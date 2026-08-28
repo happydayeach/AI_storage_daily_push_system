@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>欧洲存储市场 · 每日情报（四大分类 + 双标签）</title>
+    <style>
+        /* ===== 通用层 CSS 变量 ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: var(--bg-body);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 1.5rem;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        :root {
+            --color-primary: #1a5fb4;
+            --color-primary-light: #3584e4;
+            --color-accent: #e66100;
+            --color-accent-soft: #ff7800;
+            --color-bg-body: #f8f9fa;
+            --color-bg-card: #ffffff;
+            --color-bg-section: #ffffff;
+            --color-border: #e9ecef;
+            --color-text-primary: #1e293b;
+            --color-text-secondary: #475569;
+            --color-text-muted: #94a3b8;
+
+            --bg-body: var(--color-bg-body);
+            --bg-card: var(--color-bg-card);
+            --bg-section: var(--color-bg-section);
+            --border-color: var(--color-border);
+            --text-primary: var(--color-text-primary);
+            --text-secondary: var(--color-text-secondary);
+            --text-muted: var(--color-text-muted);
+
+            --space-xs: 0.25rem;
+            --space-sm: 0.5rem;
+            --space-md: 1rem;
+            --space-lg: 1.5rem;
+            --space-xl: 2rem;
+            --space-2xl: 3rem;
+
+            --font-size-xs: 0.75rem;
+            --font-size-sm: 0.875rem;
+            --font-size-base: 1rem;
+            --font-size-lg: 1.125rem;
+            --font-size-xl: 1.25rem;
+            --font-size-2xl: 1.5rem;
+            --font-size-3xl: 2rem;
+
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.10);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-body: #0f172a;
+                --bg-card: #1e293b;
+                --bg-section: #1e293b;
+                --border-color: #334155;
+                --text-primary: #f1f5f9;
+                --text-secondary: #cbd5e1;
+                --text-muted: #64748b;
+                --color-primary: #60a5fa;
+                --color-primary-light: #93bbfc;
+                --color-accent: #fb923c;
+                --color-accent-soft: #fdba74;
+                --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+                --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+                --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.5);
+            }
+        }
+
+        .container {
+            max-width: 1024px;
+            margin: 0 auto;
+        }
+
+        /* ===== 头部 ===== */
+        .brief-header {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl) var(--space-lg);
+            margin-bottom: var(--space-xl);
+            box-shadow: var(--shadow-sm);
+            border-left: 6px solid var(--color-primary);
+        }
+
+        .brief-header__top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: var(--space-md);
+        }
+
+        .brief-header__title {
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .brief-header__badge {
+            background: var(--color-primary);
+            color: #fff;
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+            padding: 2px 12px;
+            border-radius: 20px;
+        }
+
+        .brief-header__date {
+            font-size: var(--font-size-sm);
+            color: var(--text-secondary);
+            background: var(--bg-body);
+            padding: 4px 14px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+
+        .brief-header__meta {
+            margin-top: var(--space-md);
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-md) var(--space-lg);
+            font-size: var(--font-size-sm);
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border-color);
+            padding-top: var(--space-md);
+        }
+
+        .brief-header__meta-item .count {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* ===== 执行摘要 ===== */
+        .executive-summary {
+            background: var(--bg-section);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg) var(--space-xl);
+            margin-bottom: var(--space-xl);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .executive-summary__title {
+            font-size: var(--font-size-sm);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            margin-bottom: var(--space-sm);
+        }
+
+        .executive-summary__text {
+            font-size: var(--font-size-base);
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .executive-summary__text strong {
+            color: var(--text-primary);
+        }
+
+        /* ===== 分类锚点导航（四大类） ===== */
+        .category-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-sm) var(--space-md);
+            margin-bottom: var(--space-md);
+            padding: var(--space-md) var(--space-lg);
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .category-nav__link {
+            font-size: var(--font-size-sm);
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 4px 16px;
+            border-radius: 20px;
+            transition: all 0.15s;
+            border: 1px solid transparent;
+            background: var(--bg-body);
+        }
+
+        .category-nav__link:hover {
+            color: var(--color-primary);
+            background: color-mix(in srgb, var(--color-primary) 8%, transparent);
+        }
+
+        .category-nav__link--active {
+            color: var(--color-primary);
+            background: color-mix(in srgb, var(--color-primary) 12%, transparent);
+            border-color: color-mix(in srgb, var(--color-primary) 30%, transparent);
+            font-weight: 500;
+        }
+
+        /* ===== 筛选器（产业 + 行业，辅助功能） ===== */
+        .filter-bar {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: var(--space-sm) var(--space-lg);
+            margin-bottom: var(--space-xl);
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: var(--space-xs) var(--space-md);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .filter-bar__group {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 4px 8px;
+        }
+
+        .filter-bar__group-label {
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-right: 4px;
+        }
+
+        .filter-bar__btn {
+            font-size: var(--font-size-xs);
+            padding: 2px 12px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-body);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.15s;
+            font-family: inherit;
+        }
+
+        .filter-bar__btn:hover {
+            background: color-mix(in srgb, var(--color-primary) 8%, transparent);
+            color: var(--color-primary);
+        }
+
+        .filter-bar__btn--active {
+            background: color-mix(in srgb, var(--color-primary) 15%, transparent);
+            color: var(--color-primary);
+            border-color: color-mix(in srgb, var(--color-primary) 30%, transparent);
+            font-weight: 500;
+        }
+
+        .filter-bar__divider {
+            color: var(--border-color);
+            font-weight: 300;
+            margin: 0 2px;
+        }
+
+        /* ===== 分类内容区 ===== */
+        .section {
+            margin-bottom: var(--space-2xl);
+        }
+
+        .section__header {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            margin-bottom: var(--space-lg);
+            padding-bottom: var(--space-sm);
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .section__header h2 {
+            font-size: var(--font-size-xl);
+            font-weight: 600;
+        }
+
+        .section__header .section-count {
+            font-size: var(--font-size-sm);
+            color: var(--text-muted);
+            font-weight: 400;
+            margin-left: auto;
+        }
+
+        /* ===== 卡片 ===== */
+        .card {
+            background: var(--bg-card);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: var(--space-md);
+            overflow: hidden;
+            transition: box-shadow 0.15s;
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-md);
+        }
+
+        .card__header {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-md);
+            padding: var(--space-md) var(--space-lg);
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.1s;
+        }
+
+        .card__header:hover {
+            background: color-mix(in srgb, var(--border-color) 25%, transparent);
+        }
+
+        .card__icon {
+            font-size: var(--font-size-xl);
+            flex-shrink: 0;
+            line-height: 1.4;
+            margin-top: 2px;
+        }
+
+        .card__info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .card__title {
+            font-weight: 600;
+            font-size: var(--font-size-base);
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .card__title a {
+            color: inherit;
+            text-decoration: none;
+        }
+        .card__title a:hover {
+            color: var(--color-primary);
+        }
+
+        /* ----- 标签体系（三层） ----- */
+        .card__tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px 6px;
+            margin-top: 4px;
+        }
+
+        .tag {
+            font-size: var(--font-size-xs);
+            padding: 1px 10px;
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+
+        /* 产业标签（主标签，彩色） */
+        .tag--industry {
+            background: color-mix(in srgb, var(--color-primary) 14%, transparent);
+            color: var(--color-primary);
+            border: 1px solid color-mix(in srgb, var(--color-primary) 25%, transparent);
+        }
+        .tag--industry.tag--data-protection {
+            background: color-mix(in srgb, #2563eb 14%, transparent);
+            color: #2563eb;
+            border-color: color-mix(in srgb, #2563eb 25%, transparent);
+        }
+        .tag--industry.tag--distributed {
+            background: color-mix(in srgb, #7c3aed 14%, transparent);
+            color: #7c3aed;
+            border-color: color-mix(in srgb, #7c3aed 25%, transparent);
+        }
+        .tag--industry.tag--flash {
+            background: color-mix(in srgb, #059669 14%, transparent);
+            color: #059669;
+            border-color: color-mix(in srgb, #059669 25%, transparent);
+        }
+
+        /* 行业标签（次标签，灰色低调） */
+        .tag--vertical {
+            background: var(--bg-body);
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+            font-weight: 400;
+        }
+
+        /* 状态标签 */
+        .tag--status {
+            background: color-mix(in srgb, var(--color-accent) 12%, transparent);
+            color: var(--color-accent);
+            border: 1px solid color-mix(in srgb, var(--color-accent) 20%, transparent);
+        }
+        .tag--status-new {
+            background: color-mix(in srgb, #16a34a 12%, transparent);
+            color: #16a34a;
+            border-color: color-mix(in srgb, #16a34a 20%, transparent);
+        }
+
+        .card__meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-xs) var(--space-md);
+            font-size: var(--font-size-xs);
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+        .card__meta .source {
+            display: inline-flex;
+            align-items: center;
+            gap: 2px;
+        }
+
+        /* 卡片展开体 */
+        .card__body {
+            padding: 0 var(--space-lg) var(--space-lg) var(--space-lg);
+            border-top: 1px solid var(--border-color);
+            display: none;
+            animation: fadeSlide 0.2s ease;
+        }
+        .card__body--open {
+            display: block;
+        }
+
+        @keyframes fadeSlide {
+            0% {
+                opacity: 0;
+                transform: translateY(-6px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card__body p {
+            font-size: var(--font-size-sm);
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: var(--space-sm);
+        }
+        .card__body p:last-child {
+            margin-bottom: 0;
+        }
+
+        .card__body .detail-label {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: var(--font-size-xs);
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            margin-top: var(--space-sm);
+            margin-bottom: 2px;
+        }
+
+        .card__body .history-block {
+            background: var(--bg-body);
+            padding: var(--space-sm) var(--space-md);
+            border-radius: var(--radius-sm);
+            margin: var(--space-sm) 0;
+            font-size: var(--font-size-xs);
+            color: var(--text-secondary);
+            border-left: 3px solid var(--border-color);
+        }
+
+        .card__body .source-link {
+            font-size: var(--font-size-xs);
+            color: var(--text-muted);
+            word-break: break-all;
+        }
+        .card__body .source-link a {
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+        .card__body .source-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* 持续追踪卡片左边框 */
+        .card--update .card__header {
+            border-left: 3px solid var(--color-accent);
+        }
+
+        /* ===== 页脚 ===== */
+        .brief-footer {
+            margin-top: var(--space-2xl);
+            padding-top: var(--space-lg);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: var(--space-md);
+            font-size: var(--font-size-xs);
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 640px) {
+            body {
+                padding: 0.75rem;
+            }
+            .brief-header {
+                padding: var(--space-lg) var(--space-md);
+            }
+            .brief-header__title {
+                font-size: var(--font-size-xl);
+            }
+            .card__header {
+                padding: var(--space-md);
+                flex-wrap: wrap;
+            }
+            .card__body {
+                padding: 0 var(--space-md) var(--space-md) var(--space-md);
+            }
+            .executive-summary {
+                padding: var(--space-md);
+            }
+            .category-nav {
+                padding: var(--space-sm) var(--space-md);
+                gap: var(--space-xs) var(--space-sm);
+            }
+            .category-nav__link {
+                font-size: var(--font-size-xs);
+                padding: 2px 10px;
+            }
+            .filter-bar {
+                padding: var(--space-sm) var(--space-md);
+                gap: var(--space-xs) var(--space-sm);
+            }
+            .filter-bar__btn {
+                font-size: 0.7rem;
+                padding: 1px 8px;
+            }
+            .brief-footer {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <!-- ===== 头部 ===== -->
+        <header class="brief-header">
+            <div class="brief-header__top">
+                <div>
+                    <h1 class="brief-header__title">📊 欧洲存储市场 · 每日情报</h1>
+                    <span class="brief-header__badge">四大分类 + 双维度标签</span>
+                </div>
+                <span class="brief-header__date">📅 2026-08-28</span>
+            </div>
+            <div class="brief-header__meta">
+                <span class="brief-header__meta-item">📰 今日 <span class="count">10</span> 条</span>
+                <span class="brief-header__meta-item">🆕 新事件 <span class="count">6</span></span>
+                <span class="brief-header__meta-item">🔄 持续追踪 <span class="count">4</span></span>
+                <span class="brief-header__meta-item">🏷️ 产业：数据保护 · 分布式 · 闪存</span>
+            </div>
+        </header>
+
+        <!-- ===== 执行摘要 ===== -->
+        <section class="executive-summary">
+            <div class="executive-summary__title">📋 执行摘要</div>
+            <div class="executive-summary__text">
+                今日 <strong>产业热点</strong>：存储芯片（闪存）供应链波动、头部厂商并购传闻；<strong>垂直行业热点</strong>：医疗、制造、零售领域存储支出持续走高；
+                <strong>监管与合规</strong>：欧盟及成员国密集出台数据保护新规；
+                <strong>产品与技术</strong>：NetApp 新品出货、协作平台互通功能上线。
+                产业维度以 <strong>数据保护</strong>（合规、加密）、<strong>分布式</strong>（边缘、多云）与 <strong>闪存</strong>（芯片、介质）三条主线并行，
+                行业标签（金融/医疗/制造等）仅作信息补充，不主导分类。
+            </div>
+        </section>
+
+        <!-- ===== 分类锚点导航（四大类） ===== -->
+        <nav class="category-nav" id="categoryNav">
+            <a href="#sec-industry" class="category-nav__link category-nav__link--active">🏭 产业热点</a>
+            <a href="#sec-vertical" class="category-nav__link">📊 垂直行业热点</a>
+            <a href="#sec-regulation" class="category-nav__link">⚖️ 监管与合规</a>
+            <a href="#sec-product" class="category-nav__link">🚀 产品与技术</a>
+        </nav>
+
+        <!-- ===== 筛选器（产业 + 行业，辅助过滤） ===== -->
+        <div class="filter-bar" id="filterBar">
+            <div class="filter-bar__group">
+                <span class="filter-bar__group-label">🏷️ 产业</span>
+                <button class="filter-bar__btn filter-bar__btn--active" data-filter="all">全部</button>
+                <button class="filter-bar__btn" data-filter="data-protection">📀 数据保护</button>
+                <button class="filter-bar__btn" data-filter="distributed">🌐 分布式</button>
+                <button class="filter-bar__btn" data-filter="flash">💾 闪存</button>
+            </div>
+            <span class="filter-bar__divider">|</span>
+            <div class="filter-bar__group">
+                <span class="filter-bar__group-label">🏢 行业</span>
+                <button class="filter-bar__btn" data-filter="finance">💰 金融</button>
+                <button class="filter-bar__btn" data-filter="healthcare">🏥 医疗</button>
+                <button class="filter-bar__btn" data-filter="manufacturing">🏭 制造</button>
+                <button class="filter-bar__btn" data-filter="retail">🛒 零售</button>
+                <button class="filter-bar__btn" data-filter="government">🏛️ 政府</button>
+                <button class="filter-bar__btn" data-filter="telco">📡 运营商</button>
+                <!-- 商业市场本日无新闻，不显示 -->
+            </div>
+        </div>
+
+        <!-- ============================================================
+        内容区：四大分类
+        ============================================================ -->
+
+        <!-- ===== 分类1：产业热点 ===== -->
+        <section class="section" id="sec-industry">
+            <div class="section__header">
+                <h2>🏭 产业热点</h2>
+                <span class="section-count">3 条</span>
+            </div>
+
+            <!-- 卡片 1：产业热点 + 闪存（新产业） + 无行业 -->
+            <div class="card" data-industry="flash" data-vertical="" data-type="new">
+                <div class="card__header" onclick="toggleCard(this)">
+                    <span class="card__icon">📉</span>
+                    <div class="card__info">
+                        <div class="card__title"><a href="#" onclick="event.preventDefault();">NAND 闪存价格连续第五周下跌，渠道库存加速去化</a></div>
+                        <div class="card__tags">
+                            <span class="tag tag--industry tag--flash">💾 闪存</span>
+                            <span class="tag tag--status-new">🆕 新事件</span>
+                        </div>
+                        <div class="card__meta">
+                            <span class="source">📰 <strong>TrendForce</strong></span>
+                            <span>🕒 2026-08-28 10:00</span>
+                        </div>
+                    </div>
+                    <span style="color:var(--text-muted);font-size:var(--font-size-sm);">▼</span>
+                </div>
+                <div class="card__body">
+                    <p>TrendForce 最新周报显示，NAND 闪存合约价本周再跌 3.2%，连续第五周下跌，累计跌幅 14.7%。渠道库存天数从 6 周峰值回落至 4.2 周，去化速度略超预期，下游存储设备厂商有望在 Q4 迎来毛利率改善。</p>
+                    <div class="detail-label">🔍 关键实体</div>
+                    <p style="font-size:var(--font-size-sm);color:var(--text-secondary);">TrendForce · 三星 · SK 海力士 · 西部数据</p>
+                    <div class="detail-label">📎 来源</div>
+                    <div class="source-link"><a href="#" onclick="event.preventDefault();">TrendForce 周报</a></div>
+                </div>
+            </div>
+
+            <!-- 卡片 2：产业热点 + 数据保护 + 金融行业 -->
+            <div class="card" data-industry="data-protection" data-vertical="finance" data-type="update">
+                <div class="card__header" onclick="toggleCard(this)">
+                    <span class="card__icon">🏦</span>
+                    <div class="card__info">
+                        <div class="card__title"><a href="#" onclick="event.preventDefault();">欧洲央行强化云存储数据保护要求，金融机构合规成本攀升</a></div>
+                        <div class="card__tags">
+                            <span class="tag tag--industry tag--data-protection">📀 数据保护</span>
+                            <span class="tag tag--vertical">💰 金融</span>
+                            <span class="tag tag--status">🔄 持续追踪</span>
+                        </div>
+                        <div class="card__meta">
+                            <span class="source">📰 <strong>ECB</strong></span>
+                            <span>🕒 2026-08-28 09:30</span>
+                        </div>
+                    </div>
+                    <span style="color:var(--text-muted);font-size:var(--font-size-sm);">▼</span>
+                </div>
+                <div class="card__body">
+                    <p><strong>📌 新进展：</strong>欧洲央行今日发布补充指引，明确金融机构云存储须满足数据驻留、端到端加密及实时审计要求。多家欧洲银行已启动合规评估，预计带动 2.3 亿欧元的数据保护技术服务采购。</p>
+                    <div class="history-block">📎 历史回溯（8月25日）：ECB 首次就云存储数据保护向欧洲各大银行征询意见。</div>
+                    <div class="detail-label">🔍 关键实体</div>
+                    <p style="font-size:var(--font-size-sm);color:var(--text-secondary);">ECB · 德意志银行 · BNP Paribas</p>
+                    <div class="detail-label">📎 来源</div>
+                    <div class="source-link"><a href="#" onclick="event.preventDefault();">ECB 官方公告</a></div>
+                </div>
+            </div>
+
+            <!-- 卡片 3：产业热点 + 分布式 + 运营商行业 -->
+            <div class="card" data-industry="distributed" data-vertical="telco" data-type="new">
+                <div class="card__header" onclick="toggleCard(this)">
+                    <span class="card__icon">📡</span>
+                    <div class="card__info">
+                        <div class="card__title"><a href="#" onclick="event.preventDefault();">德国电信部署分布式边缘存储节点，支撑 5G 工业应用</a></div>
+                        <div class="card__tags">
+                            <span class="tag tag--industry tag--distributed">🌐 分布式</span>
+                            <span class="tag tag--vertical">📡 运营商</span>
+                            <span class="tag tag--status-new">🆕 新事件</span>
+                        </div>
+                        <div class="card__meta">
+                            <span class="source">📰 <strong>TelecomTV</strong></span>
+                            <span>🕒 2026-08-28 08:15</span>
+                        </div>
+                    </div>
+                    <span style="color:var(--text-muted);font-size:var(--font-size-sm);">▼</span>
+                </div>
+                <div class="card__body">
+                    <p>德国电信宣布在慕尼黑、汉堡等 5 个城市部署分布式边缘存储节点，与 5G 网络深度融合，提供 < 5ms 延迟的数据存储服务，首批客户覆盖智能制造与自动驾驶测试领域。</p>
+                    <div class="detail-label">🔍 关键实体</div>
+                    <p style="font-size:var(--font-size-sm);color:var(--text-secondary);">德国电信 · 宝马 · 西门子</p>
+                    <div class="detail-label">📎 来源</div>
+                    <div class="source-link"><a href="#" onclick="event.preventDefault();">TelecomTV 报道</a></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== 分类2：垂直行业热点 ===== -->
+        <section class="section" id="sec-vertical">
+            <div class="section__header">
+                <h2>📊 垂直行业热点</h2>
+                <span class="section-count">3 条</span>
+            </div>
+
+            <!-- 卡片 4：垂直行业 + 数据保护 + 医疗 -->
+            <div class="card" data-industry="data-protection" data-vertical="healthcare" data-type="new">
+                <div class="card__header" onclick="toggleCard(this)">
+                    <span class="card__icon">🏥</span>
+                    <div class="card__info">
+                        <div class="card__title"><a href="#" onclick="event.preventDefault();">欧洲医疗云存储市场年增速达 28%，合规存储成核心竞争力</a></div>
+                        <div class="card__tags">
+                            <span class="tag tag--industry tag--data-protection">📀 数据保护</span>
+                            <span class="tag tag--vertical">🏥 医疗</span>
+                            <span class="tag tag--status-new">🆕 新事件</span>
+                        </div>
+                        <div class="card__meta">
+                            <span class="source">📰 <strong>Healthcare IT News</strong></span>
+                            <span>🕒 2026-08-28 07:20</span>
+                        </div>
+                    </div>
+                    <span style="color:var(--text-muted);font-size:var(--font-size-sm);">▼</span>
+                </div>
+                <div class="card__body">
+                    <p>2026 年上半年欧洲医疗云存储市场同比增长 28%，达 47 亿欧元。GDPR 与欧洲健康数据空间（EHDS）成为主要驱动力，医疗机构对符合 EU 数据主权要求的存储方案需求激增，德国、法国、荷兰为前三大市场。</p>
+                    <div class="detail-label">🔍 关键实体</div>
+                    <p style="font-size:var(--font-size-sm);color:var(--text-secondary);">EHDS · GDPR · 欧洲医疗云服务商</p>
+                    <div class="detail-label">📎 来源</div>
+                    <div class="source-link"><a href="#" onclick="event.preventDefault();">Healthcare IT News</a></div>
+                </div>
+            </div>
+
+            <!-- 卡片 5：垂直行业 + 分布式 + 制造 -->
+            <div class="card" data-industry="distributed" data-vertical="manufacturing" data-type="new">
+                <div class="card__header" onclick="toggleCard(this)">
+                    <span class="card__icon">🏭</span>
+                    <div class="card__info">
+                        <div class="card__title"><a href="#" onclick="event.preventDefault();">西门子采用分布式存储架构，统一全球 120 个工厂数据湖</a></div>
+                        <div class="card__tags">
+                            <span class="tag tag--industry tag--distributed">🌐 分布式</span>
+                            <span class="tag tag--vertical">🏭 制造</span>
+                            <span class="tag tag--status-new">🆕 新事件</span>
+                        </div>
+                        <div class="card__meta">
+                            <span class="source">📰 <strong>Manufacturing Today</strong></span>
+                            <span>🕒 2026-08-28 06:45</span>
+                        </div>
+                    </div>
+                    <span style="color:var(--text-muted);font-size:var(--font-size-sm);">▼</span>
+                </div>
+                <div class="card__body">
+                    <p>西门子完成全球 120 个工厂的数据湖统一改造，采用分布式存储架构打通产线、质检与供应链数据，实现实时数据分析。项目由 Dell 和 MinIO 联合提供技术支持。</p>
+                    <div class="detail-label">🔍 关键实体</div>
+                    <p style="font-size:var(--font-size-sm);color:var(--text-secondary);">西门子 · Dell · MinIO</p>
+                    <div class="detail-label">📎 来源</div>
+                    <div class="source-link"><a href="#" onclick="event.preventDefault();">Manufacturing Today</a></div>
+                </div>
+            </div>
+
+            <!-- 卡片 6：垂直行业 + 闪存 + 零售（持续追踪） -->
+            <div class="card card--update" data-industry="flash" data-vertical="retail" data-type="update">
+                <div class="card__header" onclick="toggleCard(this)">
+                    <span class="card__icon">🛒</span>
+                    <div class="card__info">
+                        <div class="card__title"><a href="#" onclick="event.preventDefault();">闪存价格下跌带动消费电子零售端备货回暖</a></div>
+                        <div class="card__tags">
+                            <span class="tag tag--industry tag--flash">💾 闪存</span>
+                            <span class="tag tag--vertical">🛒 零售</span>
+                            <span class="tag tag--status">🔄 持续追踪</span>
+                        </div>
+                        <div class="card__meta">
+                            <span class="source">📰 <strong>Retail Dive</strong></span>
+                            <span>🕒 2026-08-28 11:30</span>
+                        </div>
+                    </div>
+                    <span style="color:var(--text-muted);font-size:var(--font-size-sm);">▼</span>
+                </div>
+                <div class="card__body">
+                    <p><strong>📌 新进展：</strong>受 NAND 闪存价格持续走低影响，欧洲消费电子零售商（MediaMarkt、Fnac）开始加大 SSD 及 U 盘类产品的备货力度。渠道数据显示，8 月最后一周零售端闪存产品订单环比增长 18%。</p>
+                    <div class="history-block">📎 历史回溯（8月20日）：闪存价格连续四周下跌，渠道商普遍持观望态度。</div>
+                    <div class="detail-label">🔍 关键实体</div>
+                    <p style="font-size:var(--font-size-sm);color:var(--text-secondary);">MediaMarkt · Fnac · 闪存渠道联盟</p>
+                    <div class="detail-label">📎 来源</div>
+                    <div class="source-link"><a href="#" onclick="event.preventDefault();">Retail Dive 报道</a></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== 分类3：监管与合规 ===== -->
+        <section class="section" id="sec-regulation">
+            <div class="section__header">
+                <h2>⚖️ 监管与合规</h2>
+                <span class="section-count">2 条</span>
+            </div>
+
+            <!-- 卡片 7：监管 + 数据保护 + 政府 -->
+            <div class="card" data-industry="data-protection" data-vertical="government" data-type="new">
+                <div class="card__header" onclick="toggleCard(this)">
+                    <span class="card__icon">📜</span>
+                    <div class="card__info">
+                        <div class="card__title"><a href="#" onclick="event.preventDefault();">欧盟数据法案实施细则落地，存储服务商面临新合规要求</a></div>
+                        <div class="card__tags">
+                            <span class="tag tag--industry tag--data-protection">📀 数据保护</span>
+                            <span class="tag tag--vertical">🏛️ 政府</span>
+                            <span class="tag tag--status-new">🆕 新事件</span>
+                        </div>
+                        <div class="card__meta">
+                            <span class="source">📰 <strong>EURACTIV</strong></span>
+                            <span>🕒 2026-08-28 14:00</span>
+                        </div>
+                    </div>
+                    <span style="color:var(--text-muted);font-size:var(--font-size-sm);">▼</span>
+                </div>
+                <div class="card__body">
+                    <p>欧盟委员会正式发布《数据法案》实施细则，明确云存储服务商的数据可移植性、互操作性及跨境传输要求。新规要求 2027 年 1 月前完成合规改造，违规处罚上限提高至全球年营业额 4%。</p>
+                    <div class="detail-label">🔍 关键实体</div>
+                    <p style="font-size:var(--font-size-sm);color:var(--text-secondary);">欧盟委员会 · AWS · Microsoft Azure</p>
+                    <div class="detail-label">📎 来源</div>
+                    <div class="source-link"><a href="#" onclick="event.preventDefault();">EURACTIV 原文</a> ｜ <a href="#" onclick="event.preventDefault();">欧盟官方公报</a></div>
+                </div>
+            </div>
+
+            <!-- 卡片 8：监管 + 数据保护 + 政府 -->
+            <div class="card" data-industry="data-protection" data-vertical="government" data-type="new">
+                <div class="card__header" onclick="toggleCard(this)">
+                    <span class="card__icon">🏛️</span>
+                    <div class="card__info">
+                        <div class="card__title"><a href="#" onclick="event.preventDefault();">法国 CNIL 发布公共云存储采购安全标准，18 项硬性指标</a></div>
+                        <div class="card__tags">
+                            <span class="tag tag--industry tag--data-protection">📀 数据保护</span>
+                            <span class="tag tag--vertical">🏛️ 政府</span>
+                            <span class="tag tag--status-new">🆕 新事件</span>
+                        </div>
+                        <div class="card__meta">
+                            <span class="source">📰 <strong>CNIL</strong></span>
+                            <span>🕒 2026-08-28 13:15</span>
+                        </div>
+                    </div>
+                    <span style="color:var(--text-muted);font-size:var(--font-size-sm);">▼</span>
+                </div>
+                <div class="card__body">
+                    <p>法国国家信息与自由委员会（CNIL）发布公共机构云存储采购安全标准，明确数据加密、访问审计及跨境传输授权等 18 项硬性指标，即日起适用于所有法国中央政府部门的云存储招标。</p>
+                    <div class="detail-label">🔍 关键实体</div>
+                    <p style="font-size:var(--font-size-sm);color:var(--text-secondary);">CNIL · 法国数字事务部</p>
+                    <div class="detail-label">📎 来源</div>
+                    <div class="source-link"><a href="#" onclick="event.preventDefault();">CNIL 官方公告</a></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== 分类4：产品与技术 ===== -->
+        <section class="section" id="sec-product">
+            <div class="section__header">
+                <h2>🚀 产品与技术</h2>
+                <span class="section-count">2 条</span>
+            </div>
+
+            <!-- 卡片 9：产品 + 闪存 + 无行业（持续追踪） -->
+            <div class="card card--update" data-industry="flash" data-vertical="" data-type="update">
+                <div class="card__header" onclick="toggleCard(this)">
+                    <span class="card__icon">💾</span>
+                    <div class="card__info">
+                        <div class="card__title"><a href="#" onclick="event.preventDefault();">SK 海力士发布 300 层 3D NAND 样品，2027 年量产</a></div>
+                        <div class="card__tags">
+                            <span class="tag tag--industry tag--flash">💾 闪存</span>
+                            <span class="tag tag--status">🔄 持续追踪</span>
+                        </div>
+                        <div class="card__meta">
+                            <span class="source">📰 <strong>SK Hynix</strong></span>
+                            <span>🕒 2026-08-28 12:00</span>
+                        </div>
+                    </div>
+                    <span style="color:var(--text-muted);font-size:var(--font-size-sm);">▼</span>
+                </div>
+                <div class="card__body">
+                    <p><strong>📌 新进展：</strong>SK 海力士在 2026 年闪存峰会上首次展示 300 层 3D NAND 样品，其存储密度较当前 238 层产品提升 35%，写入速度提升 28%。预计 2027 年上半年量产，首批面向企业级 SSD 市场。</p>
+                    <div class="history-block">📎 历史回溯（2025年12月）：SK 海力士宣布 300 层 3D NAND 研发进入流片阶段。</div>
+                    <div class="detail-label">🔍 关键实体</div>
+                    <p style="font-size:var(--font-size-sm);color:var(--text-secondary);">SK 海力士 · 闪存峰会</p>
+                    <div class="detail-label">📎 来源</div>
+                    <div class="source-link"><a href="#" onclick="event.preventDefault();">SK 海力士官方公告</a> ｜ <a href="#" onclick="event.preventDefault();">TechInsights 分析</a></div>
+                </div>
+            </div>
+
+            <!-- 卡片 10：产品 + 分布式 + 无行业 -->
+            <div class="card" data-industry="distributed" data-vertical="" data-type="new">
+                <div class="card__header" onclick="toggleCard(this)">
+                    <span class="card__icon">🤝</span>
+                    <div class="card__info">
+                        <div class="card__title"><a href="#" onclick="event.preventDefault();">Microsoft Teams 与 Slack 互通功能进入公测</a></div>
+                        <div class="card__tags">
+                            <span class="tag tag--industry tag--distributed">🌐 分布式</span>
+                            <span class="tag tag--status-new">🆕 新事件</span>
+                        </div>
+                        <div class="card__meta">
+                            <span class="source">📰 <strong>TechCrunch</strong></span>
+                            <span>🕒 2026-08-28 05:30</span>
+                        </div>
+                    </div>
+                    <span style="color:var(--text-muted);font-size:var(--font-size-sm);">▼</span>
+                </div>
+                <div class="card__body">
+                    <p>Microsoft 与 Salesforce 联合宣布 Teams 与 Slack 跨平台消息互通功能进入公测，支持消息、文件和 @提及 互通，首批试点 5000 家企业。分析认为此举将降低企业协作工具的切换成本。</p>
+                    <div class="detail-label">🔍 关键实体</div>
+                    <p style="font-size:var(--font-size-sm);color:var(--text-secondary);">Microsoft · Salesforce · Slack · Teams</p>
+                    <div class="detail-label">📎 来源</div>
+                    <div class="source-link"><a href="#" onclick="event.preventDefault();">TechCrunch 报道</a> ｜ <a href="#" onclick="event.preventDefault();">Microsoft 官方公告</a></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== 页脚 ===== -->
+        <footer class="brief-footer">
+            <span>© 2026 欧洲存储市场 · 每日情报 &nbsp;|&nbsp; 🤖 AI 自动生成 · 24-48h 窗口</span>
+            <div>
+                <span style="margin-right:var(--space-md);">🏷️ 产业：数据保护 · 分布式 · 闪存</span>
+                <span>🏢 行业辅助：金融 · 医疗 · 制造 · 零售 · 政府 · 运营商</span>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- ============================================================
+    JavaScript
+    ============================================================ -->
+    <script>
+        // ----- 卡片展开/收起 -----
+        function toggleCard(headerEl) {
+            const card = headerEl.closest('.card');
+            if (!card) return;
+            const body = card.querySelector('.card__body');
+            const toggleIcon = headerEl.querySelector('span:last-child');
+            if (!body) return;
+            const isOpen = body.classList.contains('card__body--open');
+            if (isOpen) {
+                body.classList.remove('card__body--open');
+                if (toggleIcon) toggleIcon.textContent = '▼';
+            } else {
+                body.classList.add('card__body--open');
+                if (toggleIcon) toggleIcon.textContent = '▲';
+            }
+        }
+        window.toggleCard = toggleCard;
+
+        // ----- 分类导航锚点平滑滚动 + 高亮 -----
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.category-nav__link');
+
+            navLinks.forEach(function(link) {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    navLinks.forEach(function(l) { l.classList.remove('category-nav__link--active'); });
+                    this.classList.add('category-nav__link--active');
+
+                    const targetId = this.getAttribute('href');
+                    if (targetId && targetId.startsWith('#')) {
+                        const targetEl = document.querySelector(targetId);
+                        if (targetEl) {
+                            targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                    }
+                });
+            });
+
+            // ----- 筛选器（产业 + 行业）-----
+            const filterBtns = document.querySelectorAll('.filter-bar__btn');
+            const cards = document.querySelectorAll('.card');
+
+            filterBtns.forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    // 仅当前组内切换 active（保持组内互斥）
+                    const parentGroup = this.closest('.filter-bar__group');
+                    if (parentGroup) {
+                        parentGroup.querySelectorAll('.filter-bar__btn').forEach(function(b) {
+                            b.classList.remove('filter-bar__btn--active');
+                        });
+                        this.classList.add('filter-bar__btn--active');
+                    }
+
+                    // 收集所有激活的 filter 值（'all' 优先级最高）
+                    const activeFilters = [];
+                    document.querySelectorAll('.filter-bar__btn.filter-bar__btn--active').forEach(function(b) {
+                        activeFilters.push(b.dataset.filter);
+                    });
+
+                    // 如果包含 'all'，显示全部
+                    if (activeFilters.includes('all')) {
+                        cards.forEach(function(c) { c.style.display = 'block'; });
+                        return;
+                    }
+
+                    // 否则按交集筛选（卡片必须满足所有激活条件）
+                    cards.forEach(function(card) {
+                        const industry = card.dataset.industry || '';
+                        const vertical = card.dataset.vertical || '';
+                        let match = true;
+                        for (let f of activeFilters) {
+                            if (f === 'all') continue;
+                            if (industry !== f && vertical !== f) {
+                                match = false;
+                                break;
+                            }
+                        }
+                        card.style.display = match ? 'block' : 'none';
+                    });
+                });
+            });
+
+            // 默认展开第一条卡片（展示效果）
+            const firstCard = document.querySelector('.card');
+            if (firstCard) {
+                const header = firstCard.querySelector('.card__header');
+                if (header) {
+                    setTimeout(function() { toggleCard(header); }, 300);
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
