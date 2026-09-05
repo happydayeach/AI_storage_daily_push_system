@@ -3,8 +3,8 @@ import json
 import logging
 from datetime import datetime, timedelta
 from typing import List, Dict, Any
-from models import RawArticle
-from llm_client import DeepSeekClient
+from src.models import RawArticle
+from src.llm_client import DeepSeekClient
 
 logger = logging.getLogger(__name__)
 

@@ -2,8 +2,8 @@
 import json
 import logging
 from typing import List, Optional
-from models import RawArticle, ExtractedEvent
-from llm_client import DeepSeekClient
+from src.models import RawArticle, ExtractedEvent
+from src.llm_client import DeepSeekClient
 
 logger = logging.getLogger(__name__)
 

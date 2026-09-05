@@ -2,8 +2,8 @@
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 from typing import List, Dict, Any
-from models import ExtractedEvent, StoryRecord, DedupResult
-from embedding_client import EmbeddingClient
+from src.models import ExtractedEvent, StoryRecord, DedupResult
+from src.embedding_client import EmbeddingClient
 import logging
 
 logger = logging.getLogger(__name__)

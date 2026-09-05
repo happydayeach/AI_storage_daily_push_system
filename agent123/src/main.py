@@ -3,12 +3,12 @@ import yaml
 import json
 import logging
 from datetime import datetime, timedelta
-from models import StoryRecord
-from agent1_discovery import discover_articles
-from agent2_extraction import process_articles
-from agent3_dedupe import Deduplicator
-from llm_client import DeepSeekClient
-from embedding_client import EmbeddingClient
+from src.models import StoryRecord
+from src.agent1_discovery import discover_articles
+from src.agent2_extraction import process_articles
+from src.agent3_dedupe import Deduplicator
+from src.llm_client import DeepSeekClient
+from src.embedding_client import EmbeddingClient
 import os
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -18,7 +18,7 @@ def load_story_store(theme_id: str, store_path: str = "story_store/stories.json"
     try:
         with open(store_path, "r", encoding="utf-8") as f:
             all_stories = json.load(f)
-    except FileNotFoundError:
+    except (FileNotFoundError, json.JSONDecodeError):
         return []
     
     cutoff = datetime.now() - timedelta(days=14)

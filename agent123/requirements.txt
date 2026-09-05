@@ -1,1 +1,7 @@
-
+openai
+pyyaml
+sentence-transformers
+scikit-learn
+numpy
+pytest
+google-api-python-client
