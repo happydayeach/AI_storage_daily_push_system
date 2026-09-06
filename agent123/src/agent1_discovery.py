@@ -56,8 +56,8 @@ def discover_articles(theme_config: Dict[str, Any], searcher: SearchTool) -> Lis
                     # 如果超出 48 小时，丢弃（严格过滤）
                     if (datetime.now() - dt) > timedelta(hours=48):
                         continue
-                except (TypeError, ValueError):
-                    pass  # 如果时间格式不对，保留，让后续处理
+                except Exception as e:
+                    logger.warning("Could not parse publication time %r for %s: %s", pub_time, url, e)  # 保留，让后续处理
             
             raw = RawArticle(
                 url=url,

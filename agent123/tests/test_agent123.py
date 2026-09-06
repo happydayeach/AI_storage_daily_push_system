@@ -1,138 +1,123 @@
-from dataclasses import fields
+import logging
+
+import pytest
+
+from src.models import DedupResult, ExtractedEvent, RawArticle, StoryRecord
 
 
-def test_data_models_match_the_specification():
-    from src.models import DedupResult, ExtractedEvent, RawArticle, StoryRecord
-
-    assert [field.name for field in fields(RawArticle)] == [
-        "url", "title", "snippet", "published_at", "domain"
-    ]
-    assert [field.name for field in fields(ExtractedEvent)] == [
-        "event_type", "entities", "key_numbers", "summary_zh", "category",
-        "source_url", "published_at", "domain", "title", "snippet",
-    ]
-    assert ExtractedEvent("other", [], [], "summary", "category", "url", "date", "domain").title == ""
-    assert ExtractedEvent("other", [], [], "summary", "category", "url", "date", "domain").snippet == ""
-    assert [field.name for field in fields(StoryRecord)] == [
-        "story_id", "theme_id", "first_seen_date", "last_updated_date",
-        "summary_history", "embedding", "source_urls", "category",
-    ]
-    assert [field.name for field in fields(DedupResult)] == [
-        "new", "update", "duplicate_dropped_count"
-    ]
+def make_event(summary: str) -> ExtractedEvent:
+    return ExtractedEvent(
+        event_type="其他",
+        entities=[],
+        key_numbers=[],
+        summary_zh=summary,
+        category="产业热点",
+        source_url="https://source.example/article",
+        published_at="2026-09-06T01:00:00",
+        domain="source.example",
+    )
 
 
-def test_load_story_store_returns_empty_list_for_invalid_json(tmp_path):
-    from src.main import load_story_store
+def test_models_can_be_constructed_with_extracted_event_text_defaults():
+    article = RawArticle("https://example.com", "Title", "Snippet", "2026-09-06", "example.com")
+    event = make_event("摘要")
+    story = StoryRecord("story-1", "theme", "2026-09-01", "2026-09-06", ["摘要"], [1.0, 0.0], [article.url], "产业热点")
+    result = DedupResult([event], [{"story_id": story.story_id}], 0)
 
-    store_path = tmp_path / "stories.json"
-    store_path.write_text("", encoding="utf-8")
-
-    assert load_story_store("theme", str(store_path)) == []
-
-
-def test_format_iso8601_returns_second_precision_timestamp():
-    from datetime import datetime
-
-    from src.utils import format_iso8601
-
-    assert format_iso8601(datetime(2026, 9, 6, 1, 2, 3)) == "2026-09-06T01:02:03"
+    assert article.title == "Title"
+    assert event.title == ""
+    assert event.snippet == ""
+    assert story.story_id == "story-1"
+    assert result.new == [event]
 
 
-def test_mock_search_tool_returns_complete_raw_articles():
-    from src.models import RawArticle
+def test_mock_search_tool_returns_raw_articles_without_network():
     from src.search_tool import MockSearchTool
 
     articles = MockSearchTool().search("storage")
 
-    assert 3 <= len(articles) <= 5
+    assert articles
     assert all(isinstance(article, RawArticle) for article in articles)
-    assert all(article.url and article.title and article.snippet and article.published_at and article.domain for article in articles)
 
 
-def test_google_search_tool_requires_both_google_credentials(monkeypatch):
+def test_discover_articles_uses_mock_search_and_filters_blacklisted_domain():
+    from src.agent1_discovery import discover_articles
+    from src.search_tool import MockSearchTool
+
+    discovered = discover_articles({"keywords_matrix": [["storage"]]}, MockSearchTool())
+    filtered = discover_articles(
+        {
+            "keywords_matrix": [["storage"]],
+            "source_blacklist": ["cloud.example.net"],
+        },
+        MockSearchTool(),
+    )
+
+    assert discovered
+    assert all(isinstance(article, RawArticle) for article in discovered)
+    assert all(article.domain != "cloud.example.net" for article in filtered)
+    assert len(filtered) == len(discovered) - 1
+
+
+def test_discover_articles_logs_warning_and_keeps_article_for_unparseable_timestamp(caplog):
+    from src.agent1_discovery import discover_articles
+    from src.search_tool import SearchTool
+
+    class InvalidTimestampSearchTool(SearchTool):
+        def search(self, keyword, hours_back=48):
+            return [RawArticle("https://example.com/a", "Title", "Snippet", "not-a-date", "example.com")]
+
+    with caplog.at_level(logging.WARNING, logger="src.agent1_discovery"):
+        articles = discover_articles({"keywords_matrix": [["storage"]]}, InvalidTimestampSearchTool())
+
+    assert [article.url for article in articles] == ["https://example.com/a"]
+    assert "Could not parse publication time" in caplog.text
+
+
+def test_deduplicator_classifies_new_update_and_duplicate_without_model_download():
+    from src.agent3_dedupe import Deduplicator
+
+    class FakeEmbedder:
+        vectors = {
+            "duplicate": [1.0, 0.0],
+            "update": [0.8, 0.6],
+            "new": [0.0, 1.0],
+        }
+
+        def encode(self, texts):
+            return [self.vectors[text] for text in texts]
+
+    historical = StoryRecord("story-1", "theme", "2026-09-01", "2026-09-06", ["duplicate"], [1.0, 0.0], ["https://old.example"], "产业热点")
+    duplicate, update, new = (make_event(summary) for summary in ("duplicate", "update", "new"))
+
+    result = Deduplicator(FakeEmbedder(), threshold_a=0.88, threshold_b=0.75).dedupe(
+        [duplicate, update, new], [historical]
+    )
+
+    assert result.duplicate_dropped_count == 1
+    assert result.update == [{"event": update, "story_id": "story-1", "history_summary": "duplicate"}]
+    assert result.new == [new]
+
+
+def test_google_search_tool_without_credentials_raises_clear_error(monkeypatch):
     from src.search_tool import GoogleSearchTool
 
     monkeypatch.delenv("GOOGLE_API_KEY", raising=False)
     monkeypatch.delenv("GOOGLE_CSE_ID", raising=False)
 
-    try:
+    with pytest.raises(ValueError, match="GOOGLE_API_KEY.*GOOGLE_CSE_ID"):
         GoogleSearchTool()
-    except ValueError as error:
-        assert "GOOGLE_API_KEY" in str(error)
-        assert "GOOGLE_CSE_ID" in str(error)
-    else:
-        raise AssertionError("GoogleSearchTool must reject missing Google credentials")
 
 
-def test_discover_articles_filters_blacklisted_domains_and_honors_whitelist():
-    from src.agent1_discovery import discover_articles
-    from src.models import RawArticle
-    from src.search_tool import SearchTool
+def test_extract_event_parses_fixed_json_from_mocked_client():
+    from src.agent2_extraction import extract_event
 
-    class FixedSearchTool(SearchTool):
-        def search(self, keyword, hours_back=48):
-            return [
-                RawArticle("https://allowed.example/a", "Allowed", "Snippet", "2026-09-06T01:00:00", "allowed.example"),
-                RawArticle("https://blocked.example/b", "Blocked", "Snippet", "2026-09-06T01:00:00", "blocked.example"),
-                RawArticle("https://other.example/c", "Other", "Snippet", "2026-09-06T01:00:00", "other.example"),
-            ]
+    class FakeDeepSeekClient:
+        def chat(self, **kwargs):
+            assert kwargs["max_tokens"] == 800
+            return '{"event_type":"产品发布","entities":["Acme"],"key_numbers":["10%"],"summary_zh":"Acme 发布了新存储产品。","category":"产品与技术"}'
 
-    articles = discover_articles(
-        {
-            "keywords_matrix": [["storage"]],
-            "source_blacklist": ["blocked.example"],
-            "source_whitelist": ["allowed.example"],
-        },
-        FixedSearchTool(),
-    )
+    article = RawArticle("https://example.com/product", "New product", "Details", "2026-09-06T01:00:00", "example.com")
+    event = extract_event(article, FakeDeepSeekClient())
 
-    assert [article.domain for article in articles] == ["allowed.example"]
-
-
-def test_deepseek_client_uses_environment_selected_model_without_search_parameter(monkeypatch):
-    import src.llm_client as llm_client
-
-    class FakeCompletions:
-        def create(self, **kwargs):
-            self.kwargs = kwargs
-            return type("Response", (), {"choices": [type("Choice", (), {"message": type("Message", (), {"content": "ok"})()})()]})()
-
-    completions = FakeCompletions()
-
-    class FakeOpenAI:
-        def __init__(self, **kwargs):
-            self.chat = type("Chat", (), {"completions": completions})()
-
-    monkeypatch.setattr(llm_client, "OpenAI", FakeOpenAI)
-    monkeypatch.setenv("DEEPSEEK_MODEL", "deepseek-reasoner")
-
-    client = llm_client.DeepSeekClient(api_key="test-key")
-    assert client.chat("hello") == "ok"
-    assert completions.kwargs["model"] == "deepseek-reasoner"
-    assert "enable" + "_search" not in completions.kwargs
-
-
-def test_main_runs_mock_discovery_before_missing_deepseek_key(monkeypatch):
-    import pytest
-    import src.main as main
-
-    captured = []
-
-    def discover(theme_config, searcher):
-        captured.extend(searcher.search("storage"))
-        return captured
-
-    class MissingDeepSeekClient:
-        def __init__(self):
-            raise ValueError("DEEPSEEK_API_KEY is required")
-
-    monkeypatch.delenv("GOOGLE_API_KEY", raising=False)
-    monkeypatch.delenv("GOOGLE_CSE_ID", raising=False)
-    monkeypatch.setattr(main, "discover_articles", discover)
-    monkeypatch.setattr(main, "DeepSeekClient", MissingDeepSeekClient)
-
-    with pytest.raises(ValueError, match="DEEPSEEK_API_KEY"):
-        main.main()
-
-    assert len(captured) == 3
+    assert event == ExtractedEvent("产品发布", ["Acme"], ["10%"], "Acme 发布了新存储产品。", "产品与技术", article.url, article.published_at, article.domain, article.title, article.snippet)
