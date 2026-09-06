@@ -9,6 +9,7 @@ from src.agent2_extraction import process_articles
 from src.agent3_dedupe import Deduplicator
 from src.llm_client import DeepSeekClient
 from src.embedding_client import EmbeddingClient
+from src.search_tool import GoogleSearchTool, MockSearchTool
 import os
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -52,14 +53,20 @@ def main():
         theme_config = yaml.safe_load(f)
     theme_id = theme_config["theme_id"]
 
-    # 2. 初始化客户端
+    # 2. 初始化搜索工具和客户端
+    if os.getenv("GOOGLE_API_KEY") and os.getenv("GOOGLE_CSE_ID"):
+        searcher = GoogleSearchTool()
+    else:
+        logger.warning("GOOGLE_API_KEY or GOOGLE_CSE_ID is missing; using MockSearchTool for Agent 1.")
+        searcher = MockSearchTool()
+    # 3. Agent 1: 发现. This remains runnable with MockSearchTool even when
+    # the optional DeepSeek credentials used by later stages are absent.
+    logger.info("=== Agent 1: Discovery ===")
+    articles = discover_articles(theme_config, searcher)
+    logger.info(f"Found {len(articles)} raw articles.")
+
     deepseek = DeepSeekClient()
     embedder = EmbeddingClient()
-
-    # 3. Agent 1: 发现（DeepSeek 联网）
-    logger.info("=== Agent 1: Discovery ===")
-    articles = discover_articles(theme_config, deepseek)
-    logger.info(f"Found {len(articles)} raw articles.")
 
     # 4. Agent 2: 提炼（DeepSeek 非联网）
     logger.info("=== Agent 2: Extraction ===")

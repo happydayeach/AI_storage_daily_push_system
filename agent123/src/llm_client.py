@@ -3,7 +3,7 @@ import os
 from openai import OpenAI
 
 class DeepSeekClient:
-    def __init__(self, api_key: str = None, model: str = "deepseek-chat"):
+    def __init__(self, api_key: str = None, model: str = None):
         self.api_key = api_key or os.getenv("DEEPSEEK_API_KEY")
         if not self.api_key:
             raise ValueError("DEEPSEEK_API_KEY is required")
@@ -11,10 +11,11 @@ class DeepSeekClient:
             api_key=self.api_key,
             base_url="https://api.deepseek.com"
         )
-        self.model = model
+        # DeepSeek's standard chat model remains the default, but deployments may override it.
+        self.model = model or os.getenv("DEEPSEEK_MODEL", "deepseek-chat")
 
-    def chat(self, prompt: str, system_prompt: str = "", enable_search: bool = False, max_tokens: int = 2000) -> str:
-        """通用对话接口，支持联网搜索"""
+    def chat(self, prompt: str, system_prompt: str = "", max_tokens: int = 2000) -> str:
+        """General DeepSeek chat interface without provider-specific search options."""
         messages = []
         if system_prompt:
             messages.append({"role": "system", "content": system_prompt})
@@ -25,7 +26,6 @@ class DeepSeekClient:
             messages=messages,
             max_tokens=max_tokens,
             temperature=0.1,  # 低温度保证结构化输出稳定
-            enable_search=enable_search,  # 关键：开启联网
             stream=False
         )
         return response.choices[0].message.content

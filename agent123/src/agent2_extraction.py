@@ -32,7 +32,6 @@ def extract_event(article: RawArticle, llm_client: DeepSeekClient) -> Optional[E
         response = llm_client.chat(
             prompt=prompt,
             system_prompt="你是一个专业的技术新闻分析师，擅长结构化信息提取。",
-            enable_search=False,  # 关闭联网，仅做推理
             max_tokens=800
         )
         # 清理响应
