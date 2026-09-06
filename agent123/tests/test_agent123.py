@@ -1,4 +1,5 @@
 import logging
+from datetime import datetime, timedelta, timezone
 
 import pytest
 
@@ -64,7 +65,7 @@ def test_discover_articles_logs_warning_and_keeps_article_for_unparseable_timest
     from src.search_tool import SearchTool
 
     class InvalidTimestampSearchTool(SearchTool):
-        def search(self, keyword, hours_back=48):
+        def search(self, keyword):
             return [RawArticle("https://example.com/a", "Title", "Snippet", "not-a-date", "example.com")]
 
     with caplog.at_level(logging.WARNING, logger="src.agent1_discovery"):
@@ -72,6 +73,75 @@ def test_discover_articles_logs_warning_and_keeps_article_for_unparseable_timest
 
     assert [article.url for article in articles] == ["https://example.com/a"]
     assert "Could not parse publication time" in caplog.text
+
+
+def test_discover_articles_discards_old_aware_timestamp():
+    from src.agent1_discovery import discover_articles
+    from src.search_tool import SearchTool
+
+    class TimestampSearchTool(SearchTool):
+        def search(self, keyword):
+            return [
+                RawArticle(
+                    "https://example.com/old",
+                    "Old",
+                    "Snippet",
+                    (datetime.now(timezone.utc) - timedelta(hours=60)).isoformat(),
+                    "example.com",
+                ),
+                RawArticle(
+                    "https://example.com/fresh",
+                    "Fresh",
+                    "Snippet",
+                    datetime.now(timezone.utc).isoformat(),
+                    "example.com",
+                ),
+            ]
+
+    articles = discover_articles({"keywords_matrix": [["storage"]]}, TimestampSearchTool())
+
+    assert [article.url for article in articles] == ["https://example.com/fresh"]
+
+
+def test_discover_articles_discards_old_naive_timestamp():
+    from src.agent1_discovery import discover_articles
+    from src.search_tool import SearchTool
+
+    class NaiveTimestampSearchTool(SearchTool):
+        def search(self, keyword):
+            return [
+                RawArticle(
+                    "https://example.com/old",
+                    "Old",
+                    "Snippet",
+                    (datetime.now() - timedelta(hours=60)).isoformat(),
+                    "example.com",
+                )
+            ]
+
+    articles = discover_articles({"keywords_matrix": [["storage"]]}, NaiveTimestampSearchTool())
+
+    assert articles == []
+
+
+def test_discover_articles_continues_after_one_keyword_search_fails(caplog):
+    from src.agent1_discovery import discover_articles
+    from src.search_tool import SearchTool
+
+    class PartiallyFailingSearchTool(SearchTool):
+        def search(self, keyword):
+            if keyword == "broken":
+                raise RuntimeError("temporary search failure")
+            return [RawArticle("https://example.com/good", "Good", "Snippet", "", "example.com")]
+
+    with caplog.at_level(logging.ERROR, logger="src.agent1_discovery"):
+        articles = discover_articles(
+            {"keywords_matrix": [["broken", "working"]]},
+            PartiallyFailingSearchTool(),
+        )
+
+    assert [article.url for article in articles] == ["https://example.com/good"]
+    assert "Search failed for keyword 'broken'" in caplog.text
 
 
 def test_deduplicator_classifies_new_update_and_duplicate_without_model_download():
@@ -107,6 +177,21 @@ def test_google_search_tool_without_credentials_raises_clear_error(monkeypatch):
 
     with pytest.raises(ValueError, match="GOOGLE_API_KEY.*GOOGLE_CSE_ID"):
         GoogleSearchTool()
+
+
+def test_google_search_tool_returns_empty_list_when_request_fails(monkeypatch, caplog):
+    from src.search_tool import GoogleSearchTool
+
+    def failing_urlopen(*args, **kwargs):
+        raise OSError("network unavailable")
+
+    monkeypatch.setattr("src.search_tool.urlopen", failing_urlopen)
+
+    with caplog.at_level(logging.ERROR, logger="src.search_tool"):
+        articles = GoogleSearchTool(api_key="key", cse_id="cse").search("storage")
+
+    assert articles == []
+    assert "Google Custom Search failed" in caplog.text
 
 
 def test_extract_event_parses_fixed_json_from_mocked_client():

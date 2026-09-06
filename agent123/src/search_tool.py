@@ -1,6 +1,7 @@
 """Pluggable news search providers for Agent 1."""
 
 import json
+import logging
 import os
 import re
 from abc import ABC, abstractmethod
@@ -12,13 +13,15 @@ from urllib.request import urlopen
 
 from src.models import RawArticle
 
+logger = logging.getLogger(__name__)
+
 
 class SearchTool(ABC):
     """Interface implemented by all Agent 1 news search providers."""
 
     @abstractmethod
-    def search(self, keyword: str, hours_back: int = 48) -> List[RawArticle]:
-        """Return articles relevant to ``keyword`` from the requested time window."""
+    def search(self, keyword: str) -> List[RawArticle]:
+        """Return articles relevant to ``keyword``."""
 
 
 class GoogleSearchTool(SearchTool):
@@ -33,10 +36,14 @@ class GoogleSearchTool(SearchTool):
         if missing:
             raise ValueError(f"Google Custom Search requires {', '.join(missing)}")
 
-    def search(self, keyword: str, hours_back: int = 48) -> List[RawArticle]:
+    def search(self, keyword: str) -> List[RawArticle]:
         query = urlencode({"key": self.api_key, "cx": self.cse_id, "q": keyword})
-        with urlopen(f"{self.API_URL}?{query}", timeout=15) as response:
-            payload = json.loads(response.read().decode("utf-8"))
+        try:
+            with urlopen(f"{self.API_URL}?{query}", timeout=15) as response:
+                payload = json.loads(response.read().decode("utf-8"))
+        except Exception as error:
+            logger.error("Google Custom Search failed for keyword %r: %s", keyword, error)
+            return []
 
         return [self._to_article(item) for item in payload.get("items", [])]
 
@@ -76,7 +83,7 @@ class GoogleSearchTool(SearchTool):
 class MockSearchTool(SearchTool):
     """Deterministic local articles for development without API credentials."""
 
-    def search(self, keyword: str, hours_back: int = 48) -> List[RawArticle]:
+    def search(self, keyword: str) -> List[RawArticle]:
         timestamp = datetime.now(timezone.utc).isoformat()
         return [
             RawArticle("https://datacenter.example.com/europe-storage", "European storage operators expand capacity", f"{keyword}: operators announced new resilient storage capacity across Europe.", timestamp, "datacenter.example.com"),
