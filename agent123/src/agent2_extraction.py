@@ -38,14 +38,22 @@ def extract_event(article: RawArticle, llm_client: DeepSeekClient) -> Optional[E
         clean = response.strip()
         if clean.startswith("```json"):
             clean = clean[7:]
+        elif clean.startswith("```"):
+            clean = clean[3:]
         if clean.endswith("```"):
             clean = clean[:-3]
         data = json.loads(clean)
+        entities = data.get("entities", [])
+        if not isinstance(entities, list):
+            entities = []
+        key_numbers = data.get("key_numbers", [])
+        if not isinstance(key_numbers, list):
+            key_numbers = []
         
         event = ExtractedEvent(
             event_type=data.get("event_type", "其他"),
-            entities=data.get("entities", []),
-            key_numbers=data.get("key_numbers", []),
+            entities=entities,
+            key_numbers=key_numbers,
             summary_zh=data.get("summary_zh", ""),
             category=data.get("category", "产业热点"),  # 新增分类字段
             source_url=article.url,

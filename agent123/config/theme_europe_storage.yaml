@@ -12,9 +12,9 @@ categories:
   - "产品与技术"
 analysis_template_sections: ["背景", "技术分析", "市场影响", "竞对信号"]
 theme_colors: {primary: "#1a5fb4", accent: "#e66100"}
-icon_map: {财报: "📈", 产品发布: "🚀", 监管: "⚖️", 合作: "🤝"}
+icon_map: {财报: "📈", 产品发布: "🚀", 监管: "⚖️", 合作: "🤝", 并购: "🏦", 漏洞: "🔒", 其他: "📌"}
 push_targets:
   - channel: "pushplus"
-    token: "your_token"
+    token: "your_token"  # 待实现，当前为占位
   - channel: "wecom"
-    webhook: "your_webhook"
+    webhook: "your_webhook"  # 待实现，当前为占位
