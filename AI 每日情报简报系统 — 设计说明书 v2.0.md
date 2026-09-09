@@ -1,13 +1,13 @@
-好的，我将当前最新方案（**DeepSeek 联网搜索版**）整理为一份完整、规范的设计文档，方便您后续迭代修改。
+好的，我将当前最新方案（**Tavily 搜索版**）整理为一份完整、规范的设计文档，方便您后续迭代修改。
 
 ---
 
 # AI 每日情报简报系统 — 设计说明书 v2.0
 
-> **版本**：v2.0（DeepSeek 原生联网版）  
+> **版本**：v2.1（Tavily 搜索版）  
 > **状态**：✅ 已完成 Agent 1+2+3 核心链路设计，进入实现阶段  
 > **目标**：复刻并改进“欧洲存储市场每日情报简报”，实现 **检索 → 提炼 → 去重 → 分析 → 推送** 全自动化链路，全程无人在环。  
-> **核心变更**：采用 **DeepSeek 大模型内置联网搜索** 替代传统爬虫 + 搜索 API，大幅降低维护成本与版权风险。
+> **核心变更**：Agent 1 信源发现改用 **Tavily Search API**（真·全网搜索）替代爬虫；原 v2.0「DeepSeek 原生联网 `enable_search`」方案因该参数不存在已废弃。
 
 ---
 
@@ -47,11 +47,11 @@
 
 ## 2. v1.0 → v2.0 变更摘要
 
-| 模块 | v1.0 原始方案 | **v2.0 当前方案（DeepSeek 版）** |
+| 模块 | v1.0 原始方案 | **v2.1 当前方案（Tavily 版）** |
 | :--- | :--- | :--- |
-| **Agent 1（信源发现）** | 调用 Bing News / GDELT / NewsAPI | 使用 **DeepSeek `enable_search=True`**，通过 Prompt 指令让模型直接返回结构化新闻列表 |
-| **Agent 2（抓取与提炼）** | `requests` + BeautifulSoup 爬取全文 → 喂给 Claude | **完全移除爬虫**，直接基于标题 + Snippet 让 DeepSeek（关闭联网）做结构化提取 |
-| **外部依赖** | `requests`, `beautifulsoup4`, `anthropic`, `newspaper3k` | `openai`（DeepSeek SDK）, `sentence-transformers` |
+| **Agent 1（信源发现）** | 调用 Bing News / GDELT / NewsAPI | 使用 **Tavily Search API**（`topic=news`，真·全网搜索）直接返回结构化新闻列表 |
+| **Agent 2（抓取与提炼）** | `requests` + BeautifulSoup 爬取全文 → 喂给 Claude | **完全移除爬虫**，直接基于标题 + Snippet 让 DeepSeek 做结构化提取 |
+| **外部依赖** | `requests`, `beautifulsoup4`, `anthropic`, `newspaper3k` | `openai`（DeepSeek SDK）, `sentence-transformers`, `python-dotenv` |
 | **版权合规风险** | 需人工约束 LLM“转述不引用”，但抓取全文仍有风险 | **仅使用公开 Snippet**，绝不复制全文，合规性最高 |
 | **维护成本** | 需应对网站反爬、HTML 结构变化 | **维护成本归零**，网站改版与系统无关 |
 
@@ -65,14 +65,14 @@
 [主题配置 theme_config]
          ↓
 ┌────────────────────────────────────────────────────────────┐
-│ Agent 1：信源发现（DeepSeek 联网搜索）                     │
+│ Agent 1：信源发现（Tavily 搜索）                           │
 │   输入：关键词矩阵                                         │
-│   操作：调用 DeepSeek Chat + enable_search=True            │
+│   操作：调用 Tavily Search API（topic=news）               │
 │   输出：RawArticle[] (url, title, snippet, published_at, domain) │
 └────────────────────────────────────────────────────────────┘
          ↓
 ┌────────────────────────────────────────────────────────────┐
-│ Agent 2：提炼（DeepSeek 非联网推理）                       │
+│ Agent 2：提炼（DeepSeek 推理）                             │
 │   输入：RawArticle[]                                       │
 │   操作：基于 title + snippet 生成结构化事件卡片             │
 │   输出：ExtractedEvent[] (含 event_type, entities, summary_zh, category) │
@@ -99,22 +99,22 @@
 
 ### 关键设计决策
 
-- **Agent 1 和 Agent 2 共用同一个 DeepSeek Client**，仅通过 `enable_search` 开关区分模式。
-- **不再单独维护搜索 API Key**（如 Bing/NewsAPI），仅需 `DEEPSEEK_API_KEY`。
+- **Agent 1 检索走 Tavily Search API；Agent 2 提炼走 DeepSeek Client**，二者独立。
+- **需维护两个 key**：`TAVILY_API_KEY`（搜索）+ `DEEPSEEK_API_KEY`（提炼）。
 - **Agent 3 使用本地 `sentence-transformers`**，无需额外 API 调用，成本可控且速度快。
 
 ---
 
 ## 4. Agent 详细设计
 
-### 4.1 Agent 1：信源发现（DeepSeek 联网搜索）
+### 4.1 Agent 1：信源发现（Tavily 搜索）
 
 | 属性 | 描述 |
 | :--- | :--- |
 | **输入** | `theme_config.keywords_matrix`（关键词分组列表） |
-| **核心方法** | 对每个关键词，调用 DeepSeek（`enable_search=True`）并 Prompt 要求返回 JSON 数组 |
+| **核心方法** | 对每个关键词，调用 `TavilySearchTool.search(keyword)`（`topic=news`，`max_results=10`）返回结构化结果列表 |
 | **输出** | `List[RawArticle]`，包含 `url, title, snippet, published_at, domain` |
-| **去重策略** | 按 URL 去重；时间窗口由 Prompt 强制限定（48 小时） |
+| **去重策略** | 按 URL 去重；时间窗口由代码按 `published_at` 强制过滤（48 小时） |
 | **异常处理** | 某关键词搜索失败时记录日志并跳过，不影响整体流程 |
 
 **Prompt 核心指令**（见第 9 节完整模板）：
@@ -125,12 +125,12 @@
 
 ---
 
-### 4.2 Agent 2：提炼（DeepSeek 非联网推理）
+### 4.2 Agent 2：提炼（DeepSeek 推理）
 
 | 属性 | 描述 |
 | :--- | :--- |
 | **输入** | `RawArticle`（仅使用 `title` + `snippet`，**不再抓取全文**） |
-| **核心方法** | 调用 DeepSeek（`enable_search=False`），将标题和摘要作为上下文，输出结构化 JSON |
+| **核心方法** | 调用 DeepSeek，将标题和摘要作为上下文，输出结构化 JSON |
 | **输出** | `ExtractedEvent`，包含 `event_type`, `entities`, `key_numbers`, `summary_zh`, `category` |
 | **版权合规** | 强制要求“转述、不引用原文”，输入仅是公开片段，输出是重新组织的摘要 |
 | **分类映射** | `category` 字段直接映射到四大分类（产业热点 / 垂直行业热点 / 监管与合规 / 产品与技术） |
@@ -296,31 +296,20 @@ push_targets: []
 
 ## 9. 关键 Prompt 工程
 
-### 9.1 Agent 1：联网搜索 Prompt（`enable_search=True`）
+### 9.1 Agent 1：搜索（Tavily Search API）
 
-```text
-请搜索过去 48 小时内发布的、与“{keyword}”相关的最新英文新闻。
+Agent 1 不再通过 LLM 联网搜索，而是直接调用 Tavily Search API：
 
-要求：
-1. 返回一个 JSON 数组，每个元素包含以下字段：
-   - "title": 新闻标题
-   - "url": 新闻链接（必须是真实可访问的 URL）
-   - "snippet": 新闻摘要（50-100个英文单词，概括核心内容）
-   - "published_at": 发布时间（ISO 8601 格式，如 2026-08-28T10:30:00）
-   - "domain": 来源域名（如 techcrunch.com）
-2. 只返回过去 48 小时内的内容，拒绝过期新闻。
-3. 优先选择权威技术媒体（TechCrunch, The Register, DataCenterDynamics, Blocks & Files, 路透社, 彭博等）。
-4. 如果搜索结果少于 3 条，也请返回实际条数，不要虚构。
-5. **只输出 JSON 数组，不要有任何额外的文字、解释或 Markdown 标记。**
+- 端点：`POST https://api.tavily.com/search`
+- 请求体：`{"query": keyword, "max_results": 10, "topic": "news", "search_depth": "basic"}`
+- 鉴权：`Authorization: Bearer $TAVILY_API_KEY`
+- 返回字段：`title / url / content / score / published_date`
 
-搜索结果：
-```
-
-**System Prompt**：`"你是一个专业的新闻检索助手，擅长使用联网功能获取最新资讯。"`
+字段映射到 `RawArticle`：`url ← url`、`title ← title`、`snippet ← content`、`published_at ← parsedate(published_date)`、`domain ← urlparse(url).netloc`（去 www）。
 
 ---
 
-### 9.2 Agent 2：结构化提炼 Prompt（`enable_search=False`）
+### 9.2 Agent 2：结构化提炼 Prompt
 
 ```text
 请根据以下新闻信息，提取关键字段并以 JSON 格式返回。
@@ -351,7 +340,7 @@ push_targets: []
 | `threshold_a` | 0.88 | 重复判定阈值，≥ 此值视为重复 | 运行一周后用真实数据观察，若漏判/误判过多则调整 |
 | `threshold_b` | 0.75 | 更新判定阈值，≥ 此值且 < A 视为同一事件的“新进展” | 同上 |
 | `Agent 1 的 `hours_back` | 48 | 时间窗口（小时） | 可根据需要调整为 24（更精简）或 72（更全面） |
-| `Agent 1 的 `max_tokens` | 2000 | 联网搜索返回内容长度限制 | 若返回新闻条数不足，可适当增加 |
+| Agent 1 的 `max_results` | 10 | Tavily 单次返回结果条数 | 若新闻条数不足，可增加到 20 |
 | `Agent 2 的 `max_tokens` | 800 | 单条提炼输出长度 | 若摘要过长被截断，可增加 |
 
 ---
@@ -371,8 +360,9 @@ push_targets: []
 │   ├── main.py                         # 主流程编排
 │   ├── models.py                       # 数据模型
 │   ├── llm_client.py                   # DeepSeek API 封装
+│   ├── search_tool.py                  # Tavily 搜索封装（SearchTool 抽象）
 │   ├── embedding_client.py             # sentence-transformers 封装
-│   ├── agent1_discovery.py             # 信源发现（联网搜索）
+│   ├── agent1_discovery.py             # 信源发现（Tavily 搜索）
 │   ├── agent2_extraction.py            # 结构化提炼
 │   ├── agent3_dedupe.py                # 去重聚类
 │   └── utils.py                        # 工具函数（日期、日志等）
@@ -390,12 +380,12 @@ push_targets: []
 ### 第一阶段 ✅（已完成设计）
 - [x] 需求分析与架构设计
 - [x] HTML 原型（四大分类 + 双标签系统）
-- [x] Agent 1+2+3 核心代码设计（DeepSeek 版）
+- [x] Agent 1+2+3 核心代码设计（Tavily 版）
 - [x] 数据模型与配置规范
 
 ### 第二阶段（待实现）
 - [ ] Agent 4：深度分析
-  - 对 `new` 事件做二次定向检索（DeepSeek 联网）
+  - 对 `new` 事件做二次定向检索（Tavily 搜索）
   - 生成四段式深度报告（背景 / 技术分析 / 市场影响 / 竞对信号）
   - 对 `update` 事件生成“新进展”段落 + 链接历史摘要
 - [ ] Agent 5：质检自检（条目数、字段完整性、异常日志）
@@ -424,10 +414,11 @@ pip install -r requirements.txt
 
 # 运行完整流程
 export DEEPSEEK_API_KEY="sk-xxx"
+export TAVILY_API_KEY="tvly-xxx"
 python src/main.py
 
-# 仅测试 Agent 1（联网搜索）
-python -c "from src.agent1_discovery import discover_articles; from src.llm_client import DeepSeekClient; ..."
+# 仅测试 Agent 1（Tavily 搜索）
+python -c "from src.search_tool import TavilySearchTool; print(TavilySearchTool().search('europe storage market'))"
 ```
 
 ### 环境变量
@@ -435,10 +426,11 @@ python -c "from src.agent1_discovery import discover_articles; from src.llm_clie
 | 变量名 | 必填 | 说明 |
 | :--- | :--- | :--- |
 | `DEEPSEEK_API_KEY` | ✅ | DeepSeek API 密钥 |
+| `TAVILY_API_KEY` | ✅ | Tavily 搜索 API 密钥 |
 | `PUSHPLUS_TOKEN` | ❌ | pushplus 推送 token（Agent 7 使用） |
 | `WECOM_WEBHOOK` | ❌ | 企业微信机器人 Webhook（Agent 7 使用） |
 | `FEISHU_WEBHOOK` | ❌ | 飞书机器人 Webhook（Agent 7 使用） |
 
 ---
 
-*文档版本：v2.0 | 最后更新：2026-08-28 | 维护者：AI 情报系统开发组*
+*文档版本：v2.1 | 最后更新：2026-09-09 | 维护者：AI 情报系统开发组*
