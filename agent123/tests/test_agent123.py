@@ -528,3 +528,53 @@ def test_qa_rejects_an_empty_report_list():
     assert result.total == 0
     assert result.valid == 0
     assert result.issues == ["无深度报告"]
+
+
+def test_render_html_builds_complete_card_with_configured_icon_and_colors():
+    from src.agent6_render import render_html
+    from src.models import DeepReport
+
+    event = make_event("产品摘要")
+    event.event_type = "产品发布"
+    event.title = "Acme 推出存储产品"
+    report = DeepReport(event, {"背景": "背景内容", "技术分析": "技术内容", "市场影响": "市场内容", "竞对信号": "竞对内容"}, False)
+    theme_config = {
+        "categories": ["产品与技术"],
+        "icon_map": {"产品发布": "🚀"},
+        "theme_colors": {"primary": "#123456", "accent": "#abcdef"},
+    }
+
+    html = render_html([report], theme_config)
+
+    assert '<html' in html
+    assert '<head>' in html
+    assert '<meta charset="utf-8">' in html
+    assert '<title>' in html
+    assert '<body>' in html
+    assert 'class="card"' in html
+    assert "🚀" in html
+    assert "Acme 推出存储产品" in html
+    assert "产品与技术" in html
+    assert all(section in html for section in ("背景", "技术分析", "市场影响", "竞对信号"))
+    assert 'href="https://source.example/article"' in html
+    assert "#123456" in html
+    assert "#abcdef" in html
+
+
+def test_render_push_message_includes_configured_icon_title_category_summary_and_link():
+    from src.agent6_render import render_push_message
+    from src.models import DeepReport
+
+    event = make_event("推送摘要")
+    event.event_type = "合作"
+    event.title = "Acme 与 Contoso 合作"
+    report = DeepReport(event, {}, False)
+
+    message = render_push_message(
+        [report],
+        {"categories": ["产业热点"], "icon_map": {"合作": "🤝"}, "theme_colors": {"primary": "#123456", "accent": "#abcdef"}},
+    )
+
+    assert "🤝 Acme 与 Contoso 合作｜产业热点" in message
+    assert "推送摘要" in message
+    assert "https://source.example/article" in message
