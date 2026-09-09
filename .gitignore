@@ -1,0 +1,16 @@
+# secrets
+.env
+agent123/.env
+*.env
+
+# python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# OS
+.DS_Store
+
+# generated output
+agent123/output/

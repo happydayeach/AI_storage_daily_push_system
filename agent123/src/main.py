@@ -15,8 +15,6 @@ from src.llm_client import DeepSeekClient
 from src.embedding_client import EmbeddingClient
 from src.search_tool import MockSearchTool, TavilySearchTool
 
-load_dotenv()
-
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
@@ -53,6 +51,7 @@ def save_story_store(theme_id: str, new_events: list, update_events: list, store
     logger.warning("save_story_store not fully implemented yet.")
 
 def main():
+    load_dotenv()
     # 1. 加载配置
     with open("config/theme_europe_storage.yaml", "r", encoding="utf-8") as f:
         theme_config = yaml.safe_load(f)
