@@ -3,13 +3,12 @@
 import json
 import logging
 import os
-import re
 from abc import ABC, abstractmethod
 from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
 from typing import Any, Dict, List
-from urllib.parse import urlencode, urlparse
-from urllib.request import urlopen
+from urllib.parse import urlparse
+from urllib.request import Request, urlopen
 
 from src.models import RawArticle
 
@@ -24,60 +23,57 @@ class SearchTool(ABC):
         """Return articles relevant to ``keyword``."""
 
 
-class GoogleSearchTool(SearchTool):
-    """Google Custom Search JSON API provider."""
+class TavilySearchTool(SearchTool):
+    """Tavily Search API provider."""
 
-    API_URL = "https://www.googleapis.com/customsearch/v1"
+    API_URL = "https://api.tavily.com/search"
 
-    def __init__(self, api_key: str | None = None, cse_id: str | None = None):
-        self.api_key = api_key or os.getenv("GOOGLE_API_KEY")
-        self.cse_id = cse_id or os.getenv("GOOGLE_CSE_ID")
-        missing = [name for name, value in (("GOOGLE_API_KEY", self.api_key), ("GOOGLE_CSE_ID", self.cse_id)) if not value]
-        if missing:
-            raise ValueError(f"Google Custom Search requires {', '.join(missing)}")
+    def __init__(self, api_key: str | None = None):
+        self.api_key = api_key or os.getenv("TAVILY_API_KEY")
+        if not self.api_key:
+            raise ValueError("Tavily Search requires TAVILY_API_KEY")
 
     def search(self, keyword: str) -> List[RawArticle]:
-        query = urlencode({"key": self.api_key, "cx": self.cse_id, "q": keyword})
+        payload = json.dumps(
+            {
+                "query": keyword,
+                "max_results": 10,
+                "topic": "news",
+                "search_depth": "basic",
+            }
+        ).encode("utf-8")
+        request = Request(
+            self.API_URL,
+            data=payload,
+            headers={
+                "Content-Type": "application/json",
+                "Authorization": f"Bearer {self.api_key}",
+            },
+            method="POST",
+        )
         try:
-            with urlopen(f"{self.API_URL}?{query}", timeout=15) as response:
-                payload = json.loads(response.read().decode("utf-8"))
+            with urlopen(request, timeout=15) as response:
+                response_payload = json.loads(response.read().decode("utf-8"))
         except Exception as error:
-            logger.error("Google Custom Search failed for keyword %r: %s", keyword, error)
+            logger.error("Tavily Search failed for keyword %r: %s", keyword, error)
             return []
 
-        return [self._to_article(item) for item in payload.get("items", [])]
+        return [self._to_article(item) for item in response_payload.get("results", [])]
 
     @staticmethod
     def _to_article(item: Dict[str, Any]) -> RawArticle:
-        url = item.get("link", "")
-        snippet = item.get("snippet", "")
-        metatags = (item.get("pagemap", {}).get("metatags") or [{}])[0]
-        published_at = GoogleSearchTool._published_at(snippet, metatags)
-        domain = urlparse(url).netloc.lower().removeprefix("www.")
-        return RawArticle(
-            title=item.get("title", ""),
-            url=url,
-            snippet=snippet,
-            published_at=published_at,
-            domain=domain,
-        )
-
-    @staticmethod
-    def _published_at(snippet: str, metatags: Dict[str, Any]) -> str:
-        for key in ("article:published_time", "datepublished", "date", "og:updated_time"):
-            if metatags.get(key):
-                return str(metatags[key])
-        match = re.search(r"\b\w{3},?\s+\d{1,2},\s+\d{4}\b", snippet)
-        if match:
-            for date_format in ("%b %d, %Y", "%B %d, %Y"):
-                try:
-                    return datetime.strptime(match.group(0).replace("  ", " "), date_format).isoformat()
-                except ValueError:
-                    continue
+        url = item.get("url", "")
         try:
-            return parsedate_to_datetime(snippet).isoformat()
+            published_at = parsedate_to_datetime(item.get("published_date", "")).isoformat()
         except (TypeError, ValueError, IndexError):
-            return datetime.now(timezone.utc).isoformat()
+            published_at = ""
+        return RawArticle(
+            url=url,
+            title=item.get("title", ""),
+            snippet=item.get("content", ""),
+            published_at=published_at,
+            domain=urlparse(url).netloc.lower().removeprefix("www."),
+        )
 
 
 class MockSearchTool(SearchTool):

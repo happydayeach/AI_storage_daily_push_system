@@ -169,18 +169,45 @@ def test_deduplicator_classifies_new_update_and_duplicate_without_model_download
     assert result.new == [new]
 
 
-def test_google_search_tool_without_credentials_raises_clear_error(monkeypatch):
-    from src.search_tool import GoogleSearchTool
+def test_tavily_search_tool_maps_results_to_raw_articles(monkeypatch):
+    from src.search_tool import TavilySearchTool
 
-    monkeypatch.delenv("GOOGLE_API_KEY", raising=False)
-    monkeypatch.delenv("GOOGLE_CSE_ID", raising=False)
+    class Response:
+        def read(self):
+            return b'{"results":[{"title":"Storage update","url":"https://www.example.com/news","content":"European storage news","published_date":"Fri, 05 Sep 2026 12:30:00 +0000"}]}'
 
-    with pytest.raises(ValueError, match="GOOGLE_API_KEY.*GOOGLE_CSE_ID"):
-        GoogleSearchTool()
+        def __enter__(self):
+            return self
+
+        def __exit__(self, exc_type, exc_value, traceback):
+            return False
+
+    monkeypatch.setattr("src.search_tool.urlopen", lambda *args, **kwargs: Response())
+
+    articles = TavilySearchTool(api_key="key").search("storage")
+
+    assert articles == [
+        RawArticle(
+            "https://www.example.com/news",
+            "Storage update",
+            "European storage news",
+            "2026-09-05T12:30:00+00:00",
+            "example.com",
+        )
+    ]
 
 
-def test_google_search_tool_returns_empty_list_when_request_fails(monkeypatch, caplog):
-    from src.search_tool import GoogleSearchTool
+def test_tavily_search_tool_without_credentials_raises_clear_error(monkeypatch):
+    from src.search_tool import TavilySearchTool
+
+    monkeypatch.delenv("TAVILY_API_KEY", raising=False)
+
+    with pytest.raises(ValueError, match="TAVILY_API_KEY"):
+        TavilySearchTool()
+
+
+def test_tavily_search_tool_returns_empty_list_when_request_fails(monkeypatch, caplog):
+    from src.search_tool import TavilySearchTool
 
     def failing_urlopen(*args, **kwargs):
         raise OSError("network unavailable")
@@ -188,10 +215,10 @@ def test_google_search_tool_returns_empty_list_when_request_fails(monkeypatch, c
     monkeypatch.setattr("src.search_tool.urlopen", failing_urlopen)
 
     with caplog.at_level(logging.ERROR, logger="src.search_tool"):
-        articles = GoogleSearchTool(api_key="key", cse_id="cse").search("storage")
+        articles = TavilySearchTool(api_key="key").search("storage")
 
     assert articles == []
-    assert "Google Custom Search failed" in caplog.text
+    assert "Tavily Search failed" in caplog.text
 
 
 def test_extract_event_parses_fixed_json_from_mocked_client():

@@ -2,15 +2,20 @@
 import yaml
 import json
 import logging
+import os
 from datetime import datetime, timedelta
+
+from dotenv import load_dotenv
+
 from src.models import StoryRecord
 from src.agent1_discovery import discover_articles
 from src.agent2_extraction import process_articles
 from src.agent3_dedupe import Deduplicator
 from src.llm_client import DeepSeekClient
 from src.embedding_client import EmbeddingClient
-from src.search_tool import GoogleSearchTool, MockSearchTool
-import os
+from src.search_tool import MockSearchTool, TavilySearchTool
+
+load_dotenv()
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
@@ -54,10 +59,10 @@ def main():
     theme_id = theme_config["theme_id"]
 
     # 2. 初始化搜索工具和客户端
-    if os.getenv("GOOGLE_API_KEY") and os.getenv("GOOGLE_CSE_ID"):
-        searcher = GoogleSearchTool()
+    if os.getenv("TAVILY_API_KEY"):
+        searcher = TavilySearchTool()
     else:
-        logger.warning("GOOGLE_API_KEY or GOOGLE_CSE_ID is missing; using MockSearchTool for Agent 1.")
+        logger.warning("TAVILY_API_KEY is missing; using MockSearchTool for Agent 1.")
         searcher = MockSearchTool()
     # 3. Agent 1: 发现. This remains runnable with MockSearchTool even when
     # the optional DeepSeek credentials used by later stages are absent.
