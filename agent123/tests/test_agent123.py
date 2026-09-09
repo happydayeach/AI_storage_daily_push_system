@@ -239,7 +239,7 @@ def test_extract_event_parses_fixed_json_from_mocked_client():
 @pytest.mark.parametrize(
     ("provider", "expected_model", "expected_api_key", "expected_base_url"),
     [
-        ("deepseek", "deepseek-v4-pro", "deepseek-key", "https://api.deepseek.com/v1"),
+        ("deepseek", "deepseek-v4-flash", "deepseek-key", "https://api.deepseek.com/v1"),
         ("codex", "gpt-5.6-terra", "codex-token", "https://chatgpt.com/backend-api/codex"),
     ],
 )

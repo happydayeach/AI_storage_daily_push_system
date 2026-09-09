@@ -31,7 +31,7 @@ class LLMClient:
                 api_key=self.api_key,
                 base_url="https://api.deepseek.com/v1"
             )
-            self.model = model or os.getenv("DEEPSEEK_MODEL", "deepseek-v4-pro")
+            self.model = model or os.getenv("DEEPSEEK_MODEL", "deepseek-v4-flash")
 
     def chat(self, prompt: str, system_prompt: str = "", max_tokens: int = 800) -> str:
         """Return a chat completion from the configured LLM provider."""
