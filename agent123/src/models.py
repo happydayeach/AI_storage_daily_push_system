@@ -42,3 +42,11 @@ class DedupResult:
     new: List[ExtractedEvent]
     update: List[Dict]
     duplicate_dropped_count: int
+
+
+@dataclass
+class DeepReport:
+    event: ExtractedEvent
+    sections: Dict[str, str]
+    is_update: bool
+    history_summary: str = ""
