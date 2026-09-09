@@ -32,6 +32,19 @@ def test_models_can_be_constructed_with_extracted_event_text_defaults():
     assert story.story_id == "story-1"
     assert result.new == [event]
 
+
+def test_deep_report_preserves_event_sections_and_update_history():
+    from src.models import DeepReport
+
+    event = make_event("摘要")
+    report = DeepReport(event, {"新进展": "部署启动"}, True, "此前项目立项")
+
+    assert report.event is event
+    assert report.sections == {"新进展": "部署启动"}
+    assert report.is_update is True
+    assert report.history_summary == "此前项目立项"
+
+
 def test_save_story_store_adds_new_event_with_serializable_embedding(tmp_path):
     from src.main import save_story_store
 
@@ -62,6 +75,7 @@ def test_save_story_store_adds_new_event_with_serializable_embedding(tmp_path):
     assert record["category"] == event.category
     assert record["first_seen_date"] == record["last_updated_date"]
     assert embedder.calls == ["新增摘要"]
+
 
 def test_save_story_store_updates_matching_story_without_duplicate_history_or_urls(tmp_path):
     import json
@@ -373,3 +387,103 @@ def test_llm_client_selects_provider_and_uses_its_api(monkeypatch, provider, exp
             "store": False,
             "stream": True,
         }
+
+
+def test_analyze_new_event_searches_twice_and_returns_configured_sections():
+    from src.agent4_analysis import analyze
+
+    class RecordingSearchTool:
+        def __init__(self):
+            self.keywords = []
+
+        def search(self, keyword):
+            self.keywords.append(keyword)
+            return [RawArticle("https://evidence.example/a", "Evidence title", "Evidence snippet", "", "evidence.example")]
+
+    class FakeLLM:
+        def __init__(self):
+            self.calls = []
+
+        def chat(self, **kwargs):
+            self.calls.append(kwargs)
+            return '```json\n{"背景":"背景内容","技术分析":"技术内容","市场影响":"市场内容","竞对信号":"竞对内容"}\n```'
+
+    event = make_event("Acme 发布新产品")
+    event.entities = ["Acme"]
+    event.title = "Acme launches storage"
+    search_tool = RecordingSearchTool()
+    llm = FakeLLM()
+
+    reports = analyze(
+        DedupResult(new=[event], update=[], duplicate_dropped_count=0),
+        search_tool,
+        llm,
+        {"analysis_template_sections": ["背景", "技术分析", "市场影响", "竞对信号"]},
+    )
+
+    assert search_tool.keywords == ["Acme", "Acme"]
+    assert len(llm.calls) == 1
+    assert "Evidence title" in llm.calls[0]["prompt"]
+    assert reports[0].event is event
+    assert reports[0].sections == {"背景": "背景内容", "技术分析": "技术内容", "市场影响": "市场内容", "竞对信号": "竞对内容"}
+    assert reports[0].is_update is False
+    assert reports[0].history_summary == ""
+
+
+def test_analyze_update_skips_search_and_generates_progress_from_history():
+    from src.agent4_analysis import analyze
+
+    class FailingSearchTool:
+        def search(self, keyword):
+            raise AssertionError("update events must not trigger a second search")
+
+    class FakeLLM:
+        def __init__(self):
+            self.calls = []
+
+        def chat(self, **kwargs):
+            self.calls.append(kwargs)
+            return '{"新进展":"项目已进入部署阶段"}'
+
+    event = make_event("项目有进一步消息")
+    llm = FakeLLM()
+
+    reports = analyze(
+        DedupResult(
+            new=[],
+            update=[{"event": event, "story_id": "story-1", "history_summary": "此前已宣布项目立项"}],
+            duplicate_dropped_count=0,
+        ),
+        FailingSearchTool(),
+        llm,
+        {"analysis_template_sections": ["背景", "技术分析", "市场影响", "竞对信号"]},
+    )
+
+    assert len(llm.calls) == 1
+    assert "此前已宣布项目立项" in llm.calls[0]["prompt"]
+    assert reports[0].sections == {"新进展": "项目已进入部署阶段"}
+    assert reports[0].is_update is True
+    assert reports[0].history_summary == "此前已宣布项目立项"
+
+
+def test_analyze_logs_error_and_skips_only_event_with_invalid_llm_json(caplog):
+    from src.agent4_analysis import analyze
+
+    class SearchTool:
+        def search(self, keyword):
+            return []
+
+    class InvalidJsonLLM:
+        def chat(self, **kwargs):
+            return "not JSON"
+
+    with caplog.at_level(logging.ERROR, logger="src.agent4_analysis"):
+        reports = analyze(
+            DedupResult(new=[make_event("无法解析的分析")], update=[], duplicate_dropped_count=0),
+            SearchTool(),
+            InvalidJsonLLM(),
+            {"analysis_template_sections": ["背景", "技术分析", "市场影响", "竞对信号"]},
+        )
+
+    assert reports == []
+    assert "Deep analysis failed for new event" in caplog.text
