@@ -3,11 +3,11 @@ import json
 import logging
 from typing import List, Optional
 from src.models import RawArticle, ExtractedEvent
-from src.llm_client import DeepSeekClient
+from src.llm_client import LLMClient
 
 logger = logging.getLogger(__name__)
 
-def extract_event(article: RawArticle, llm_client: DeepSeekClient) -> Optional[ExtractedEvent]:
+def extract_event(article: RawArticle, llm_client: LLMClient) -> Optional[ExtractedEvent]:
     """
     使用 DeepSeek（关闭联网）根据标题和片段进行结构化提取。
     """
@@ -67,7 +67,7 @@ def extract_event(article: RawArticle, llm_client: DeepSeekClient) -> Optional[E
         logger.error(f"Extraction failed for {article.url}: {e}")
         return None
 
-def process_articles(articles: List[RawArticle], llm_client: DeepSeekClient) -> List[ExtractedEvent]:
+def process_articles(articles: List[RawArticle], llm_client: LLMClient) -> List[ExtractedEvent]:
     events = []
     for art in articles:
         logger.info(f"Extracting from: {art.title[:50]}...")

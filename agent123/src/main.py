@@ -11,7 +11,7 @@ from src.models import StoryRecord
 from src.agent1_discovery import discover_articles
 from src.agent2_extraction import process_articles
 from src.agent3_dedupe import Deduplicator
-from src.llm_client import DeepSeekClient
+from src.llm_client import LLMClient
 from src.embedding_client import EmbeddingClient
 from src.search_tool import MockSearchTool, TavilySearchTool
 
@@ -69,7 +69,7 @@ def main():
     articles = discover_articles(theme_config, searcher)
     logger.info(f"Found {len(articles)} raw articles.")
 
-    deepseek = DeepSeekClient()
+    deepseek = LLMClient()
     embedder = EmbeddingClient()
 
     # 4. Agent 2: 提炼（DeepSeek 非联网）
