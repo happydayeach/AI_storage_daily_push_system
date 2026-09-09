@@ -3,6 +3,7 @@ import yaml
 import json
 import logging
 import os
+from uuid import uuid4
 from datetime import datetime, timedelta
 
 from dotenv import load_dotenv
@@ -45,10 +46,44 @@ def load_story_store(theme_id: str, store_path: str = "story_store/stories.json"
         ))
     return records
 
-def save_story_store(theme_id: str, new_events: list, update_events: list, store_path: str = "story_store/stories.json"):
-    """简化版存储，实际生产需做合并"""
-    # 这里仅做演示，实际需读取原文件合并
-    logger.warning("save_story_store not fully implemented yet.")
+def save_story_store(theme_id: str, new_events: list, update_events: list, embedder, store_path: str = "story_store/stories.json"):
+    try:
+        with open(store_path, "r", encoding="utf-8") as f:
+            all_stories = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        all_stories = []
+
+    for event in new_events:
+        now = datetime.now().isoformat()
+        embedding = embedder.encode(event.summary_zh)[0]
+        all_stories.append({
+            "story_id": uuid4().hex,
+            "theme_id": theme_id,
+            "first_seen_date": now,
+            "last_updated_date": now,
+            "summary_history": [event.summary_zh],
+            "embedding": list(embedding),
+            "source_urls": [event.source_url],
+            "category": event.category,
+        })
+
+    stories_by_id = {story["story_id"]: story for story in all_stories}
+    for update in update_events:
+        story = stories_by_id.get(update["story_id"])
+        if story is None:
+            continue
+
+        event = update["event"]
+        if event.summary_zh not in story["summary_history"]:
+            story["summary_history"].append(event.summary_zh)
+        if event.source_url not in story["source_urls"]:
+            story["source_urls"].append(event.source_url)
+        story["embedding"] = list(embedder.encode(event.summary_zh)[0])
+        story["last_updated_date"] = datetime.now().isoformat()
+
+    os.makedirs(os.path.dirname(store_path) or ".", exist_ok=True)
+    with open(store_path, "w", encoding="utf-8") as f:
+        json.dump(all_stories, f, indent=2, ensure_ascii=False)
 
 def main():
     load_dotenv()
@@ -86,6 +121,8 @@ def main():
     result = deduper.dedupe(events, story_records)
 
     logger.info(f"New: {len(result.new)}, Update: {len(result.update)}, Duplicates dropped: {result.duplicate_dropped_count}")
+
+    save_story_store(theme_id, result.new, result.update, embedder)
 
     # 7. 输出结果
     output_data = {

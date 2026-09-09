@@ -32,6 +32,86 @@ def test_models_can_be_constructed_with_extracted_event_text_defaults():
     assert story.story_id == "story-1"
     assert result.new == [event]
 
+def test_save_story_store_adds_new_event_with_serializable_embedding(tmp_path):
+    from src.main import save_story_store
+
+    class FakeEmbedder:
+        def __init__(self):
+            self.calls = []
+
+        def encode(self, text):
+            self.calls.append(text)
+            return [[0.25, 0.75]]
+
+    store_path = tmp_path / "stories.json"
+    event = make_event("新增摘要")
+    embedder = FakeEmbedder()
+
+    save_story_store("theme-a", [event], [], embedder, str(store_path))
+
+    import json
+
+    stored = json.loads(store_path.read_text(encoding="utf-8"))
+    assert len(stored) == 1
+    record = stored[0]
+    assert len(record["story_id"]) == 32
+    assert record["theme_id"] == "theme-a"
+    assert record["summary_history"] == ["新增摘要"]
+    assert record["embedding"] == [0.25, 0.75]
+    assert record["source_urls"] == [event.source_url]
+    assert record["category"] == event.category
+    assert record["first_seen_date"] == record["last_updated_date"]
+    assert embedder.calls == ["新增摘要"]
+
+def test_save_story_store_updates_matching_story_without_duplicate_history_or_urls(tmp_path):
+    import json
+
+    from src.main import save_story_store
+
+    class FakeEmbedder:
+        def encode(self, text):
+            assert text == "更新摘要"
+            return [[0.9, 0.1]]
+
+    store_path = tmp_path / "stories.json"
+    store_path.write_text(
+        json.dumps([
+            {
+                "story_id": "target-story",
+                "theme_id": "theme-a",
+                "first_seen_date": "2026-01-01T00:00:00",
+                "last_updated_date": "2026-01-02T00:00:00",
+                "summary_history": ["旧摘要"],
+                "embedding": [1.0, 0.0],
+                "source_urls": ["https://source.example/article"],
+                "category": "产业热点",
+            },
+            {
+                "story_id": "other-story",
+                "theme_id": "theme-b",
+                "first_seen_date": "2026-01-01T00:00:00",
+                "last_updated_date": "2026-01-02T00:00:00",
+                "summary_history": ["其他"],
+                "embedding": [0.0, 1.0],
+                "source_urls": ["https://other.example/article"],
+                "category": "市场动态",
+            },
+        ], ensure_ascii=False),
+        encoding="utf-8",
+    )
+    event = make_event("更新摘要")
+    update = {"event": event, "story_id": "target-story", "history_summary": "旧摘要"}
+
+    save_story_store("theme-a", [], [update, update], FakeEmbedder(), str(store_path))
+
+    stored = json.loads(store_path.read_text(encoding="utf-8"))
+    target = next(record for record in stored if record["story_id"] == "target-story")
+    assert target["summary_history"] == ["旧摘要", "更新摘要"]
+    assert target["source_urls"] == ["https://source.example/article"]
+    assert target["embedding"] == [0.9, 0.1]
+    assert target["last_updated_date"] != "2026-01-02T00:00:00"
+    assert next(record for record in stored if record["story_id"] == "other-story")["embedding"] == [0.0, 1.0]
+
 
 def test_mock_search_tool_returns_raw_articles_without_network():
     from src.search_tool import MockSearchTool
