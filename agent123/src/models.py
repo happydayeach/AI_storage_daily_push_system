@@ -50,3 +50,11 @@ class DeepReport:
     sections: Dict[str, str]
     is_update: bool
     history_summary: str = ""
+
+
+@dataclass
+class QAResult:
+    passed: bool
+    total: int
+    valid: int
+    issues: List[str]
