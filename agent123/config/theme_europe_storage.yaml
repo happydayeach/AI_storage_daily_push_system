@@ -1,10 +1,10 @@
 theme_id: "europe_storage"
 keywords_matrix:
-  - ["数据保护", "GDPR", "云存储", "合规"]
-  - ["分布式", "边缘存储", "多云", "数据湖"]
-  - ["闪存", "NAND", "SSD", "存储芯片"]
+  - ["数据保护", "GDPR", "云存储", "数据存储"]
+  - ["分布式存储", "边缘存储", "多云", "数据湖"]
+  - ["闪存", "闪存存储", "NAND", "SSD", "存储芯片"]
 source_whitelist: []   # 空表示不限制
-source_blacklist: ["reuters.com", "bloomberg.com"]  # 示例黑名单（实际可调）
+source_blacklist: ["reuters.com", "bloomberg.com", "ttplus.cn"]  # 示例黑名单（实际可调）
 categories:
   - "产业热点"
   - "垂直行业热点"
