@@ -6,14 +6,14 @@
         "Meta",
         "Odense",
         "Denmark",
-        "district-heating network",
-        "data center"
+        "data center",
+        "district-heating network"
       ],
       "key_numbers": [
         "90%",
-        "2026-09-12"
+        "2026-09-12T18:25:00+00:00"
       ],
-      "summary_zh": "丹麦欧登塞的Meta数据中心将服务器运行产生的冷却余热直接输送给附近居民供暖。服务器几乎将所有电力以热量形式排出，行业估计这一比例接近90%。这种模式依赖城市拥有覆盖广泛的区域供热网络，且设施必须靠近现有管网。欧登塞在数据中心落地前已具备该基础设施，因此得以成功。在其他地区，尤其是美国，社区因土地使用、水资源消耗和电网压力对数据中心抵触情绪上升，泰国也提出类似反对。欧登塞成为数据中心余热惠及周边社区的罕见案例。",
+      "summary_zh": "丹麦欧登塞的Meta数据中心将服务器冷却产生的热量直接输送给附近家庭。服务器运行几乎将所有电力转化为热能，行业估计约90%的电能最终以热量形式散失。这种模式的成功依赖于当地已有的区域供热网络，因为热量远距离传输损耗大，设施必须靠近现有管网。在其他地区，尤其是美国，社区因土地使用、水资源消耗和电网压力对数据中心持反对态度，泰国也有类似担忧。欧登塞的案例展示了数据中心余热造福周边社区的可能性。",
       "category": "产业热点",
       "source_url": "https://www.techradar.com/pro/finally-some-good-usage-this-danish-data-center-is-providing-heat-to-power-thousands-of-household-radiators",
       "published_at": "2026-09-12T18:25:00+00:00",
@@ -22,8 +22,8 @@
       "snippet": "Data centers usually waste heat, but this Danish firm is taking a different route\n\nWhen you purchase through links on our site, we may earn an affiliate commission. Here’s how it works.\n\nData center\n\nA data center operated by Meta in Odense, Denmark is channeling its cooling heat straight into nearby homes.\n\nServer operations typically send almost all of their electricity out as warmth, with one industry estimate placing that figure near 90%. [...] Replicating this setup elsewhere depends heavily on one specific ingredient many cities simply lack entirely — a wide-reaching district-heating network.\n\nHeat cannot travel far without significant loss, meaning facilities must sit close to an existing distribution network.\n\nOdense already had that infrastructure in place before Meta's data center arrived on site, and this is part of the success of the system. [...] This situation stands out against a backdrop of growing resistance to data centers elsewhere, particularly in the United States.\n\nCommunities there have pushed back over land use, water consumption and strain on local electricity grids.\n\nThailand has raised similar objections recently, citing comparable pressure on its own limited resources.\n\nAmid that friction, Odense offers a rare example of data center heat actually benefiting the surrounding community.\n\nVia Science Blog",
       "industry": "general",
       "vertical": "",
-      "title_zh": "丹麦数据中心将服务器热量转化为可用的家庭能源",
-      "structured_summary": "2026年9月，丹麦欧登塞，Meta运营的数据中心将服务器冷却产生的余热直接输送至附近家庭供暖。服务器运行几乎将所有电力以热量形式排出，行业估计该比例接近90%。该模式成功的关键在于欧登塞在数据中心落地前已建成覆盖广泛的区域供热网络，且设施靠近现有管网。结果：这一案例为数据中心余热回收提供了罕见范本，对存储行业而言，它提示数据中心在能耗与散热管理上的创新可降低运营成本并改善社区关系，可能推动存储基础设施向更绿色、更贴近城市能源系统的方向演进。"
+      "title_zh": "丹麦数据中心将服务器热量转化为家庭可用能源",
+      "structured_summary": "2026年9月，丹麦欧登塞，Meta运营的数据中心将服务器冷却产生的热量直接输送到附近家庭。起因是数据中心通常浪费大量热能，约90%的电力以热量形式散失。经过是欧登塞已有区域供热网络，使热量得以就近利用。结果是该模式成功为社区供热，但复制需依赖现有管网；对存储行业而言，这为数据中心能效与可持续运营提供了新思路，可能推动存储基础设施向余热回收与绿色节能方向演进。"
     },
     {
       "event_type": "其他",
@@ -38,7 +38,7 @@
         "150 MWh",
         "2026-09-12"
       ],
-      "summary_zh": "在2026年高盛Communacopia大会上，Verizon透露已就部分退役站点签署协议，预计明年从推理和边缘计算业务中获得可观收入。与此同时，芬兰运营商Elisa通过其Gridle平台，将2000多个电信站点和超过150兆瓦时的分布式电池容量整合为虚拟电厂，软件可计算网络弹性所需电量，并将剩余容量投入批发和平衡电力市场。",
+      "summary_zh": "在2026年高盛Communacopia大会上，Verizon透露已就部分退役站点签署协议，预计明年起从推理与边缘计算业务中获得可观收入。与此同时，芬兰运营商Elisa通过其Gridle平台，将2000多个电信站点和超过150兆瓦时的分布式电池容量整合为虚拟电厂，软件可动态计算网络韧性所需电量与可参与电力市场的容量。",
       "category": "产业热点",
       "source_url": "https://sebastianbarros.substack.com/p/telcos-as-power-plants",
       "published_at": "2026-09-12T22:00:00+00:00",
@@ -48,7 +48,7 @@
       "industry": "distributed",
       "vertical": "telco",
       "title_zh": "电信运营商变身发电厂？",
-      "structured_summary": "2026年9月，在高盛Communacopia大会上，Verizon宣布已就退役站点签署协议，预计明年从推理和边缘计算中获得可观收入；同期芬兰Elisa通过Gridle平台将2000多个电信站点和150兆瓦时分布式电池容量整合为虚拟电厂，参与电力市场交易。该新闻表明电信基础设施正与边缘计算和能源管理融合，将推动边缘数据中心和分布式存储需求增长，对存储行业而言意味着边缘节点数据存储与保护市场将迎来新机遇。"
+      "structured_summary": "2026年9月，在高盛Communacopia大会上，Verizon宣布已就退役站点签署协议，预计明年从推理和边缘计算中获得可观收入；同期芬兰Elisa通过Gridle平台将2000多个电信站点和150兆瓦时分布式电池容量整合为虚拟电厂，参与电力市场交易。该新闻表明电信基础设施正与边缘计算和能源管理融合，将推动边缘数据中心和分布式存储需求增长，对存储行业构成利好。"
     },
     {
       "event_type": "其他",
@@ -65,11 +65,10 @@
         "cycling"
       ],
       "key_numbers": [
-        "2015",
-        "2025",
+        "2015-2025",
         "2026-09-13"
       ],
-      "summary_zh": "该研究探讨了全球高校向智慧可持续校园转型的趋势与挑战。荷兰和丹麦高校以自行车出行为主，而美国和中东地区更侧重电动班车与智能停车，部分校园还实施拥堵收费或车辆限行。研究指出，从传统校园向智慧可持续校园转变不仅是技术升级，更是高校在可持续发展观念和运营模式上的根本性变革，需打破设施管理、学术部门与学生事务之间的信息孤岛，实现数据互通与目标共享。",
+      "summary_zh": "该研究探讨了全球高校向智慧可持续校园转型的趋势与挑战。荷兰和丹麦高校优先推广自行车出行，而美国和中东等汽车主导地区更侧重电动班车与智能停车，部分校园还通过拥堵收费或车辆限行减少燃油车使用。研究指出，从传统校园向智慧可持续校园转型不仅是技术升级，更涉及高校在可持续发展观念和运营方式上的根本转变，需打破设施管理、学术部门与学生事务之间的信息孤岛，实现数据互通与目标协同。",
       "category": "垂直行业热点",
       "source_url": "https://www.frontiersin.org/journals/sustainable-cities/articles/10.3389/frsc.2026.1747438/full",
       "published_at": "2026-09-13T00:00:00+00:00",
@@ -79,7 +78,7 @@
       "industry": "general",
       "vertical": "education",
       "title_zh": "智慧可持续校园运营的可持续发展策略：全球趋势、挑战与机遇",
-      "structured_summary": "2026年9月，发表在frontiersin.org上的一项研究分析了2015至2025年间全球高校智慧可持续校园运营策略。起因是传统校园系统碎片化、缺乏共享可持续发展目标。研究通过文献综述比较了不同地区高校在交通、能源、废物和水管理等方面的实践，发现荷兰和丹麦以自行车为主导，美国和则侧重电动班车与智能停车。结果揭示了向智慧可持续校园转型需要技术与制度双重变革。该研究对存储行业影响有限，但智慧校园的数据整合需求可能间接推动教育领域对分布式存储和数据保护方案的关注。"
+      "structured_summary": "2026年9月，一项发表于Frontiers的研究分析了2015至2025年间全球高校智慧可持续校园建设趋势。起因是传统校园系统碎片化、缺乏共享可持续发展目标。经过是对荷兰、丹麦、美国和中东等地区在绿色出行、智能停车和车辆管控方面的实践进行比较。结果是提出高校需实现跨部门数据互通与协同运营。该研究虽聚焦校园可持续发展，但其对数据互操作性和智慧校园运营的强调，间接推动教育信息化中数据存储与集成需求，对存储行业在教育领域的应用具有潜在拉动作用。"
     }
   ],
   "update": [],
