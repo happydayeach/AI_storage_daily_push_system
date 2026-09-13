@@ -10,7 +10,7 @@ from urllib.request import Request, urlopen
 logger = logging.getLogger(__name__)
 
 _DEFAULT_TITLE = "每日情报简报"
-_PUSHPLUS_URL = "http://www.pushplus.plus/send"
+_PUSHPLUS_URL = "https://www.pushplus.plus/send"
 _TOKEN_PLACEHOLDERS = {"", "your_token"}
 
 

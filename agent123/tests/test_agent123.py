@@ -634,7 +634,7 @@ def test_pushplus_adapter_posts_send_channel_and_option_and_accepts_success_resp
         "pushplus-token", send_channel="webhook", option="webhook-code"
     ).push("briefing", title="Custom title") is True
     assert captured == {
-        "url": "http://www.pushplus.plus/send",
+        "url": "https://www.pushplus.plus/send",
         "method": "POST",
         "body": b'{"token": "pushplus-token", "title": "Custom title", "content": "briefing", "template": "txt", "channel": "webhook", "option": "webhook-code"}',
         "content_type": "application/json",
