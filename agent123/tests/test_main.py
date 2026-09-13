@@ -133,7 +133,7 @@ def test_main_continues_after_qa_failure_and_writes_rendered_outputs(monkeypatch
     monkeypatch.setattr(main, "LLMClient", lambda: object())
     monkeypatch.setattr(main, "EmbeddingClient", lambda: object())
     monkeypatch.setattr(main, "discover_articles", lambda config, searcher: [])
-    monkeypatch.setattr(main, "process_articles", lambda articles, llm: [])
+    monkeypatch.setattr(main, "process_articles", lambda articles, llm, theme_config: [])
     monkeypatch.setattr(main, "load_story_store", lambda theme_id: [])
     monkeypatch.setattr(main, "save_story_store", lambda *args: None)
     monkeypatch.setattr(main, "analyze", lambda result, searcher, llm, config: [report])

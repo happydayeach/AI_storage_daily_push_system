@@ -115,7 +115,7 @@ def main():
 
     # 4. Agent 2: 提炼（DeepSeek 非联网）
     logger.info("=== Agent 2: Extraction ===")
-    events = process_articles(articles, deepseek)
+    events = process_articles(articles, deepseek, theme_config)
     logger.info(f"Extracted {len(events)} events.")
 
     # 5. 加载历史 story 库

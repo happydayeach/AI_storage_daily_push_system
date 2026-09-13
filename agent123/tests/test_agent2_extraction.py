@@ -1,7 +1,7 @@
 """
 被测目标：src/agent2_extraction.py
 依赖：src/models.py（RawArticle、ExtractedEvent）、src/llm_client.py（LLMClient）
-覆盖场景：relevant 相关性过滤、industry/vertical 双标签、JSON 清理容错
+覆盖场景：relevant 相关性过滤、industry/vertical 双标签、JSON 清理容错、主题配置驱动的提取 prompt
 """
 
 import logging
@@ -24,7 +24,7 @@ def test_extract_event_parses_fixed_json_from_mocked_client():
             return '{"event_type":"产品发布","entities":["Acme"],"key_numbers":["10%"],"summary_zh":"Acme 发布了新存储产品。","category":"产品与技术"}'
 
     article = RawArticle("https://example.com/product", "New product", "Details", "2026-09-06T01:00:00", "example.com")
-    event = extract_event(article, FakeDeepSeekClient())
+    event = extract_event(article, FakeDeepSeekClient(), {})
 
     assert event == ExtractedEvent("产品发布", ["Acme"], ["10%"], "Acme 发布了新存储产品。", "产品与技术", article.url, article.published_at, article.domain, article.title, article.snippet)
 
@@ -38,7 +38,7 @@ def test_extract_event_writes_industry_and_vertical_tags_from_llm_response():
 
     article = RawArticle("https://example.com/product", "New product", "Details", "2026-09-06T01:00:00", "example.com")
 
-    event = extract_event(article, FakeLLM())
+    event = extract_event(article, FakeLLM(), {})
 
     assert event is not None
     assert event.industry == "flash"
@@ -54,7 +54,7 @@ def test_extract_event_defaults_missing_industry_and_vertical_tags_to_empty_stri
 
     article = RawArticle("https://example.com/product", "New product", "Details", "2026-09-06T01:00:00", "example.com")
 
-    event = extract_event(article, FakeLLM())
+    event = extract_event(article, FakeLLM(), {})
 
     assert event is not None
     assert event.industry == ""
@@ -70,7 +70,7 @@ def test_extract_event_normalizes_non_string_industry_and_vertical_tags_to_empty
 
     article = RawArticle("https://example.com/product", "New product", "Details", "2026-09-06T01:00:00", "example.com")
 
-    event = extract_event(article, FakeLLM())
+    event = extract_event(article, FakeLLM(), {})
 
     assert event is not None
     assert event.industry == ""
@@ -87,7 +87,7 @@ def test_extract_event_discards_article_marked_irrelevant(caplog):
     article = RawArticle("https://spam.example/article", "博彩", "SEO spam", "2026-09-06T01:00:00", "spam.example")
 
     with caplog.at_level(logging.INFO, logger="src.agent2_extraction"):
-        event = extract_event(article, FakeLLM())
+        event = extract_event(article, FakeLLM(), {})
 
     assert event is None
     assert "Skipping irrelevant article" in caplog.text
@@ -113,7 +113,7 @@ def test_extract_event_keeps_relevant_or_unclassified_article(relevant):
 
     article = RawArticle("https://example.com/product", "New product", "Details", "2026-09-06T01:00:00", "example.com")
 
-    event = extract_event(article, FakeLLM())
+    event = extract_event(article, FakeLLM(), {})
 
     assert event is not None
     assert event.title == article.title
@@ -140,6 +140,41 @@ def test_process_articles_keeps_only_relevant_extracted_events():
         RawArticle("https://storage.example/article", "Storage", "存储", "2026-09-06T01:00:00", "storage.example"),
     ]
 
-    events = process_articles(articles, FakeLLM())
+    events = process_articles(articles, FakeLLM(), {})
 
     assert [event.source_url for event in events] == ["https://storage.example/article"]
+
+
+def test_extract_event_builds_prompt_from_custom_theme_config():
+    from src.agent2_extraction import extract_event
+
+    class FakeLLM:
+        def __init__(self):
+            self.prompt = ""
+
+        def chat(self, **kwargs):
+            self.prompt = kwargs["prompt"]
+            return '{"event_type":"校园公告","entities":[],"key_numbers":[],"summary_zh":"教育新闻。","category":"教育动态","relevant":true}'
+
+    theme_config = {
+        "relevance_theme": "教育产业（学校、课程与教育技术）",
+        "event_types": ["校园公告"],
+        "categories": [{"id": "education", "label": "教育动态", "icon": "📚"}],
+        "industries": {
+            "edtech": {"label": "教育科技", "desc": "教育软件与在线课程"},
+        },
+        "verticals": {
+            "education": {"label": "教育", "desc": "学校与高等教育"},
+        },
+    }
+    article = RawArticle("https://example.com/education", "Campus", "Details", "2026-09-06T01:00:00", "example.com")
+    llm = FakeLLM()
+
+    event = extract_event(article, llm, theme_config)
+
+    assert event is not None
+    assert '["校园公告"]' in llm.prompt
+    assert '["教育动态"]' in llm.prompt
+    assert "教育产业（学校、课程与教育技术）" in llm.prompt
+    assert "edtech=教育科技（教育软件与在线课程）" in llm.prompt
+    assert "education=教育（学校与高等教育）" in llm.prompt
