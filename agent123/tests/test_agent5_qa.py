@@ -70,6 +70,26 @@ def test_qa_accepts_new_report_with_empty_competitor_signal_section():
     assert result.issues == []
 
 
+def test_qa_requires_competitor_signal_when_it_is_the_configured_update_section():
+    from src.agent5_qa import qa
+
+    event = make_event("更新摘要")
+    event.entities = ["Acme"]
+    event.title = "竞对更新事件"
+
+    result = qa(
+        [DeepReport(event, {"竞对信号": ""}, True)],
+        {
+            "analysis_template_sections": ["背景", "技术分析", "市场影响", "竞对信号"],
+            "update_section_name": "竞对信号",
+        },
+    )
+
+    assert result.passed is False
+    assert result.valid == 0
+    assert result.issues == ["报告 竞对更新事件 缺少或为空: sections.竞对信号"]
+
+
 def test_qa_accepts_update_report_with_only_configured_update_section():
     from src.agent5_qa import qa
 
