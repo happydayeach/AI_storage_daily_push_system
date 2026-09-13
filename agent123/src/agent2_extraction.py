@@ -40,7 +40,7 @@ def extract_event(article: RawArticle, llm_client: LLMClient, theme_config: dict
 - "structured_summary": 一段话总结，不超过 200 字，按“时间、地点、起因、经过、结果”归纳；结果部分须用一句话分析该新闻对存储行业的影响。
 - "category": 分类，从 {json.dumps(categories, ensure_ascii=False)} 中选择一个最合适的。
 - "relevant": 布尔值。判断这篇新闻是否与“{relevance_theme}”直接相关；与该主题无关时填 false。
-- "industry": 产业标签，从 [{", ".join(json.dumps(key, ensure_ascii=False) for key in config_loader.get_industries(theme_config))}] 选一个，不属于任何产业填 ""。判断标准：{industries}。
+- "industry": 产业标签，从 [{", ".join(json.dumps(key, ensure_ascii=False) for key in config_loader.get_industries(theme_config))}] 选一个。flash/distributed/data-protection 分别对应闪存、分布式、数据保护三大产业；存储相关但不属于上述三类的填 "general"（通用）；只有与存储完全无关的才填 ""（但 relevant 已过滤无关文章，industry 应总有值）。判断标准：{industries}。
 - "vertical": 行业标签，从 [{", ".join(json.dumps(key, ensure_ascii=False) for key in config_loader.get_verticals(theme_config))}] 选一个，不涉及特定垂直行业填 ""。对应：{verticals}。
 
 **只输出 JSON，不要有其他任何文字。**

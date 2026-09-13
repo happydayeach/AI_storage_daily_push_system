@@ -1,7 +1,7 @@
 """
 被测目标：src/agent2_extraction.py
 依赖：src/models.py（RawArticle、ExtractedEvent）、src/llm_client.py（LLMClient）
-覆盖场景：relevant 相关性过滤、industry/vertical 双标签、title_zh/structured_summary 兜底、JSON 清理容错、主题配置驱动的提取 prompt
+覆盖场景：relevant 相关性过滤、industry（含 general）/vertical 双标签、title_zh/structured_summary 兜底、JSON 清理容错、主题配置驱动的提取 prompt
 """
 
 import logging
@@ -43,6 +43,28 @@ def test_extract_event_writes_industry_and_vertical_tags_from_llm_response():
     assert event is not None
     assert event.industry == "flash"
     assert event.vertical == "finance"
+
+
+def test_extract_event_keeps_general_for_storage_related_article_outside_three_industries():
+    from src.agent2_extraction import extract_event
+
+    class FakeLLM:
+        def __init__(self):
+            self.prompt = ""
+
+        def chat(self, **kwargs):
+            self.prompt = kwargs["prompt"]
+            return '{"relevant":true,"event_type":"产品发布","entities":[],"key_numbers":[],"summary_zh":"Acme 发布企业存储管理软件。","category":"产品与技术","industry":"general"}'
+
+    article = RawArticle("https://example.com/storage-management", "Storage management", "Enterprise storage management software", "2026-09-06T01:00:00", "example.com")
+    llm = FakeLLM()
+
+    event = extract_event(article, llm, {})
+
+    assert event is not None
+    assert event.industry == "general"
+    assert '"general"' in llm.prompt
+    assert "存储相关但不属于闪存/分布式/数据保护" in llm.prompt
 
 
 def test_extract_event_defaults_missing_industry_and_vertical_tags_to_empty_strings():

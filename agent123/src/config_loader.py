@@ -18,6 +18,7 @@ _DEFAULT_INDUSTRIES = {
     "flash": {"icon": "💾", "label": "闪存", "desc": "闪存存储硬件（NAND/SSD/存储芯片/DRAM）"},
     "distributed": {"icon": "🌐", "label": "分布式", "desc": "分布式存储/边缘存储/多云/数据湖"},
     "data-protection": {"icon": "📀", "label": "数据保护", "desc": "数据保护/GDPR/数据合规/数据主权"},
+    "general": {"icon": "📦", "label": "通用", "desc": "存储相关但不属于闪存/分布式/数据保护"},
 }
 _DEFAULT_VERTICALS = {
     "finance": {"icon": "💰", "label": "金融", "desc": "金融行业"},

@@ -1,7 +1,7 @@
 """
 被测目标：src/config_loader.py
 依赖：yaml
-覆盖场景：默认值兜底 + categories 双格式兼容。
+覆盖场景：默认值兜底（含通用产业标签）+ categories 双格式兼容。
 """
 
 from pathlib import Path
@@ -42,6 +42,14 @@ def test_resolve_supplies_defaults_without_overwriting_explicit_values():
     assert config["event_types"] == ["财报", "漏洞", "产品发布", "监管", "合作", "并购", "其他"]
     assert config["update_section_name"] == "新进展"
     assert config["template_glob"] == "eu-storage-daily*.html"
+
+
+def test_get_industries_includes_default_general_storage_tag():
+    assert get_industries({})["general"] == {
+        "icon": "📦",
+        "label": "通用",
+        "desc": "存储相关但不属于闪存/分布式/数据保护",
+    }
 
 
 def test_get_categories_normalizes_legacy_string_list():

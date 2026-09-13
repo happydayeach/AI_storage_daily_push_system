@@ -1,7 +1,7 @@
 """
 被测目标：src/agent6_render.py
 依赖：src/models.py（DeepReport、ExtractedEvent）
-覆盖场景：模板复用、配置驱动的标题/标签/分类/段名/模板、中文标题与一段话总结、更新历史、空段跳过、空态、HTML 转义与推送消息
+覆盖场景：模板复用、配置驱动的标题/标签（含 general）/分类/段名/模板、中文标题与一段话总结、更新历史、空段跳过、空态、HTML 转义与推送消息
 """
 
 import logging
@@ -221,6 +221,20 @@ def test_render_html_uses_default_tag_metadata_when_legacy_config_omits_tags():
 
     assert "💾 闪存" in html
     assert "💰 金融" in html
+
+
+def test_render_html_renders_default_general_industry_tag():
+    from src.agent6_render import render_html
+    from src.models import DeepReport
+
+    event = make_event("通用存储摘要")
+    event.industry = "general"
+    report = DeepReport(event, {"背景": "企业存储管理软件更新。"}, False)
+
+    html = render_html([report], {"categories": ["产业热点"]})
+
+    assert 'data-industry="general"' in html
+    assert "📦 通用" in html
 
 
 def test_render_html_uses_configured_page_title_in_all_template_heading_locations():
