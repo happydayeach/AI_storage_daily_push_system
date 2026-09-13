@@ -1,3 +1,0 @@
-{
-  "tests/test_agent123.py::test_llm_client_selects_provider_and_uses_its_api[deepseek-deepseek-v4-pro-deepseek-key-https://api.deepseek.com/v1]": true
-}
