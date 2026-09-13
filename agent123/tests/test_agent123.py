@@ -554,11 +554,32 @@ def test_render_html_builds_complete_card_with_configured_icon_and_colors():
     assert 'class="card"' in html
     assert "🚀" in html
     assert "Acme 推出存储产品" in html
-    assert "产品与技术" in html
+    assert '<span class="tag">产业热点</span>' in html
     assert all(section in html for section in ("背景", "技术分析", "市场影响", "竞对信号"))
+    assert all(content in html for content in ("背景内容", "技术内容", "市场内容", "竞对内容"))
     assert 'href="https://source.example/article"' in html
     assert "#123456" in html
     assert "#abcdef" in html
+
+
+def test_render_html_renders_update_progress_and_history_without_empty_new_sections():
+    from src.agent6_render import render_html
+    from src.models import DeepReport
+
+    event = make_event("更新摘要")
+    report = DeepReport(
+        event,
+        {"新进展": "项目已完成首批部署。"},
+        True,
+        "此前已完成项目立项。",
+    )
+
+    html = render_html([report], {"categories": ["产业热点"]})
+
+    assert "新进展" in html
+    assert "项目已完成首批部署。" in html
+    assert "此前已完成项目立项。" in html
+    assert html.count("<p></p>") == 0
 
 
 def test_render_push_message_includes_configured_icon_title_category_summary_and_link():

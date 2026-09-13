@@ -19,11 +19,22 @@ def _card_html(report: DeepReport, theme_config: dict) -> str:
     title = escape(event.title or event.summary_zh)
     category = escape(event.category)
     source_url = escape(event.source_url, quote=True)
-    sections = "".join(
-        f'<div class="detail-label">{escape(section_name)}</div>'
-        f'<p>{escape(report.sections.get(section_name, ""))}</p>'
-        for section_name in _SECTION_NAMES
-    )
+    if report.is_update:
+        sections = (
+            '<div class="detail-label">新进展</div>'
+            f'<p>{escape(report.sections.get("新进展", ""))}</p>'
+        )
+        if report.history_summary:
+            sections += (
+                '<div class="detail-label">历史摘要</div>'
+                f'<p>{escape(report.history_summary)}</p>'
+            )
+    else:
+        sections = "".join(
+            f'<div class="detail-label">{escape(section_name)}</div>'
+            f'<p>{escape(report.sections.get(section_name, ""))}</p>'
+            for section_name in _SECTION_NAMES
+        )
     return f'''<article class="card">
   <div class="card__header">
     <span class="card__icon">{icon}</span>
