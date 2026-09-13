@@ -603,7 +603,7 @@ def test_render_push_message_includes_configured_icon_title_category_summary_and
     assert "https://source.example/article" in message
 
 
-def test_pushplus_adapter_posts_expected_json_and_accepts_success_response(monkeypatch):
+def test_pushplus_adapter_posts_send_channel_and_option_and_accepts_success_response(monkeypatch):
     from src.agent7_push import PushplusAdapter
 
     captured = {}
@@ -630,35 +630,20 @@ def test_pushplus_adapter_posts_expected_json_and_accepts_success_response(monke
 
     monkeypatch.setattr("src.agent7_push.urlopen", fake_urlopen)
 
-    assert PushplusAdapter("pushplus-token").push("briefing", title="Custom title") is True
+    assert PushplusAdapter(
+        "pushplus-token", send_channel="webhook", option="webhook-code"
+    ).push("briefing", title="Custom title") is True
     assert captured == {
         "url": "http://www.pushplus.plus/send",
         "method": "POST",
-        "body": b'{"token": "pushplus-token", "title": "Custom title", "content": "briefing", "template": "txt"}',
+        "body": b'{"token": "pushplus-token", "title": "Custom title", "content": "briefing", "template": "txt", "channel": "webhook", "option": "webhook-code"}',
         "content_type": "application/json",
         "timeout": 15,
     }
 
 
-@pytest.mark.parametrize(
-    ("adapter_name", "credential", "response_body", "expected_payload"),
-    [
-        (
-            "WecomAdapter",
-            "https://wecom.example/hook",
-            b'{"errcode": 0}',
-            {"msgtype": "text", "text": {"content": "briefing"}},
-        ),
-        (
-            "FeishuAdapter",
-            "https://feishu.example/hook",
-            b'{"StatusCode": 0}',
-            {"msg_type": "text", "content": {"text": "briefing"}},
-        ),
-    ],
-)
-def test_webhook_adapters_post_channel_specific_json(monkeypatch, adapter_name, credential, response_body, expected_payload):
-    from src import agent7_push
+def test_pushplus_adapter_omits_option_when_not_configured(monkeypatch):
+    from src.agent7_push import PushplusAdapter
 
     captured = {}
 
@@ -666,7 +651,7 @@ def test_webhook_adapters_post_channel_specific_json(monkeypatch, adapter_name, 
         status = 200
 
         def read(self):
-            return response_body
+            return b'{"code": 200}'
 
         def __enter__(self):
             return self
@@ -675,40 +660,41 @@ def test_webhook_adapters_post_channel_specific_json(monkeypatch, adapter_name, 
             return False
 
     def fake_urlopen(request, timeout):
-        captured["url"] = request.full_url
         captured["body"] = request.data
         return Response()
 
-    monkeypatch.setattr(agent7_push, "urlopen", fake_urlopen)
-    adapter = getattr(agent7_push, adapter_name)(credential)
+    monkeypatch.setattr("src.agent7_push.urlopen", fake_urlopen)
 
-    assert adapter.push("briefing") is True
-    assert captured["url"] == credential
+    assert PushplusAdapter("pushplus-token").push("briefing") is True
     import json
 
-    assert json.loads(captured["body"]) == expected_payload
+    assert json.loads(captured["body"]) == {
+        "token": "pushplus-token",
+        "title": "每日情报简报",
+        "content": "briefing",
+        "template": "txt",
+        "channel": "wechat",
+    }
 
 
-def test_build_adapters_resolves_placeholders_skips_missing_and_dispatches_channels(caplog):
-    from src.agent7_push import FeishuAdapter, PushplusAdapter, WecomAdapter, build_adapters
+def test_build_adapters_uses_one_pushplus_adapter_per_target(caplog):
+    from src.agent7_push import PushplusAdapter, build_adapters
 
     adapters = build_adapters(
         {
             "push_targets": [
-                {"channel": "pushplus", "token": "your_token"},
-                {"channel": "wecom", "webhook": "configured-webhook"},
-                {"channel": "feishu", "webhook": "your_webhook"},
-                {"channel": "wecom", "webhook": ""},
+                {"channel": "wechat"},
+                {"channel": "webhook", "option": "webhook-code"},
             ]
         },
-        env={"PUSHPLUS_TOKEN": "environment-token", "FEISHU_WEBHOOK": "feishu-webhook"},
+        env={"PUSHPLUS_TOKEN": "environment-token"},
     )
 
-    assert [type(adapter) for adapter in adapters] == [PushplusAdapter, WecomAdapter, FeishuAdapter]
-    assert adapters[0].token == "environment-token"
-    assert adapters[1].webhook == "configured-webhook"
-    assert adapters[2].webhook == "feishu-webhook"
-    assert "Skipping wecom push target without credentials" in caplog.text
+    assert [type(adapter) for adapter in adapters] == [PushplusAdapter, PushplusAdapter]
+    assert [(adapter.token, adapter.send_channel, adapter.option) for adapter in adapters] == [
+        ("environment-token", "wechat", None),
+        ("environment-token", "webhook", "webhook-code"),
+    ]
 
 
 def test_push_returns_false_for_transport_http_and_json_failures(monkeypatch):
@@ -805,7 +791,7 @@ def test_main_continues_after_qa_failure_and_writes_rendered_outputs(monkeypatch
     config_dir = tmp_path / "config"
     config_dir.mkdir()
     (config_dir / "theme_europe_storage.yaml").write_text(
-        "theme_id: test\nanalysis_template_sections: [背景]\npush_targets:\n  - channel: pushplus\n    token: token\n",
+        "theme_id: test\nanalysis_template_sections: [背景]\npush_targets:\n  - channel: wechat\n",
         encoding="utf-8",
     )
 
@@ -859,43 +845,13 @@ def test_daily_workflow_is_valid_and_configures_scheduled_secret_backed_pipeline
     assert "LLM_PROVIDER: deepseek" in workflow_text
     assert "git add docs/ agent123/output/" in workflow_text
     assert "git push origin HEAD:" in workflow_text
-    for secret_name in (
-        "DEEPSEEK_API_KEY",
-        "TAVILY_API_KEY",
-        "PUSHPLUS_TOKEN",
-        "WECOM_WEBHOOK",
-        "FEISHU_WEBHOOK",
-    ):
+    for secret_name in ("DEEPSEEK_API_KEY", "TAVILY_API_KEY", "PUSHPLUS_TOKEN"):
         assert f"${{{{ secrets.{secret_name} }}}}" in workflow_text
 
 
-def test_build_adapters_skips_none_credentials_and_null_targets():
+def test_build_adapters_skips_missing_token_and_null_targets(caplog):
     from src.agent7_push import build_adapters
 
-    assert build_adapters({"push_targets": [{"channel": "pushplus", "token": None}]}) == []
+    assert build_adapters({"push_targets": [{"channel": "wechat"}]}, env={}) == []
     assert build_adapters({"push_targets": None}) == []
-
-
-@pytest.mark.parametrize("response_body, expected", [
-    (b'{"code": 0}', True),
-    (b'{"StatusCode": 0}', True),
-    (b'{"code": 1}', False),
-])
-def test_feishu_adapter_accepts_only_zero_code_responses(monkeypatch, response_body, expected):
-    from src.agent7_push import FeishuAdapter
-
-    class Response:
-        status = 200
-
-        def read(self):
-            return response_body
-
-        def __enter__(self):
-            return self
-
-        def __exit__(self, exc_type, exc_value, traceback):
-            return False
-
-    monkeypatch.setattr("src.agent7_push.urlopen", lambda *args, **kwargs: Response())
-
-    assert FeishuAdapter("https://feishu.example/hook").push("briefing") is expected
+    assert "PUSHPLUS_TOKEN" in caplog.text

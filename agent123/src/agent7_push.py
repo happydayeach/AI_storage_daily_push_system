@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 
 _DEFAULT_TITLE = "每日情报简报"
 _PUSHPLUS_URL = "http://www.pushplus.plus/send"
-_PLACEHOLDERS = {"", "your_token", "your_webhook"}
+_TOKEN_PLACEHOLDERS = {"", "your_token"}
 
 
 class PushAdapter(ABC):
@@ -55,72 +55,42 @@ class PushplusAdapter(_JsonWebhookAdapter):
 
     channel = "pushplus"
 
-    def __init__(self, token: str):
+    def __init__(self, token: str, send_channel: str = "wechat", option: str | None = None):
         self.token = token
+        self.send_channel = send_channel
+        self.option = option
 
     def push(self, message: str, title: str = _DEFAULT_TITLE) -> bool:
         return self._post(
             _PUSHPLUS_URL,
-            {"token": self.token, "title": title, "content": message, "template": "txt"},
+            {
+                "token": self.token,
+                "title": title,
+                "content": message,
+                "template": "txt",
+                "channel": self.send_channel,
+                **({"option": self.option} if self.option else {}),
+            },
             lambda response: response.get("code") == 200,
         )
 
 
-class WecomAdapter(_JsonWebhookAdapter):
-    """WeCom group webhook adapter."""
-
-    channel = "wecom"
-
-    def __init__(self, webhook: str):
-        self.webhook = webhook
-
-    def push(self, message: str, title: str = _DEFAULT_TITLE) -> bool:
-        return self._post(
-            self.webhook,
-            {"msgtype": "text", "text": {"content": message}},
-            lambda response: response.get("errcode") == 0,
-        )
-
-
-class FeishuAdapter(_JsonWebhookAdapter):
-    """Feishu group webhook adapter."""
-
-    channel = "feishu"
-
-    def __init__(self, webhook: str):
-        self.webhook = webhook
-
-    def push(self, message: str, title: str = _DEFAULT_TITLE) -> bool:
-        return self._post(
-            self.webhook,
-            {"msg_type": "text", "content": {"text": message}},
-            lambda response: response.get("code") == 0 or response.get("StatusCode") == 0,
-        )
-
-
 def build_adapters(theme_config: dict, env: Mapping[str, str] | None = None) -> List[PushAdapter]:
-    """Build configured adapters, resolving blank credentials from the environment."""
+    """Build one Pushplus adapter for each configured downstream target."""
     environment = os.environ if env is None else env
-    adapters: List[PushAdapter] = []
-    adapter_types = {
-        "pushplus": ("token", "PUSHPLUS_TOKEN", PushplusAdapter),
-        "wecom": ("webhook", "WECOM_WEBHOOK", WecomAdapter),
-        "feishu": ("webhook", "FEISHU_WEBHOOK", FeishuAdapter),
-    }
-    for target in theme_config.get("push_targets") or []:
-        channel = target.get("channel")
-        if channel not in adapter_types:
-            logger.warning("Skipping unsupported push channel: %r", channel)
-            continue
-        credential_key, environment_key, adapter_type = adapter_types[channel]
-        credential = target.get(credential_key) or ""
-        if credential in _PLACEHOLDERS:
-            credential = environment.get(environment_key, "")
-        if credential in _PLACEHOLDERS:
-            logger.warning("Skipping %s push target without credentials", channel)
-            continue
-        adapters.append(adapter_type(credential))
-    return adapters
+    token = environment.get("PUSHPLUS_TOKEN", "")
+    if token in _TOKEN_PLACEHOLDERS:
+        logger.warning("Skipping push targets without PUSHPLUS_TOKEN")
+        return []
+
+    return [
+        PushplusAdapter(
+            token,
+            send_channel=target.get("channel", "wechat"),
+            option=target.get("option"),
+        )
+        for target in theme_config.get("push_targets") or []
+    ]
 
 
 def push_all(adapters: List[PushAdapter], message: str, title: str = _DEFAULT_TITLE) -> dict:
