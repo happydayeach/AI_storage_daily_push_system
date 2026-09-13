@@ -1,5 +1,4 @@
 # src/main.py
-import yaml
 import json
 import logging
 import os
@@ -8,6 +7,7 @@ from datetime import datetime, timedelta
 
 from dotenv import load_dotenv
 
+from src import config_loader
 from src.models import StoryRecord
 from src.agent1_discovery import discover_articles
 from src.agent2_extraction import process_articles
@@ -94,8 +94,8 @@ def save_story_store(theme_id: str, new_events: list, update_events: list, embed
 def main():
     load_dotenv()
     # 1. 加载配置
-    with open("config/theme_europe_storage.yaml", "r", encoding="utf-8") as f:
-        theme_config = yaml.safe_load(f)
+    theme_id = os.getenv("THEME", "europe_storage")
+    theme_config = config_loader.load_theme_config(theme_id)
     theme_id = theme_config["theme_id"]
 
     # 2. 初始化搜索工具和客户端

@@ -23,6 +23,7 @@ jobs:
           TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
           PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
           LLM_PROVIDER: deepseek
+          THEME: europe_storage
         run: python -m src.main
       - name: Commit generated briefing
         run: |

@@ -1,7 +1,7 @@
 """
 被测目标：src/main.py
-依赖：src/models.py、src/agent7_push.py、GitHub Actions workflow
-覆盖场景：故事存储、QA 失败继续输出与定时工作流
+依赖：src/models.py、src/config_loader.py、src/agent7_push.py、GitHub Actions workflow
+覆盖场景：故事存储、THEME 驱动配置加载、QA 失败继续输出与定时工作流
 """
 
 import logging
@@ -100,7 +100,7 @@ def test_save_story_store_updates_matching_story_without_duplicate_history_or_ur
 def test_main_continues_after_qa_failure_and_writes_rendered_outputs(monkeypatch, tmp_path):
     import json
 
-    from src import main
+    from src import config_loader, main
     from src.agent7_push import PushplusAdapter
     from src.models import DeepReport
 
@@ -127,8 +127,21 @@ def test_main_continues_after_qa_failure_and_writes_rendered_outputs(monkeypatch
         def __exit__(self, exc_type, exc_value, traceback):
             return False
 
+    loaded_theme_ids = []
+    theme_config = {
+        "theme_id": "nordic_education",
+        "analysis_template_sections": ["背景"],
+        "push_targets": [{"channel": "wechat"}],
+    }
+
+    def load_theme_config(theme_id):
+        loaded_theme_ids.append(theme_id)
+        return theme_config
+
     requests = []
     monkeypatch.chdir(tmp_path)
+    monkeypatch.setenv("THEME", "nordic_education")
+    monkeypatch.setattr(config_loader, "load_theme_config", load_theme_config)
     monkeypatch.setattr(main, "load_dotenv", lambda: None)
     monkeypatch.setattr(main, "LLMClient", lambda: object())
     monkeypatch.setattr(main, "EmbeddingClient", lambda: object())
@@ -142,6 +155,7 @@ def test_main_continues_after_qa_failure_and_writes_rendered_outputs(monkeypatch
 
     main.main()
 
+    assert loaded_theme_ids == ["nordic_education"]
     output = tmp_path / "output"
     repo_root = Path(main.__file__).resolve().parents[2]
     assert (repo_root / "docs" / "index.html").is_file()
@@ -162,6 +176,7 @@ def test_daily_workflow_is_valid_and_configures_scheduled_secret_backed_pipeline
     assert triggers["schedule"] == [{"cron": "0 6 * * *"}]
     assert triggers["workflow_dispatch"] == {}
     assert workflow["jobs"]["briefing"]["permissions"] == {"contents": "write"}
+    assert "THEME: europe_storage" in workflow_text
     assert "LLM_PROVIDER: deepseek" in workflow_text
     assert "git add docs/ agent123/output/" in workflow_text
     assert "git push origin HEAD:" in workflow_text
