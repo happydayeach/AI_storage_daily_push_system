@@ -30,6 +30,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add docs/ output/
+          git add docs/ agent123/output/
           git diff --cached --quiet || git commit -m "chore: daily briefing $(date +%F)"
-          git push
+          git push origin HEAD:${{ github.ref_name }}

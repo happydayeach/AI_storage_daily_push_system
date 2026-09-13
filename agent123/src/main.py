@@ -23,6 +23,8 @@ from src.search_tool import MockSearchTool, TavilySearchTool
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
+_REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 def load_story_store(theme_id: str, store_path: str = "story_store/stories.json") -> list:
     try:
         with open(store_path, "r", encoding="utf-8") as f:
@@ -140,9 +142,10 @@ def main():
     )
 
     # 9. Agent 6: 渲染
-    os.makedirs("docs", exist_ok=True)
+    docs_dir = os.path.join(_REPO_ROOT, "docs")
+    os.makedirs(docs_dir, exist_ok=True)
     html = render_html(reports, theme_config)
-    with open("docs/index.html", "w", encoding="utf-8") as f:
+    with open(os.path.join(docs_dir, "index.html"), "w", encoding="utf-8") as f:
         f.write(html)
     push_message = render_push_message(reports, theme_config)
 
