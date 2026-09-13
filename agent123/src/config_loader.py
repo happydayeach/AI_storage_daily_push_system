@@ -53,6 +53,7 @@ def resolve(config: dict) -> dict:
         "industries": _DEFAULT_INDUSTRIES,
         "verticals": _DEFAULT_VERTICALS,
         "event_types": _DEFAULT_EVENT_TYPES,
+        "competitors": ["Dell DataDomain", "HPE", "Rubrik", "Cohesity", "Hitachi", "Commvault", "Pure Storage"],
         "analysis_template_sections": ["背景", "技术分析", "市场影响", "竞对信号"],
         "update_section_name": "新进展",
         "template_glob": "eu-storage-daily*.html",

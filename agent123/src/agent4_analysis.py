@@ -4,6 +4,7 @@ import json
 import logging
 from typing import Dict, List
 
+from src import config_loader
 from src.llm_client import LLMClient
 from src.models import DedupResult, DeepReport, ExtractedEvent, RawArticle
 from src.search_tool import SearchTool
@@ -46,6 +47,7 @@ def _analyze_new(
     llm: LLMClient,
     sections: List[str],
     theme_name: str,
+    competitors: List[str],
 ) -> DeepReport:
     keyword = event.entities[0] if event.entities else event.title
     articles = search_tool.search(keyword) + search_tool.search(keyword)
@@ -57,7 +59,9 @@ def _analyze_new(
 检索证据：
 {_evidence_details(articles)}
 
-仅输出 JSON 对象，且必须包含以下段落：{', '.join(sections)}。每个键的值为对应段落正文。"""
+仅输出 JSON 对象，且必须包含以下段落：{', '.join(sections)}。每个键的值为对应段落正文。
+
+其中“竞对信号”段：分析存储产业厂商（{'、'.join(competitors)}）是否对此事件有布局、响应或竞争动作；若没有任何厂商布局，该段输出空字符串。"""
     data = _parse_json(
         llm.chat(
             prompt=prompt,
@@ -101,13 +105,15 @@ def _analyze_update(
 def analyze(result: DedupResult, search_tool: SearchTool, llm: LLMClient, theme_config: dict) -> List[DeepReport]:
     """Return deep reports, skipping individual events whose analysis fails."""
     reports = []
+    theme_config = config_loader.resolve(theme_config)
     sections = theme_config["analysis_template_sections"]
     theme_name = theme_config.get("theme_name")
+    competitors = theme_config.get("competitors")
     update_section_name = theme_config.get("update_section_name", "新进展")
 
     for event in result.new:
         try:
-            reports.append(_analyze_new(event, search_tool, llm, sections, theme_name))
+            reports.append(_analyze_new(event, search_tool, llm, sections, theme_name, competitors))
         except Exception as error:
             logger.error("Deep analysis failed for new event %r: %s", event.source_url, error)
 

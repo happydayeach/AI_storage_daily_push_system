@@ -1,7 +1,7 @@
 """
 被测目标：src/agent6_render.py
 依赖：src/models.py（DeepReport、ExtractedEvent）
-覆盖场景：模板复用、配置驱动的标题/标签/分类/段名/模板、中文标题与一段话总结、更新历史、空态、HTML 转义与推送消息
+覆盖场景：模板复用、配置驱动的标题/标签/分类/段名/模板、中文标题与一段话总结、更新历史、空段跳过、空态、HTML 转义与推送消息
 """
 
 import logging
@@ -232,3 +232,21 @@ def test_render_html_uses_configured_page_title_in_all_template_heading_location
     assert '<h1 class="brief-header__title">📊 自定义存储专题 · 每日情报</h1>' in html
     assert "© 2026 自定义存储专题 · 每日情报" in html
     assert "欧洲存储市场" not in html
+
+
+def test_render_html_skips_empty_analysis_section_without_hiding_populated_sections():
+    from src.agent6_render import render_html
+    from src.models import DeepReport
+
+    report = DeepReport(
+        make_event("摘要"),
+        {"背景": "背景内容", "技术分析": "技术内容", "市场影响": "市场内容", "竞对信号": ""},
+        False,
+    )
+
+    html = render_html([report], {})
+
+    assert "<div class=\"detail-label\">背景</div><p>背景内容</p>" in html
+    assert "<div class=\"detail-label\">技术分析</div><p>技术内容</p>" in html
+    assert "<div class=\"detail-label\">市场影响</div><p>市场内容</p>" in html
+    assert '<div class="detail-label">竞对信号</div>' not in html

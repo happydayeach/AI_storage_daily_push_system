@@ -1,7 +1,7 @@
 """
 被测目标：src/agent4_analysis.py
 依赖：src/models.py（DedupResult、ExtractedEvent）
-覆盖场景：新事件双检索、更新历史分析、主题配置驱动的 prompt 与无效 JSON 容错
+覆盖场景：新事件双检索、更新历史分析、主题配置驱动的 prompt（含竞对约束）与无效 JSON 容错
 """
 
 import logging
@@ -155,3 +155,50 @@ def test_analyze_logs_error_and_skips_only_event_with_invalid_llm_json(caplog):
 
     assert reports == []
     assert "Deep analysis failed for new event" in caplog.text
+
+
+def test_resolve_supplies_default_storage_competitors():
+    from src.config_loader import resolve
+
+    assert resolve({})["competitors"] == [
+        "Dell DataDomain",
+        "HPE",
+        "Rubrik",
+        "Cohesity",
+        "Hitachi",
+        "Commvault",
+        "Pure Storage",
+    ]
+
+
+def test_analyze_new_event_prompt_limits_competitor_signals_to_configured_storage_vendors():
+    from src.agent4_analysis import analyze
+
+    class SearchTool:
+        def search(self, keyword):
+            return []
+
+    class FakeLLM:
+        def __init__(self):
+            self.calls = []
+
+        def chat(self, **kwargs):
+            self.calls.append(kwargs)
+            return '{"背景":"背景内容","竞对信号":""}'
+
+    llm = FakeLLM()
+    analyze(
+        DedupResult(new=[make_event("新事件")], update=[], duplicate_dropped_count=0),
+        SearchTool(),
+        llm,
+        {
+            "analysis_template_sections": ["背景", "竞对信号"],
+            "competitors": ["Rubrik", "Cohesity"],
+        },
+    )
+
+    prompt = llm.calls[0]["prompt"]
+    assert "竞对信号" in prompt
+    assert "Rubrik、Cohesity" in prompt
+    assert "布局、响应或竞争动作" in prompt
+    assert "输出空字符串" in prompt

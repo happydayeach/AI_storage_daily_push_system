@@ -60,6 +60,7 @@ def _card_html(report: DeepReport, theme_config: dict, sections: List[str], indu
         body = "".join(
             f'<div class="detail-label">{escape(name)}</div><p>{escape(report.sections.get(name, ""))}</p>'
             for name in sections
+            if report.sections.get(name)
         )
     if event.structured_summary:
         body = (
