@@ -1,13 +1,62 @@
 {
-  "new": [],
+  "new": [
+    {
+      "event_type": "其他",
+      "entities": [
+        "Meta",
+        "Odense",
+        "Denmark",
+        "data center",
+        "district-heating network"
+      ],
+      "key_numbers": [
+        "90%",
+        "2026-09-12T18:25:00+00:00"
+      ],
+      "summary_zh": "丹麦欧登塞的Meta数据中心将服务器冷却产生的热量直接输送到附近家庭，而非像通常那样浪费掉。服务器运行几乎将所有电力转化为热量，行业估计约90%。这种模式依赖城市拥有广泛的区域供热网络，且设施需靠近现有管网。欧登塞在数据中心建成前已有该基础设施，因此成功。这与美国等地因土地使用、水资源和电网压力而抵制数据中心形成对比，泰国也有类似反对。欧登塞提供了数据中心余热造福社区的罕见案例。",
+      "category": "产业热点",
+      "source_url": "https://www.techradar.com/pro/finally-some-good-usage-this-danish-data-center-is-providing-heat-to-power-thousands-of-household-radiators",
+      "published_at": "2026-09-12T18:25:00+00:00",
+      "domain": "techradar.com",
+      "title": "This Danish data center found a surprising way to heat homes instead of wasting its massive server-generated energy | TechRadar",
+      "snippet": "Data centers usually waste heat, but this Danish firm is taking a different route\n\nWhen you purchase through links on our site, we may earn an affiliate commission. Here’s how it works.\n\nData center\n\nA data center operated by Meta in Odense, Denmark is channeling its cooling heat straight into nearby homes.\n\nServer operations typically send almost all of their electricity out as warmth, with one industry estimate placing that figure near 90%. [...] Replicating this setup elsewhere depends heavily on one specific ingredient many cities simply lack entirely — a wide-reaching district-heating network.\n\nHeat cannot travel far without significant loss, meaning facilities must sit close to an existing distribution network.\n\nOdense already had that infrastructure in place before Meta's data center arrived on site, and this is part of the success of the system. [...] This situation stands out against a backdrop of growing resistance to data centers elsewhere, particularly in the United States.\n\nCommunities there have pushed back over land use, water consumption and strain on local electricity grids.\n\nThailand has raised similar objections recently, citing comparable pressure on its own limited resources.\n\nAmid that friction, Odense offers a rare example of data center heat actually benefiting the surrounding community.\n\nVia Science Blog",
+      "industry": "",
+      "vertical": ""
+    },
+    {
+      "event_type": "其他",
+      "entities": [
+        "Smart Sustainable Campus (SSC)",
+        "higher education institutions (HEIs)",
+        "Netherlands",
+        "Denmark",
+        "U.S.",
+        "Middle East",
+        "electric bus shuttles",
+        "smart parking",
+        "congestion pricing",
+        "mobile applications"
+      ],
+      "key_numbers": [
+        "2026-09-13T00:00:00+00:00"
+      ],
+      "summary_zh": "该研究探讨了智慧可持续校园（SSC）的全球发展趋势与挑战。荷兰和丹麦高校在推广自行车出行方面领先，而美国和中东等汽车主导地区更关注电动巴士和智能停车，部分校园还实施拥堵收费或车辆限行。SSC不仅是技术升级，更是高校在数字创新与生态导向下对可持续发展的范式转变，需打破传统校园中设施、学术与学生事务各自为政的孤岛状态。",
+      "category": "垂直行业热点",
+      "source_url": "https://www.frontiersin.org/journals/sustainable-cities/articles/10.3389/frsc.2026.1747438/full",
+      "published_at": "2026-09-13T00:00:00+00:00",
+      "domain": "frontiersin.org",
+      "title": "Frontiers | Sustainable development strategies for smart sustainable campus operations: global trends, challenges and opportunities",
+      "snippet": "lifestyle (Okeniyi et al., 2018). Universities in Netherlands and Denmark lead in incorporating of cycling as a mode of transportation. In comparison, institutions in automobile-centred areas such as the U.S. and the Middle East pay more attention to electric bus shuttles and smart parking (Amr et al., 2021). Congestion pricing or bans on access to specific vehicles are in place in some campuses to minimise the use of vehicles that use internal combustion (Pan et al., 2023). Mobile applications [...] The emergence of Smart Sustainable Campus (SSC) represents a significant evolution in how higher education institutions (HEIs) will address challenges related to global sustainability (Hariram et al., 2023). Rooted in the principles of sustainable development, SSCs represent an institutional transition embedded with digital innovation and ecologically oriented campus activities (Santos, 2024). Factors such as environmental concerns, technological development, and international sustainability [...] According to Malagnino et al. (2021), transitioning from a conventional campus to a Smart Sustainable Campus (SSC) is not just about technology; it is a paradigmatic shift of how HEIs view and operationalise sustainability. Traditional campuses operate on fragmented systems in which facilities management, academic departments, and student affairs feel like silos, with no shared sustainability objectives or interoperable sustainability data (González-García et al., 2023). Such campuses are",
+      "industry": "",
+      "vertical": "education"
+    }
+  ],
   "update": [],
   "duplicate_dropped_count": 0,
   "qa": {
-    "passed": false,
-    "valid": 0,
-    "total": 0,
-    "issues": [
-      "无深度报告"
-    ]
+    "passed": true,
+    "valid": 2,
+    "total": 2,
+    "issues": []
   }
 }
