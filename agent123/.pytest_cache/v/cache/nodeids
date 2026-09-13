@@ -128,5 +128,7 @@
   "tests/test_search_tool.py::test_mock_search_tool_returns_raw_articles_without_network",
   "tests/test_search_tool.py::test_tavily_search_tool_maps_results_to_raw_articles",
   "tests/test_search_tool.py::test_tavily_search_tool_returns_empty_list_when_request_fails",
-  "tests/test_search_tool.py::test_tavily_search_tool_without_credentials_raises_clear_error"
+  "tests/test_search_tool.py::test_tavily_search_tool_without_credentials_raises_clear_error",
+  "tests/test_theme_switch.py::test_europe_storage_theme_keeps_existing_vertical_labels_without_education",
+  "tests/test_theme_switch.py::test_nordic_education_theme_drives_search_extraction_and_rendering_without_code_changes"
 ]
