@@ -599,3 +599,191 @@ def test_render_push_message_includes_configured_icon_title_category_summary_and
     assert "🤝 Acme 与 Contoso 合作｜产业热点" in message
     assert "推送摘要" in message
     assert "https://source.example/article" in message
+
+
+def test_pushplus_adapter_posts_expected_json_and_accepts_success_response(monkeypatch):
+    from src.agent7_push import PushplusAdapter
+
+    captured = {}
+
+    class Response:
+        status = 200
+
+        def read(self):
+            return b'{"code": 200}'
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, exc_type, exc_value, traceback):
+            return False
+
+    def fake_urlopen(request, timeout):
+        captured["url"] = request.full_url
+        captured["method"] = request.get_method()
+        captured["body"] = request.data
+        captured["content_type"] = request.get_header("Content-type")
+        captured["timeout"] = timeout
+        return Response()
+
+    monkeypatch.setattr("src.agent7_push.urlopen", fake_urlopen)
+
+    assert PushplusAdapter("pushplus-token").push("briefing", title="Custom title") is True
+    assert captured == {
+        "url": "http://www.pushplus.plus/send",
+        "method": "POST",
+        "body": b'{"token": "pushplus-token", "title": "Custom title", "content": "briefing", "template": "txt"}',
+        "content_type": "application/json",
+        "timeout": 15,
+    }
+
+
+@pytest.mark.parametrize(
+    ("adapter_name", "credential", "response_body", "expected_payload"),
+    [
+        (
+            "WecomAdapter",
+            "https://wecom.example/hook",
+            b'{"errcode": 0}',
+            {"msgtype": "text", "text": {"content": "briefing"}},
+        ),
+        (
+            "FeishuAdapter",
+            "https://feishu.example/hook",
+            b'{"StatusCode": 0}',
+            {"msg_type": "text", "content": {"text": "briefing"}},
+        ),
+    ],
+)
+def test_webhook_adapters_post_channel_specific_json(monkeypatch, adapter_name, credential, response_body, expected_payload):
+    from src import agent7_push
+
+    captured = {}
+
+    class Response:
+        status = 200
+
+        def read(self):
+            return response_body
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, exc_type, exc_value, traceback):
+            return False
+
+    def fake_urlopen(request, timeout):
+        captured["url"] = request.full_url
+        captured["body"] = request.data
+        return Response()
+
+    monkeypatch.setattr(agent7_push, "urlopen", fake_urlopen)
+    adapter = getattr(agent7_push, adapter_name)(credential)
+
+    assert adapter.push("briefing") is True
+    assert captured["url"] == credential
+    import json
+
+    assert json.loads(captured["body"]) == expected_payload
+
+
+def test_build_adapters_resolves_placeholders_skips_missing_and_dispatches_channels(caplog):
+    from src.agent7_push import FeishuAdapter, PushplusAdapter, WecomAdapter, build_adapters
+
+    adapters = build_adapters(
+        {
+            "push_targets": [
+                {"channel": "pushplus", "token": "your_token"},
+                {"channel": "wecom", "webhook": "configured-webhook"},
+                {"channel": "feishu", "webhook": "your_webhook"},
+                {"channel": "wecom", "webhook": ""},
+            ]
+        },
+        env={"PUSHPLUS_TOKEN": "environment-token", "FEISHU_WEBHOOK": "feishu-webhook"},
+    )
+
+    assert [type(adapter) for adapter in adapters] == [PushplusAdapter, WecomAdapter, FeishuAdapter]
+    assert adapters[0].token == "environment-token"
+    assert adapters[1].webhook == "configured-webhook"
+    assert adapters[2].webhook == "feishu-webhook"
+    assert "Skipping wecom push target without credentials" in caplog.text
+
+
+def test_push_returns_false_for_transport_http_and_json_failures(monkeypatch):
+    from src.agent7_push import PushplusAdapter
+
+    def failing_urlopen(*args, **kwargs):
+        raise OSError("network unavailable")
+
+    monkeypatch.setattr("src.agent7_push.urlopen", failing_urlopen)
+    assert PushplusAdapter("token").push("briefing") is False
+
+    class BadStatusResponse:
+        status = 500
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, exc_type, exc_value, traceback):
+            return False
+
+    monkeypatch.setattr("src.agent7_push.urlopen", lambda *args, **kwargs: BadStatusResponse())
+    assert PushplusAdapter("token").push("briefing") is False
+
+    class BadJsonResponse:
+        status = 200
+
+        def read(self):
+            return b"not json"
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, exc_type, exc_value, traceback):
+            return False
+
+    monkeypatch.setattr("src.agent7_push.urlopen", lambda *args, **kwargs: BadJsonResponse())
+    assert PushplusAdapter("token").push("briefing") is False
+
+    class NonObjectJsonResponse:
+        status = 200
+
+        def read(self):
+            return b"[]"
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, exc_type, exc_value, traceback):
+            return False
+
+    monkeypatch.setattr("src.agent7_push.urlopen", lambda *args, **kwargs: NonObjectJsonResponse())
+    assert PushplusAdapter("token").push("briefing") is False
+
+
+def test_push_all_continues_after_adapter_exception():
+    from src.agent7_push import PushAdapter, push_all
+
+    class FailingAdapter(PushAdapter):
+        channel = "failing"
+
+        def push(self, message, title="每日情报简报"):
+            raise OSError("broken")
+
+    class SuccessfulAdapter(PushAdapter):
+        channel = "successful"
+
+        def __init__(self):
+            self.calls = []
+
+        def push(self, message, title="每日情报简报"):
+            self.calls.append((message, title))
+            return True
+
+    successful = SuccessfulAdapter()
+
+    assert push_all([FailingAdapter(), successful], "briefing", "Custom title") == {
+        "failing": False,
+        "successful": True,
+    }
+    assert successful.calls == [("briefing", "Custom title")]
