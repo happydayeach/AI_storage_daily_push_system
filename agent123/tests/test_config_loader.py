@@ -61,6 +61,14 @@ def test_get_categories_preserves_dict_format():
     assert get_categories({"categories": categories}) == categories
 
 
+def test_resolve_supplies_default_analysis_template_sections():
+    assert resolve({})["analysis_template_sections"] == ["背景", "技术分析", "市场影响", "竞对信号"]
+
+
+def test_get_sections_falls_back_to_default_when_sections_are_missing():
+    assert get_sections({"theme_id": "custom"}) == ["背景", "技术分析", "市场影响", "竞对信号"]
+
+
 def test_accessors_return_resolved_metadata_and_sections():
     config = {"analysis_template_sections": ["背景", "技术分析", "市场影响", "竞对信号"]}
 

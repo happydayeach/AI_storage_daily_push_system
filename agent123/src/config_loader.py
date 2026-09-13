@@ -51,6 +51,7 @@ def resolve(config: dict) -> dict:
         "industries": _DEFAULT_INDUSTRIES,
         "verticals": _DEFAULT_VERTICALS,
         "event_types": _DEFAULT_EVENT_TYPES,
+        "analysis_template_sections": ["背景", "技术分析", "市场影响", "竞对信号"],
         "update_section_name": "新进展",
         "template_glob": "eu-storage-daily*.html",
     }
@@ -87,7 +88,7 @@ def get_verticals(config: dict) -> Dict[str, dict]:
 
 def get_sections(config: dict) -> List[str]:
     """Return the analysis section names."""
-    return config.get("analysis_template_sections", [])
+    return resolve(config)["analysis_template_sections"]
 
 
 def get_event_types(config: dict) -> List[str]:
