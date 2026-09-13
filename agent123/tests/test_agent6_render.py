@@ -1,7 +1,7 @@
 """
 被测目标：src/agent6_render.py
 依赖：src/models.py（DeepReport、ExtractedEvent）
-覆盖场景：模板复用、更新历史、空态、HTML 转义与推送消息
+覆盖场景：模板复用、配置驱动的标签/分类/段名/模板、更新历史、空态、HTML 转义与推送消息
 """
 
 import logging
@@ -84,7 +84,7 @@ def test_render_html_renders_update_history_without_new_event_sections():
 def test_render_html_returns_complete_designed_skeleton_for_empty_reports():
     from src.agent6_render import render_html
 
-    html = render_html([], {"categories": ["产业热点"]})
+    html = render_html([], {})
 
     assert html.startswith("<!DOCTYPE html>")
     assert "<header class=\"brief-header\">" in html
@@ -127,3 +127,43 @@ def test_render_push_message_includes_configured_icon_title_category_summary_and
     assert "🤝 Acme 与 Contoso 合作｜产业热点" in message
     assert "推送摘要" in message
     assert "https://source.example/article" in message
+
+
+def test_render_html_uses_custom_tag_and_layout_configuration():
+    from src.agent6_render import render_html
+    from src.models import DeepReport
+
+    event = make_event("教育摘要")
+    event.category = "教育动态"
+    event.industry = "education"
+    event.vertical = "schools"
+    report = DeepReport(event, {"概览": "自定义概览"}, False)
+    theme_config = {
+        "categories": [{"id": "sec-education", "label": "教育动态", "icon": "🎓"}],
+        "industries": {"education": {"icon": "🎓", "label": "教育", "desc": "教育产业"}},
+        "verticals": {"schools": {"icon": "🏫", "label": "学校", "desc": "学校行业"}},
+        "analysis_template_sections": ["概览"],
+    }
+
+    html = render_html([report], theme_config)
+
+    assert 'id="sec-education"' in html
+    assert "🎓 教育动态（1）" in html
+    assert "🎓 教育" in html
+    assert "🏫 学校" in html
+    assert "自定义概览" in html
+
+
+def test_render_html_uses_default_tag_metadata_when_legacy_config_omits_tags():
+    from src.agent6_render import render_html
+    from src.models import DeepReport
+
+    event = make_event("默认标签摘要")
+    event.industry = "flash"
+    event.vertical = "finance"
+    report = DeepReport(event, {"背景": "背景内容"}, False)
+
+    html = render_html([report], {"categories": ["产业热点"]})
+
+    assert "💾 闪存" in html
+    assert "💰 金融" in html
