@@ -11,6 +11,3 @@ venv/
 
 # OS
 .DS_Store
-
-# generated output
-agent123/output/
