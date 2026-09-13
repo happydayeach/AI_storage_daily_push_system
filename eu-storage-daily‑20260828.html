@@ -599,24 +599,7 @@
 
         <!-- ===== 筛选器（产业 + 行业，辅助过滤） ===== -->
         <div class="filter-bar" id="filterBar">
-            <div class="filter-bar__group">
-                <span class="filter-bar__group-label">🏷️ 产业</span>
-                <button class="filter-bar__btn filter-bar__btn--active" data-filter="all">全部</button>
-                <button class="filter-bar__btn" data-filter="data-protection">📀 数据保护</button>
-                <button class="filter-bar__btn" data-filter="distributed">🌐 分布式</button>
-                <button class="filter-bar__btn" data-filter="flash">💾 闪存</button>
-            </div>
-            <span class="filter-bar__divider">|</span>
-            <div class="filter-bar__group">
-                <span class="filter-bar__group-label">🏢 行业</span>
-                <button class="filter-bar__btn" data-filter="finance">💰 金融</button>
-                <button class="filter-bar__btn" data-filter="healthcare">🏥 医疗</button>
-                <button class="filter-bar__btn" data-filter="manufacturing">🏭 制造</button>
-                <button class="filter-bar__btn" data-filter="retail">🛒 零售</button>
-                <button class="filter-bar__btn" data-filter="government">🏛️ 政府</button>
-                <button class="filter-bar__btn" data-filter="telco">📡 运营商</button>
-                <!-- 商业市场本日无新闻，不显示 -->
-            </div>
+            <!-- FILTER_BAR -->
         </div>
 
         <!-- ============================================================
@@ -979,48 +962,23 @@
             });
 
             // ----- 筛选器（产业 + 行业）-----
-            const filterBtns = document.querySelectorAll('.filter-bar__btn');
-            const cards = document.querySelectorAll('.card');
-
-            filterBtns.forEach(function(btn) {
-                btn.addEventListener('click', function() {
-                    // 仅当前组内切换 active（保持组内互斥）
-                    const parentGroup = this.closest('.filter-bar__group');
-                    if (parentGroup) {
-                        parentGroup.querySelectorAll('.filter-bar__btn').forEach(function(b) {
-                            b.classList.remove('filter-bar__btn--active');
-                        });
-                        this.classList.add('filter-bar__btn--active');
-                    }
-
-                    // 收集所有激活的 filter 值（'all' 优先级最高）
-                    const activeFilters = [];
-                    document.querySelectorAll('.filter-bar__btn.filter-bar__btn--active').forEach(function(b) {
-                        activeFilters.push(b.dataset.filter);
-                    });
-
-                    // 如果包含 'all'，显示全部
-                    if (activeFilters.includes('all')) {
-                        cards.forEach(function(c) { c.style.display = 'block'; });
-                        return;
-                    }
-
-                    // 否则按交集筛选（卡片必须满足所有激活条件）
-                    cards.forEach(function(card) {
-                        const industry = card.dataset.industry || '';
-                        const vertical = card.dataset.vertical || '';
-                        let match = true;
-                        for (let f of activeFilters) {
-                            if (f === 'all') continue;
-                            if (industry !== f && vertical !== f) {
-                                match = false;
-                                break;
-                            }
-                        }
-                        card.style.display = match ? 'block' : 'none';
-                    });
+            function filterCards(btn, filter) {
+                document.querySelectorAll('.filter-bar__btn').forEach(function(button) {
+                    button.classList.remove('filter-bar__btn--active');
                 });
-            });
+                btn.classList.add('filter-bar__btn--active');
+
+                document.querySelectorAll('.card').forEach(function(card) {
+                    let matches = filter === 'all';
+                    if (filter.startsWith('industry:')) {
+                        matches = card.dataset.industry === filter.slice('industry:'.length);
+                    } else if (filter.startsWith('vertical:')) {
+                        matches = card.dataset.vertical === filter.slice('vertical:'.length);
+                    }
+                    card.style.display = matches ? 'block' : 'none';
+                });
+            }
+            window.filterCards = filterCards;
 
             // 默认展开第一条卡片（展示效果）
             const firstCard = document.querySelector('.card');

@@ -1,7 +1,7 @@
 """
 被测目标：src/agent6_render.py
 依赖：src/models.py（DeepReport、ExtractedEvent）
-覆盖场景：模板复用、配置驱动的标题/标签（含 general）/分类/段名/模板、中文标题与一段话总结、更新历史、空段跳过、空态、HTML 转义与推送消息
+覆盖场景：模板复用、配置驱动的标题/标签（含 general）/分类/段名/模板/filter-bar、中文标题与一段话总结、更新历史、空段跳过、空态、HTML 转义与推送消息
 """
 
 import logging
@@ -205,6 +205,9 @@ def test_render_html_uses_custom_tag_and_layout_configuration():
     assert "🎓 教育动态（1）" in html
     assert "🎓 教育" in html
     assert "🏫 学校" in html
+    assert 'data-filter="industry:education"' in html
+    assert 'data-filter="vertical:schools"' in html
+    assert 'data-filter="industry:flash"' not in html
     assert "自定义概览" in html
 
 
@@ -250,6 +253,27 @@ def test_render_html_renders_nordic_general_industry_label_and_summary():
 
     assert "📦 通用" in html
     assert "覆盖产业：通用" in html
+
+
+def test_render_html_generates_filter_bar_from_config_and_includes_filter_script():
+    from src.agent6_render import render_html
+
+    html = render_html([], {})
+
+    assert 'data-filter="all"' in html
+    assert 'filter-bar__btn--active' in html
+    assert 'data-filter="industry:general"' in html
+    assert "📦 通用" in html
+    assert all(
+        f'data-filter="industry:{industry}"' in html
+        for industry in ("flash", "distributed", "data-protection", "general")
+    )
+    assert all(
+        f'data-filter="vertical:{vertical}"' in html
+        for vertical in ("finance", "healthcare", "manufacturing", "retail", "government", "telco")
+    )
+    assert "💰 金融" in html
+    assert "function filterCards" in html
 
 
 def test_render_html_uses_configured_page_title_in_all_template_heading_locations():

@@ -12,6 +12,7 @@ from .models import DeepReport
 
 _CONTENT_MARKER = "        <!-- ============================================================\n        内容区：四大分类"
 _FOOTER_MARKER = "        <!-- ===== 页脚 ===== -->"
+_FILTER_BAR_MARKER = "            <!-- FILTER_BAR -->"
 
 
 def _icon_for(report: DeepReport, theme_config: dict) -> str:
@@ -34,6 +35,35 @@ def _tag_html(tag_class: str, value: str, labels: dict) -> str:
     icon, label = tag
     extra_class = f" tag--{value}" if tag_class == "tag--industry" else ""
     return f'<span class="tag {tag_class}{extra_class}">{icon} {label}</span>'
+
+
+def _filter_bar_html(industries: dict, verticals: dict) -> str:
+    """Return config-driven filter controls for the designed template."""
+    industry_buttons = "".join(
+        f'<button class="filter-bar__btn" data-filter="industry:{escape(key, quote=True)}" '
+        f'onclick="filterCards(this, \'industry:{escape(key, quote=True)}\')">'
+        f'{escape(str(value["icon"]))} {escape(str(value["label"]))}</button>'
+        for key, value in industries.items()
+    )
+    vertical_buttons = "".join(
+        f'<button class="filter-bar__btn" data-filter="vertical:{escape(key, quote=True)}" '
+        f'onclick="filterCards(this, \'vertical:{escape(key, quote=True)}\')">'
+        f'{escape(str(value["icon"]))} {escape(str(value["label"]))}</button>'
+        for key, value in verticals.items()
+    )
+    return (
+        '            <div class="filter-bar__group">\n'
+        '                <span class="filter-bar__group-label">🏷️ 产业</span>\n'
+        '                <button class="filter-bar__btn filter-bar__btn--active" data-filter="all" '
+        'onclick="filterCards(this, \'all\')">全部</button>'
+        f'{industry_buttons}\n'
+        '            </div>\n'
+        '            <span class="filter-bar__divider">|</span>\n'
+        '            <div class="filter-bar__group">\n'
+        '                <span class="filter-bar__group-label">🏢 行业</span>'
+        f'{vertical_buttons}\n'
+        '            </div>'
+    )
 
 
 def _card_html(report: DeepReport, theme_config: dict, sections: List[str], industry_tags: dict, vertical_tags: dict) -> str:
@@ -100,16 +130,18 @@ def render_html(reports: List[DeepReport], theme_config: dict) -> str:
     """Return the checked-in designed briefing page populated with report data."""
     categories = config_loader.get_categories(theme_config)
     sections = config_loader.get_sections(theme_config)
-    industry_tags = {key: (value["icon"], value["label"]) for key, value in config_loader.get_industries(theme_config).items()}
-    vertical_tags = {key: (value["icon"], value["label"]) for key, value in config_loader.get_verticals(theme_config).items()}
+    industries = config_loader.get_industries(theme_config)
+    verticals = config_loader.get_verticals(theme_config)
+    industry_tags = {key: (value["icon"], value["label"]) for key, value in industries.items()}
+    vertical_tags = {key: (value["icon"], value["label"]) for key, value in verticals.items()}
     grouped = defaultdict(list)
     for report in reports:
         grouped[report.event.category].append(report)
     total = len(reports)
     updates = sum(report.is_update for report in reports)
     new_count = total - updates
-    industries = [label for key, (_, label) in industry_tags.items() if any(report.event.industry == key for report in reports)]
-    industry_text = " / ".join(industries) or "无"
+    industry_labels = [label for key, (_, label) in industry_tags.items() if any(report.event.industry == key for report in reports)]
+    industry_text = " / ".join(industry_labels) or "无"
     summary = f"今日共 {total} 条情报，其中新事件 {new_count} 条、持续追踪 {updates} 条，覆盖产业：{industry_text}。"
     source = _template_source(theme_config)
     before_content = source[:source.index(_CONTENT_MARKER)]
@@ -117,6 +149,7 @@ def render_html(reports: List[DeepReport], theme_config: dict) -> str:
     page_title = escape(str(theme_config.get("page_title", "欧洲存储市场")))
     before_content = before_content.replace("欧洲存储市场", page_title)
     footer = footer.replace("欧洲存储市场", page_title)
+    before_content = before_content.replace(_FILTER_BAR_MARKER, _filter_bar_html(industries, verticals))
     colors = theme_config.get("theme_colors", {})
     before_content = before_content.replace("--color-primary: #1a5fb4;", f'--color-primary: {escape(colors.get("primary", "#1a5fb4"), quote=True)};', 1)
     before_content = before_content.replace("--color-accent: #e66100;", f'--color-accent: {escape(colors.get("accent", "#e66100"), quote=True)};', 1)
