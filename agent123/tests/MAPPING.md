@@ -13,3 +13,4 @@
 | `src/agent7_push.py` | `tests/test_agent7_push.py` |
 | `src/llm_client.py` | `tests/test_llm_client.py` |
 | `src/main.py` | `tests/test_main.py` |
+| `src/config_loader.py` | `tests/test_config_loader.py` |
