@@ -21,6 +21,7 @@ def discover_articles(theme_config: Dict[str, Any], searcher: SearchTool) -> Lis
     """
     news_searcher = NewsSearcher(searcher)
     keywords_matrix = theme_config.get("keywords_matrix", [])
+    region = theme_config.get("region", "")
     
     # 展平并去重关键词
     all_keywords = set()
@@ -37,9 +38,10 @@ def discover_articles(theme_config: Dict[str, Any], searcher: SearchTool) -> Lis
     seen_urls = set()
     
     for kw in all_keywords:
-        logger.info(f"Searching: {kw}")
+        search_keyword = f"{region} {kw}" if region else kw
+        logger.info(f"Searching: {search_keyword}")
         try:
-            results = news_searcher.search_keyword(kw)
+            results = news_searcher.search_keyword(search_keyword)
         except Exception as error:
             logger.error("Search failed for keyword %r: %s", kw, error)
             continue

@@ -116,3 +116,49 @@ def test_discover_articles_continues_after_one_keyword_search_fails(caplog):
 
     assert [article.url for article in articles] == ["https://example.com/good"]
     assert "Search failed for keyword 'broken'" in caplog.text
+
+
+def test_discover_articles_prefixes_every_keyword_with_nonempty_region():
+    from src.agent1_discovery import discover_articles
+    from src.search_tool import SearchTool
+
+    class FakeSearchTool(SearchTool):
+        def __init__(self):
+            self.search_queries = []
+
+        def search(self, keyword):
+            self.search_queries.append(keyword)
+            return []
+
+    searcher = FakeSearchTool()
+
+    discover_articles(
+        {"region": "北欧", "keywords_matrix": [["闪存", "数据存储"], ["闪存"]]},
+        searcher,
+    )
+
+    assert set(searcher.search_queries) == {"北欧 闪存", "北欧 数据存储"}
+    assert all(query.startswith("北欧 ") for query in searcher.search_queries)
+
+
+@pytest.mark.parametrize("theme_config", [
+    {"keywords_matrix": [["storage"]]},
+    {"region": "", "keywords_matrix": [["storage"]]},
+])
+def test_discover_articles_leaves_keywords_unprefixed_when_region_is_missing_or_empty(theme_config):
+    from src.agent1_discovery import discover_articles
+    from src.search_tool import SearchTool
+
+    class FakeSearchTool(SearchTool):
+        def __init__(self):
+            self.search_queries = []
+
+        def search(self, keyword):
+            self.search_queries.append(keyword)
+            return []
+
+    searcher = FakeSearchTool()
+
+    discover_articles(theme_config, searcher)
+
+    assert searcher.search_queries == ["storage"]
