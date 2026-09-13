@@ -37,7 +37,7 @@ def test_nordic_education_theme_drives_search_extraction_and_rendering_without_c
     theme_config = config_loader.load_theme_config("nordic_education")
 
     assert theme_config["theme_id"] == "nordic_education"
-    assert theme_config["region"] == "北欧"
+    assert theme_config["region"] == ["Sweden", "Finland", "Denmark", "Iceland", "Norway"]
     assert theme_config["verticals"]["education"] == {
         "icon": "🎓",
         "label": "教育",
@@ -46,8 +46,14 @@ def test_nordic_education_theme_drives_search_extraction_and_rendering_without_c
 
     search_tool = FakeSearchTool()
     discover_articles(theme_config, search_tool)
-    assert search_tool.queries
-    assert all(query.startswith("北欧 ") for query in search_tool.queries)
+    expected_queries = [
+        f"{country} {keyword}"
+        for keyword_group in theme_config["keywords_matrix"]
+        for keyword in keyword_group
+        for country in theme_config["region"]
+    ]
+    assert search_tool.queries == expected_queries
+    assert len(search_tool.queries) == 60
 
     article = RawArticle(
         "https://example.com/education",

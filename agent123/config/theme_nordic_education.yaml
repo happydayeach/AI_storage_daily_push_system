@@ -1,12 +1,12 @@
 theme_id: "nordic_education"
 theme_name: "北欧存储·教育行业"
-region: "北欧"
+region: ["Sweden", "Finland", "Denmark", "Iceland", "Norway"]
 relevance_theme: "北欧存储与教育信息化产业（数据存储、云存储、数据中心、数据保护、分布式存储、NAND、SSD、智慧校园、在线教育数据存储）"
 keywords_matrix:
-  - ["数据存储", "云存储", "数据中心", "数据保护"]
-  - ["分布式存储", "边缘存储", "多云", "数据湖"]
-  - ["闪存", "NAND", "SSD", "存储芯片"]
-  - ["教育信息化", "智慧校园", "在线教育数据存储", "教育数据保护"]
+  - ["data storage", "cloud storage", "data center"]
+  - ["distributed storage", "edge computing", "data lake"]
+  - ["flash storage", "NAND", "SSD"]
+  - ["education technology", "EdTech", "smart campus"]
 source_whitelist: []
 source_blacklist: ["reuters.com", "bloomberg.com", "ttplus.cn"]
 categories:

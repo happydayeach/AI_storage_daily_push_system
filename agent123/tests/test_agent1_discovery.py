@@ -1,7 +1,7 @@
 """
 被测目标：src/agent1_discovery.py
 依赖：src/search_tool.py（SearchTool、MockSearchTool）、src/models.py（RawArticle）
-覆盖场景：黑名单过滤、时间戳容错与关键词搜索失败隔离
+覆盖场景：黑名单过滤、时间戳容错、关键词搜索失败隔离，以及 region 空值/单值/列表的稳定检索顺序与笛卡尔积。
 """
 
 import logging
@@ -162,3 +162,33 @@ def test_discover_articles_leaves_keywords_unprefixed_when_region_is_missing_or_
     discover_articles(theme_config, searcher)
 
     assert searcher.search_queries == ["storage"]
+
+
+def test_discover_articles_searches_every_region_keyword_pair_in_stable_order():
+    from src.agent1_discovery import discover_articles
+    from src.search_tool import SearchTool
+
+    class FakeSearchTool(SearchTool):
+        def __init__(self):
+            self.search_queries = []
+
+        def search(self, keyword):
+            self.search_queries.append(keyword)
+            return []
+
+    searcher = FakeSearchTool()
+
+    discover_articles(
+        {
+            "region": ["Sweden", "Finland"],
+            "keywords_matrix": [["data storage", "cloud storage"], ["data storage"]],
+        },
+        searcher,
+    )
+
+    assert searcher.search_queries == [
+        "Sweden data storage",
+        "Finland data storage",
+        "Sweden cloud storage",
+        "Finland cloud storage",
+    ]

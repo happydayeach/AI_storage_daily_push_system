@@ -22,13 +22,19 @@ def discover_articles(theme_config: Dict[str, Any], searcher: SearchTool) -> Lis
     news_searcher = NewsSearcher(searcher)
     keywords_matrix = theme_config.get("keywords_matrix", [])
     region = theme_config.get("region", "")
-    
-    # 展平并去重关键词
-    all_keywords = set()
+    if isinstance(region, str):
+        regions = [region] if region else []
+    else:
+        regions = list(region)
+
+    # 展平并去重关键词，同时保留配置中的稳定顺序。
+    all_keywords = []
+    seen_keywords = set()
     for group in keywords_matrix:
         for kw in group:
-            all_keywords.add(kw)
-    all_keywords = list(all_keywords)
+            if kw not in seen_keywords:
+                seen_keywords.add(kw)
+                all_keywords.append(kw)
     
     logger.info(f"Searching with keywords: {all_keywords}")
     
@@ -38,43 +44,44 @@ def discover_articles(theme_config: Dict[str, Any], searcher: SearchTool) -> Lis
     seen_urls = set()
     
     for kw in all_keywords:
-        search_keyword = f"{region} {kw}" if region else kw
-        logger.info(f"Searching: {search_keyword}")
-        try:
-            results = news_searcher.search_keyword(search_keyword)
-        except Exception as error:
-            logger.error("Search failed for keyword %r: %s", kw, error)
-            continue
-        for item in results:
-            url = item.url
-            if not url or url in seen_urls:
+        search_keywords = [f"{item} {kw}" for item in regions] if regions else [kw]
+        for search_keyword in search_keywords:
+            logger.info(f"Searching: {search_keyword}")
+            try:
+                results = news_searcher.search_keyword(search_keyword)
+            except Exception as error:
+                logger.error("Search failed for keyword %r: %s", search_keyword, error)
                 continue
-            seen_urls.add(url)
-            domain = item.domain.lower()
-            if domain in blacklist or (whitelist and domain not in whitelist):
-                continue
-            
-            # 发布时间容错
-            pub_time = item.published_at
-            if pub_time:
-                try:
-                    dt = datetime.fromisoformat(pub_time.replace("Z", "+00:00"))
-                    if dt.tzinfo is None:
-                        dt = dt.replace(tzinfo=timezone.utc)
-                    # 如果超出 48 小时，丢弃（严格过滤）
-                    if (datetime.now(timezone.utc) - dt) > timedelta(hours=48):
-                        continue
-                except Exception as e:
-                    logger.warning("Could not parse publication time %r for %s: %s", pub_time, url, e)  # 保留，让后续处理
-            
-            raw = RawArticle(
-                url=url,
-                title=item.title,
-                snippet=item.snippet,
-                published_at=pub_time or datetime.now(timezone.utc).isoformat(),
-                domain=domain
-            )
-            raw_articles.append(raw)
-    
+            for item in results:
+                url = item.url
+                if not url or url in seen_urls:
+                    continue
+                seen_urls.add(url)
+                domain = item.domain.lower()
+                if domain in blacklist or (whitelist and domain not in whitelist):
+                    continue
+
+                # 发布时间容错
+                pub_time = item.published_at
+                if pub_time:
+                    try:
+                        dt = datetime.fromisoformat(pub_time.replace("Z", "+00:00"))
+                        if dt.tzinfo is None:
+                            dt = dt.replace(tzinfo=timezone.utc)
+                        # 如果超出 48 小时，丢弃（严格过滤）
+                        if (datetime.now(timezone.utc) - dt) > timedelta(hours=48):
+                            continue
+                    except Exception as e:
+                        logger.warning("Could not parse publication time %r for %s: %s", pub_time, url, e)  # 保留，让后续处理
+
+                raw = RawArticle(
+                    url=url,
+                    title=item.title,
+                    snippet=item.snippet,
+                    published_at=pub_time or datetime.now(timezone.utc).isoformat(),
+                    domain=domain
+                )
+                raw_articles.append(raw)
+
     logger.info(f"Discovered {len(raw_articles)} unique articles after dedup.")
     return raw_articles
