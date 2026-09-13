@@ -25,6 +25,7 @@ def extract_event(article: RawArticle, llm_client: LLMClient) -> Optional[Extrac
 - "key_numbers": 关键数字或日期列表（如金额、百分比、发布日期）。
 - "summary_zh": 用中文转述摘要，严禁逐句引用原文，必须用自己的话重新组织，控制在 100-150 字。
 - "category": 分类，从 ["产业热点", "垂直行业热点", "监管与合规", "产品与技术"] 中选择一个最合适的。
+- "relevant": 布尔值。判断这篇新闻是否与“存储产业”直接相关——相关主题包括：数据存储、云存储、闪存、NAND、SSD、存储芯片、DRAM、分布式存储、边缘存储、数据湖、企业级存储、以及数据保护/GDPR（存储数据合规）。若新闻属于纯金融/证券合规、博彩、家庭教育、体育、医药、政治等与存储无关的主题，填 false。
 
 **只输出 JSON，不要有其他任何文字。**
 """
@@ -43,6 +44,9 @@ def extract_event(article: RawArticle, llm_client: LLMClient) -> Optional[Extrac
         if clean.endswith("```"):
             clean = clean[:-3]
         data = json.loads(clean)
+        if data.get("relevant") is False:
+            logger.info(f"Skipping irrelevant article: {article.url}")
+            return None
         entities = data.get("entities", [])
         if not isinstance(entities, list):
             entities = []

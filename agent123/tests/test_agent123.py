@@ -332,6 +332,74 @@ def test_extract_event_parses_fixed_json_from_mocked_client():
     assert event == ExtractedEvent("产品发布", ["Acme"], ["10%"], "Acme 发布了新存储产品。", "产品与技术", article.url, article.published_at, article.domain, article.title, article.snippet)
 
 
+def test_extract_event_discards_article_marked_irrelevant(caplog):
+    from src.agent2_extraction import extract_event
+
+    class FakeLLM:
+        def chat(self, **kwargs):
+            return '{"relevant":false,"event_type":"其他","entities":[],"key_numbers":[],"summary_zh":"博彩软文。","category":"产业热点"}'
+
+    article = RawArticle("https://spam.example/article", "博彩", "SEO spam", "2026-09-06T01:00:00", "spam.example")
+
+    with caplog.at_level(logging.INFO, logger="src.agent2_extraction"):
+        event = extract_event(article, FakeLLM())
+
+    assert event is None
+    assert "Skipping irrelevant article" in caplog.text
+
+
+@pytest.mark.parametrize("relevant", [True, None, 0, "false"])
+def test_extract_event_keeps_relevant_or_unclassified_article(relevant):
+    from src.agent2_extraction import extract_event
+
+    class FakeLLM:
+        def chat(self, **kwargs):
+            data = {
+                "event_type": "产品发布",
+                "entities": ["Acme"],
+                "key_numbers": [],
+                "summary_zh": "Acme 发布了新存储产品。",
+                "category": "产品与技术",
+            }
+            if relevant is not None:
+                data["relevant"] = relevant
+            import json
+            return json.dumps(data, ensure_ascii=False)
+
+    article = RawArticle("https://example.com/product", "New product", "Details", "2026-09-06T01:00:00", "example.com")
+
+    event = extract_event(article, FakeLLM())
+
+    assert event is not None
+    assert event.title == article.title
+
+
+def test_process_articles_keeps_only_relevant_extracted_events():
+    from src.agent2_extraction import process_articles
+
+    class FakeLLM:
+        def chat(self, **kwargs):
+            relevant = "spam" not in kwargs["prompt"]
+            import json
+            return json.dumps({
+                "relevant": relevant,
+                "event_type": "产品发布",
+                "entities": [],
+                "key_numbers": [],
+                "summary_zh": "存储新闻。",
+                "category": "产品与技术",
+            }, ensure_ascii=False)
+
+    articles = [
+        RawArticle("https://spam.example/article", "spam", "博彩", "2026-09-06T01:00:00", "spam.example"),
+        RawArticle("https://storage.example/article", "Storage", "存储", "2026-09-06T01:00:00", "storage.example"),
+    ]
+
+    events = process_articles(articles, FakeLLM())
+
+    assert [event.source_url for event in events] == ["https://storage.example/article"]
+
+
 @pytest.mark.parametrize(
     ("provider", "expected_model", "expected_api_key", "expected_base_url"),
     [
