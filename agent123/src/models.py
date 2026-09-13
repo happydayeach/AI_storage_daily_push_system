@@ -23,6 +23,8 @@ class ExtractedEvent:
     domain: str
     title: str = ""
     snippet: str = ""
+    industry: str = ""
+    vertical: str = ""
 
 
 @dataclass

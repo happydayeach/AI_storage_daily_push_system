@@ -26,6 +26,8 @@ def extract_event(article: RawArticle, llm_client: LLMClient) -> Optional[Extrac
 - "summary_zh": 用中文转述摘要，严禁逐句引用原文，必须用自己的话重新组织，控制在 100-150 字。
 - "category": 分类，从 ["产业热点", "垂直行业热点", "监管与合规", "产品与技术"] 中选择一个最合适的。
 - "relevant": 布尔值。判断这篇新闻是否与“存储产业”直接相关——相关主题包括：数据存储、云存储、闪存、NAND、SSD、存储芯片、DRAM、分布式存储、边缘存储、数据湖、企业级存储、以及数据保护/GDPR（存储数据合规）。若新闻属于纯金融/证券合规、博彩、家庭教育、体育、医药、政治等与存储无关的主题，填 false。
+- "industry": 产业标签，从 ["flash", "distributed", "data-protection"] 选一个，不属于任何产业填 ""。判断标准：flash=闪存存储硬件（NAND/SSD/存储芯片/DRAM/闪存价格产能技术）；distributed=分布式存储（分布式存储/边缘存储/多云/数据湖）；data-protection=数据保护（数据保护/GDPR/数据合规/数据主权/云存储合规）。
+- "vertical": 行业标签，从 ["finance", "healthcare", "manufacturing", "retail", "government", "telco"] 选一个，不涉及特定垂直行业填 ""。对应：金融/医疗/制造/零售/政府/运营商。
 
 **只输出 JSON，不要有其他任何文字。**
 """
@@ -53,6 +55,12 @@ def extract_event(article: RawArticle, llm_client: LLMClient) -> Optional[Extrac
         key_numbers = data.get("key_numbers", [])
         if not isinstance(key_numbers, list):
             key_numbers = []
+        industry = data.get("industry", "")
+        if not isinstance(industry, str):
+            industry = ""
+        vertical = data.get("vertical", "")
+        if not isinstance(vertical, str):
+            vertical = ""
         
         event = ExtractedEvent(
             event_type=data.get("event_type", "其他"),
@@ -64,7 +72,9 @@ def extract_event(article: RawArticle, llm_client: LLMClient) -> Optional[Extrac
             published_at=article.published_at,
             domain=article.domain,
             title=article.title,
-            snippet=article.snippet
+            snippet=article.snippet,
+            industry=industry,
+            vertical=vertical,
         )
         return event
     except Exception as e:
