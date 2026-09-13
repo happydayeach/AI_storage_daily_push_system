@@ -2,6 +2,7 @@
   "tests/test_agent123.py::test_analyze_logs_error_and_skips_only_event_with_invalid_llm_json",
   "tests/test_agent123.py::test_analyze_new_event_searches_twice_and_returns_configured_sections",
   "tests/test_agent123.py::test_analyze_update_skips_search_and_generates_progress_from_history",
+  "tests/test_agent123.py::test_build_adapters_resolves_placeholders_skips_missing_and_dispatches_channels",
   "tests/test_agent123.py::test_data_models_match_the_specification",
   "tests/test_agent123.py::test_deduplicator_classifies_new_update_and_duplicate_without_model_download",
   "tests/test_agent123.py::test_deep_report_preserves_event_sections_and_update_history",
@@ -27,6 +28,9 @@
   "tests/test_agent123.py::test_mock_search_tool_returns_complete_raw_articles",
   "tests/test_agent123.py::test_mock_search_tool_returns_raw_articles_without_network",
   "tests/test_agent123.py::test_models_can_be_constructed_with_extracted_event_text_defaults",
+  "tests/test_agent123.py::test_push_all_continues_after_adapter_exception",
+  "tests/test_agent123.py::test_push_returns_false_for_transport_http_and_json_failures",
+  "tests/test_agent123.py::test_pushplus_adapter_posts_expected_json_and_accepts_success_response",
   "tests/test_agent123.py::test_qa_counts_valid_reports_and_records_one_located_issue_per_invalid_report",
   "tests/test_agent123.py::test_qa_rejects_an_empty_report_list",
   "tests/test_agent123.py::test_render_html_builds_complete_card_with_configured_icon_and_colors",
@@ -36,5 +40,7 @@
   "tests/test_agent123.py::test_save_story_store_updates_matching_story_without_duplicate_history_or_urls",
   "tests/test_agent123.py::test_tavily_search_tool_maps_results_to_raw_articles",
   "tests/test_agent123.py::test_tavily_search_tool_returns_empty_list_when_request_fails",
-  "tests/test_agent123.py::test_tavily_search_tool_without_credentials_raises_clear_error"
+  "tests/test_agent123.py::test_tavily_search_tool_without_credentials_raises_clear_error",
+  "tests/test_agent123.py::test_webhook_adapters_post_channel_specific_json[FeishuAdapter-https://feishu.example/hook-{\"StatusCode\": 0}-expected_payload1]",
+  "tests/test_agent123.py::test_webhook_adapters_post_channel_specific_json[WecomAdapter-https://wecom.example/hook-{\"errcode\": 0}-expected_payload0]"
 ]
