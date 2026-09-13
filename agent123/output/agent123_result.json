@@ -6,54 +6,88 @@
         "Meta",
         "Odense",
         "Denmark",
-        "data center",
-        "district-heating network"
+        "district-heating network",
+        "data center"
       ],
       "key_numbers": [
         "90%",
-        "2026-09-12T18:25:00+00:00"
+        "2026-09-12"
       ],
-      "summary_zh": "丹麦欧登塞的Meta数据中心将服务器冷却产生的热量直接输送给附近家庭，而非像通常那样浪费掉。服务器运行几乎将所有电力转化为热能，行业估计这一比例接近90%。这种模式依赖城市已有的区域供热网络，因为热量远距离传输损耗大，设施必须靠近现有管网。欧登塞在数据中心建成前就具备该基础设施，成为数据中心余热惠及社区的罕见案例。",
+      "summary_zh": "丹麦欧登塞的Meta数据中心将服务器运行产生的冷却余热直接输送给附近居民供暖。服务器几乎将所有电力以热量形式排出，行业估计这一比例接近90%。这种模式依赖城市拥有覆盖广泛的区域供热网络，且设施必须靠近现有管网。欧登塞在数据中心落地前已具备该基础设施，因此得以成功。在其他地区，尤其是美国，社区因土地使用、水资源消耗和电网压力对数据中心抵触情绪上升，泰国也提出类似反对。欧登塞成为数据中心余热惠及周边社区的罕见案例。",
       "category": "产业热点",
       "source_url": "https://www.techradar.com/pro/finally-some-good-usage-this-danish-data-center-is-providing-heat-to-power-thousands-of-household-radiators",
       "published_at": "2026-09-12T18:25:00+00:00",
       "domain": "techradar.com",
-      "title": "This Danish data center found a surprising way to heat homes instead of wasting its massive server-generated energy | TechRadar",
+      "title": "Danish data center is converting server heat into useful household energy",
       "snippet": "Data centers usually waste heat, but this Danish firm is taking a different route\n\nWhen you purchase through links on our site, we may earn an affiliate commission. Here’s how it works.\n\nData center\n\nA data center operated by Meta in Odense, Denmark is channeling its cooling heat straight into nearby homes.\n\nServer operations typically send almost all of their electricity out as warmth, with one industry estimate placing that figure near 90%. [...] Replicating this setup elsewhere depends heavily on one specific ingredient many cities simply lack entirely — a wide-reaching district-heating network.\n\nHeat cannot travel far without significant loss, meaning facilities must sit close to an existing distribution network.\n\nOdense already had that infrastructure in place before Meta's data center arrived on site, and this is part of the success of the system. [...] This situation stands out against a backdrop of growing resistance to data centers elsewhere, particularly in the United States.\n\nCommunities there have pushed back over land use, water consumption and strain on local electricity grids.\n\nThailand has raised similar objections recently, citing comparable pressure on its own limited resources.\n\nAmid that friction, Odense offers a rare example of data center heat actually benefiting the surrounding community.\n\nVia Science Blog",
-      "industry": "",
-      "vertical": ""
+      "industry": "general",
+      "vertical": "",
+      "title_zh": "丹麦数据中心将服务器热量转化为可用的家庭能源",
+      "structured_summary": "2026年9月，丹麦欧登塞，Meta运营的数据中心将服务器冷却产生的余热直接输送至附近家庭供暖。服务器运行几乎将所有电力以热量形式排出，行业估计该比例接近90%。该模式成功的关键在于欧登塞在数据中心落地前已建成覆盖广泛的区域供热网络，且设施靠近现有管网。结果：这一案例为数据中心余热回收提供了罕见范本，对存储行业而言，它提示数据中心在能耗与散热管理上的创新可降低运营成本并改善社区关系，可能推动存储基础设施向更绿色、更贴近城市能源系统的方向演进。"
+    },
+    {
+      "event_type": "其他",
+      "entities": [
+        "Verizon",
+        "Goldman Sachs Communacopia",
+        "Elisa",
+        "Gridle"
+      ],
+      "key_numbers": [
+        "2,000",
+        "150 MWh",
+        "2026-09-12"
+      ],
+      "summary_zh": "在2026年高盛Communacopia大会上，Verizon透露已就部分退役站点签署协议，预计明年从推理和边缘计算业务中获得可观收入。与此同时，芬兰运营商Elisa通过其Gridle平台，将2000多个电信站点和超过150兆瓦时的分布式电池容量整合为虚拟电厂，软件可计算网络弹性所需电量，并将剩余容量投入批发和平衡电力市场。",
+      "category": "产业热点",
+      "source_url": "https://sebastianbarros.substack.com/p/telcos-as-power-plants",
+      "published_at": "2026-09-12T22:00:00+00:00",
+      "domain": "sebastianbarros.substack.com",
+      "title": "Telcos as Power Plants?",
+      "snippet": "At Goldman Sachs Communacopia this week, he went further. Verizon is already signing agreements around some of those decommissioned sites and expects the business to start generating noticeable revenue from inference and edge computing next year. [...] Elisa has been working on a different model in Finland. Its Gridle platform manages more than 2,000 telecom sites and over 150 MWh of distributed battery capacity as a virtual power plant. The software calculates how much charge needs to remain available for network resilience and how much capacity can be used in wholesale and balancing electricity markets.\n\n## This post is for paid subscribers\n\nAlready a paid subscriber? Sign in\n\n© 2026 Sebastian Barros · Privacy ∙ Terms ∙ Collection notice [...] Start your SubstackGet the app\n\nSubstack is the home for great culture",
+      "industry": "distributed",
+      "vertical": "telco",
+      "title_zh": "电信运营商变身发电厂？",
+      "structured_summary": "2026年9月，在高盛Communacopia大会上，Verizon宣布已就退役站点签署协议，预计明年从推理和边缘计算中获得可观收入；同期芬兰Elisa通过Gridle平台将2000多个电信站点和150兆瓦时分布式电池容量整合为虚拟电厂，参与电力市场交易。该新闻表明电信基础设施正与边缘计算和能源管理融合，将推动边缘数据中心和分布式存储需求增长，对存储行业而言意味着边缘节点数据存储与保护市场将迎来新机遇。"
     },
     {
       "event_type": "其他",
       "entities": [
         "Smart Sustainable Campus (SSC)",
         "Higher Education Institutions (HEIs)",
-        "Frontiers",
         "Netherlands",
         "Denmark",
         "U.S.",
-        "Middle East"
+        "Middle East",
+        "electric bus shuttles",
+        "smart parking",
+        "congestion pricing",
+        "cycling"
       ],
       "key_numbers": [
-        "2026-09-13T00:00:00+00:00"
+        "2015",
+        "2025",
+        "2026-09-13"
       ],
-      "summary_zh": "该研究探讨了智慧可持续校园（SSC）的全球发展趋势与挑战。高校正从传统碎片化管理转向融合数字创新与生态理念的运营模式。荷兰和丹麦高校侧重自行车出行，而美国和中东地区则更关注电动巴士与智能停车，部分校园还通过拥堵收费限制燃油车。研究指出，SSC转型不仅是技术升级，更是高校可持续发展理念与运营方式的根本性变革。",
+      "summary_zh": "该研究探讨了全球高校向智慧可持续校园转型的趋势与挑战。荷兰和丹麦高校以自行车出行为主，而美国和中东地区更侧重电动班车与智能停车，部分校园还实施拥堵收费或车辆限行。研究指出，从传统校园向智慧可持续校园转变不仅是技术升级，更是高校在可持续发展观念和运营模式上的根本性变革，需打破设施管理、学术部门与学生事务之间的信息孤岛，实现数据互通与目标共享。",
       "category": "垂直行业热点",
       "source_url": "https://www.frontiersin.org/journals/sustainable-cities/articles/10.3389/frsc.2026.1747438/full",
       "published_at": "2026-09-13T00:00:00+00:00",
       "domain": "frontiersin.org",
-      "title": "Frontiers | Sustainable development strategies for smart sustainable campus operations: global trends, challenges and opportunities",
-      "snippet": "lifestyle (Okeniyi et al., 2018). Universities in Netherlands and Denmark lead in incorporating of cycling as a mode of transportation. In comparison, institutions in automobile-centred areas such as the U.S. and the Middle East pay more attention to electric bus shuttles and smart parking (Amr et al., 2021). Congestion pricing or bans on access to specific vehicles are in place in some campuses to minimise the use of vehicles that use internal combustion (Pan et al., 2023). Mobile applications [...] The emergence of Smart Sustainable Campus (SSC) represents a significant evolution in how higher education institutions (HEIs) will address challenges related to global sustainability (Hariram et al., 2023). Rooted in the principles of sustainable development, SSCs represent an institutional transition embedded with digital innovation and ecologically oriented campus activities (Santos, 2024). Factors such as environmental concerns, technological development, and international sustainability [...] According to Malagnino et al. (2021), transitioning from a conventional campus to a Smart Sustainable Campus (SSC) is not just about technology; it is a paradigmatic shift of how HEIs view and operationalise sustainability. Traditional campuses operate on fragmented systems in which facilities management, academic departments, and student affairs feel like silos, with no shared sustainability objectives or interoperable sustainability data (González-García et al., 2023). Such campuses are",
-      "industry": "",
-      "vertical": "education"
+      "title": "Sustainable development strategies for smart sustainable campus operations: global trends, challenges and opportunities",
+      "snippet": "lifestyle (Okeniyi et al., 2018). Universities in Netherlands and Denmark lead in incorporating of cycling as a mode of transportation. In comparison, institutions in automobile-centred areas such as the U.S. and the Middle East pay more attention to electric bus shuttles and smart parking (Amr et al., 2021). Congestion pricing or bans on access to specific vehicles are in place in some campuses to minimise the use of vehicles that use internal combustion (Pan et al., 2023). Mobile applications [...] According to Malagnino et al. (2021), transitioning from a conventional campus to a Smart Sustainable Campus (SSC) is not just about technology; it is a paradigmatic shift of how HEIs view and operationalise sustainability. Traditional campuses operate on fragmented systems in which facilities management, academic departments, and student affairs feel like silos, with no shared sustainability objectives or interoperable sustainability data (González-García et al., 2023). Such campuses are [...] combinations of the words, such as; (“smart sustainable campus” OR “smart campus” OR “sustainable campus”) AND (“energy management” OR “waste management” OR “water management” OR “infrastructure” OR “mobility”) AND (“higher education” OR “university” OR “college”). The search was restricted to English-language peer-reviewed journal articles and conference papers published between 2015 and 2025 to capture contemporary developments while allowing temporal breadth for trend identification.",
+      "industry": "general",
+      "vertical": "education",
+      "title_zh": "智慧可持续校园运营的可持续发展策略：全球趋势、挑战与机遇",
+      "structured_summary": "2026年9月，发表在frontiersin.org上的一项研究分析了2015至2025年间全球高校智慧可持续校园运营策略。起因是传统校园系统碎片化、缺乏共享可持续发展目标。研究通过文献综述比较了不同地区高校在交通、能源、废物和水管理等方面的实践，发现荷兰和丹麦以自行车为主导，美国和则侧重电动班车与智能停车。结果揭示了向智慧可持续校园转型需要技术与制度双重变革。该研究对存储行业影响有限，但智慧校园的数据整合需求可能间接推动教育领域对分布式存储和数据保护方案的关注。"
     }
   ],
   "update": [],
   "duplicate_dropped_count": 0,
   "qa": {
     "passed": true,
-    "valid": 2,
-    "total": 2,
+    "valid": 3,
+    "total": 3,
     "issues": []
   }
 }
