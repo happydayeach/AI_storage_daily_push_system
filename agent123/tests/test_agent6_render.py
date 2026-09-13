@@ -143,7 +143,7 @@ def test_render_html_falls_back_to_original_title_and_skips_empty_structured_sum
     assert "📋 一段话总结" not in html
 
 
-def test_render_push_message_renders_escaped_html_card_with_configured_icon():
+def test_render_push_message_renders_escaped_html_card_with_frontend_and_source_links():
     from src.agent6_render import render_push_message
     from src.models import DeepReport
 
@@ -157,15 +157,48 @@ def test_render_push_message_renders_escaped_html_card_with_configured_icon():
 
     message = render_push_message(
         [report],
-        {"categories": ["产业热点"], "icon_map": {"合作": "🤝"}, "theme_colors": {"primary": "#123456", "accent": "#abcdef"}},
+        {
+            "categories": ["产业热点"],
+            "frontend_url": 'https://brief.example/daily?theme="storage"&lang=zh',
+            "icon_map": {"合作": "🤝"},
+            "theme_colors": {"primary": "#123456", "accent": "#abcdef"},
+        },
     )
 
     assert message == (
         '<div><b>🤝 Acme &lt;Storage&gt; &amp; &quot;Contoso&quot; 合作</b><br>'
         '<font color="#8a8a8a">｜产业 &amp; 市场</font><br>'
         '摘要含 &lt;标签&gt; &amp; &quot;引号&quot;<br>'
-        '<a href="https://source.example/article?filter=&quot;one&quot;&amp;sort=desc">🔗 查看原文</a></div>'
+        '<a href="https://brief.example/daily?theme=&quot;storage&quot;&amp;lang=zh">🔗 查看完整简报</a><br>'
+        '<a href="https://source.example/article?filter=&quot;one&quot;&amp;sort=desc">📄 原文</a></div>'
     )
+
+
+def test_render_push_message_omits_frontend_link_when_config_is_missing():
+    from src.agent6_render import render_push_message
+    from src.models import DeepReport
+
+    event = make_event("推送摘要")
+    event.source_url = "https://source.example/article"
+
+    message = render_push_message([DeepReport(event, {}, False)], {})
+
+    assert "查看完整简报" not in message
+    assert '<a href="https://source.example/article">📄 原文</a>' in message
+
+
+def test_render_push_message_degrades_when_frontend_url_is_null_or_blank():
+    from src.agent6_render import render_push_message
+    from src.models import DeepReport
+
+    event = make_event("推送摘要")
+    event.source_url = "https://source.example/article"
+
+    for frontend_url in (None, "   "):
+        message = render_push_message([DeepReport(event, {}, False)], {"frontend_url": frontend_url})
+
+        assert "查看完整简报" not in message
+        assert '<a href="https://source.example/article">📄 原文</a>' in message
 
 
 def test_render_push_message_prefers_chinese_title_and_falls_back_to_original_title():
