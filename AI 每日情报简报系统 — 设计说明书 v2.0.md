@@ -427,9 +427,7 @@ python -c "from src.search_tool import TavilySearchTool; print(TavilySearchTool(
 | :--- | :--- | :--- |
 | `DEEPSEEK_API_KEY` | ✅ | DeepSeek API 密钥 |
 | `TAVILY_API_KEY` | ✅ | Tavily 搜索 API 密钥 |
-| `PUSHPLUS_TOKEN` | ❌ | pushplus 推送 token（Agent 7 使用） |
-| `WECOM_WEBHOOK` | ❌ | 企业微信机器人 Webhook（Agent 7 使用） |
-| `FEISHU_WEBHOOK` | ❌ | 飞书机器人 Webhook（Agent 7 使用） |
+| `PUSHPLUS_TOKEN` | ❌ | Pushplus 推送 token（Agent 7 使用）；飞书和企业微信通过 Pushplus 的 `channel`/`option` 参数送达 |
 
 ---
 

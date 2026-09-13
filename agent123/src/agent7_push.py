@@ -18,6 +18,8 @@ class PushAdapter(ABC):
     """Common interface for outbound push channels."""
 
     channel: str
+    send_channel: str
+    option: str | None
 
     @abstractmethod
     def push(self, message: str, title: str = _DEFAULT_TITLE) -> bool:
@@ -97,9 +99,10 @@ def push_all(adapters: List[PushAdapter], message: str, title: str = _DEFAULT_TI
     """Push a briefing to every adapter without one failure stopping others."""
     results = {}
     for adapter in adapters:
+        key = adapter.send_channel if not adapter.option else f"{adapter.send_channel}:{adapter.option}"
         try:
-            results[adapter.channel] = adapter.push(message, title)
+            results[key] = adapter.push(message, title)
         except Exception as error:
-            logger.warning("%s push raised unexpectedly: %s", adapter.channel, error)
-            results[adapter.channel] = False
+            logger.warning("%s push raised unexpectedly: %s", key, error)
+            results[key] = False
     return results

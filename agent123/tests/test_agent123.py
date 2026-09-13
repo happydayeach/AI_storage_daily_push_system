@@ -754,12 +754,16 @@ def test_push_all_continues_after_adapter_exception():
 
     class FailingAdapter(PushAdapter):
         channel = "failing"
+        send_channel = "failing"
+        option = None
 
         def push(self, message, title="每日情报简报"):
             raise OSError("broken")
 
     class SuccessfulAdapter(PushAdapter):
         channel = "successful"
+        send_channel = "successful"
+        option = None
 
         def __init__(self):
             self.calls = []
@@ -775,6 +779,22 @@ def test_push_all_continues_after_adapter_exception():
         "successful": True,
     }
     assert successful.calls == [("briefing", "Custom title")]
+
+
+def test_push_all_distinguishes_pushplus_downstream_targets(monkeypatch):
+    from src.agent7_push import PushplusAdapter, push_all
+
+    monkeypatch.setattr(PushplusAdapter, "push", lambda self, message, title: True)
+
+    results = push_all(
+        [
+            PushplusAdapter("token", send_channel="wechat"),
+            PushplusAdapter("token", send_channel="webhook", option="feishu"),
+        ],
+        "briefing",
+    )
+
+    assert results == {"wechat": True, "webhook:feishu": True}
 
 
 def test_main_continues_after_qa_failure_and_writes_rendered_outputs(monkeypatch, tmp_path):
