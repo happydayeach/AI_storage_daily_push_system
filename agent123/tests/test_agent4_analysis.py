@@ -1,7 +1,7 @@
 """
 被测目标：src/agent4_analysis.py
 依赖：src/models.py（DedupResult、ExtractedEvent）
-覆盖场景：新事件双检索、更新历史分析与无效 JSON 容错
+覆盖场景：新事件双检索、更新历史分析、主题配置驱动的 prompt 与无效 JSON 容错
 """
 
 import logging
@@ -90,6 +90,48 @@ def test_analyze_update_skips_search_and_generates_progress_from_history():
     assert reports[0].sections == {"新进展": "项目已进入部署阶段"}
     assert reports[0].is_update is True
     assert reports[0].history_summary == "此前已宣布项目立项"
+
+
+def test_analyze_uses_custom_theme_and_update_section_names_in_prompts():
+    from src.agent4_analysis import analyze
+
+    class SearchTool:
+        def search(self, keyword):
+            return []
+
+    class FakeLLM:
+        def __init__(self):
+            self.calls = []
+
+        def chat(self, **kwargs):
+            self.calls.append(kwargs)
+            if "新动态" in kwargs["prompt"]:
+                return '{"新动态":"项目已进入部署阶段"}'
+            return '{"背景":"背景内容"}'
+
+    theme_config = {
+        "theme_name": "北欧存储·教育行业",
+        "update_section_name": "新动态",
+        "analysis_template_sections": ["背景"],
+    }
+    llm = FakeLLM()
+    reports = analyze(
+        DedupResult(
+            new=[make_event("新事件")],
+            update=[{"event": make_event("更新事件"), "history_summary": "此前进展"}],
+            duplicate_dropped_count=0,
+        ),
+        SearchTool(),
+        llm,
+        theme_config,
+    )
+
+    assert [call["system_prompt"] for call in llm.calls] == [
+        "你是专业的北欧存储·教育行业新闻分析师。仅依据提供的信息进行分析。",
+        "你是专业的北欧存储·教育行业新闻分析师。说明相对历史信息的新增进展。",
+    ]
+    assert '格式为 {"新动态":"段落正文"}' in llm.calls[1]["prompt"]
+    assert reports[1].sections == {"新动态": "项目已进入部署阶段"}
 
 
 def test_analyze_logs_error_and_skips_only_event_with_invalid_llm_json(caplog):
