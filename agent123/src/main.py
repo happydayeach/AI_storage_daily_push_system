@@ -140,9 +140,9 @@ def main():
     )
 
     # 9. Agent 6: 渲染
-    os.makedirs("output", exist_ok=True)
+    os.makedirs("docs", exist_ok=True)
     html = render_html(reports, theme_config)
-    with open("output/briefing.html", "w", encoding="utf-8") as f:
+    with open("docs/index.html", "w", encoding="utf-8") as f:
         f.write(html)
     push_message = render_push_message(reports, theme_config)
 

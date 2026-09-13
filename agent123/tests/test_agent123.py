@@ -1,8 +1,10 @@
 import logging
 from datetime import datetime, timedelta, timezone
+from pathlib import Path
 from unittest.mock import mock_open
 
 import pytest
+import yaml
 
 from src.models import DedupResult, ExtractedEvent, RawArticle, StoryRecord
 
@@ -835,10 +837,33 @@ def test_main_continues_after_qa_failure_and_writes_rendered_outputs(monkeypatch
     main.main()
 
     output = tmp_path / "output"
-    assert (output / "briefing.html").is_file()
+    assert (tmp_path / "docs" / "index.html").is_file()
     saved = json.loads((output / "agent123_result.json").read_text(encoding="utf-8"))
     assert saved["qa"] == {"passed": False, "valid": 0, "total": 1, "issues": ["报告 Acme 动态 缺少或为空: sections.背景"]}
     assert len(requests) == 1
+
+
+def test_daily_workflow_is_valid_and_configures_scheduled_secret_backed_pipeline():
+    workflow_path = Path(__file__).resolve().parents[2] / ".github" / "workflows" / "daily.yml"
+
+    assert workflow_path.is_file()
+    workflow_text = workflow_path.read_text(encoding="utf-8")
+    workflow = yaml.safe_load(workflow_text)
+    triggers = workflow.get("on", workflow.get(True))
+
+    assert triggers["schedule"] == [{"cron": "0 6 * * *"}]
+    assert triggers["workflow_dispatch"] == {}
+    assert workflow["jobs"]["briefing"]["permissions"] == {"contents": "write"}
+    assert "LLM_PROVIDER: deepseek" in workflow_text
+    assert "git add docs/ output/" in workflow_text
+    for secret_name in (
+        "DEEPSEEK_API_KEY",
+        "TAVILY_API_KEY",
+        "PUSHPLUS_TOKEN",
+        "WECOM_WEBHOOK",
+        "FEISHU_WEBHOOK",
+    ):
+        assert f"${{{{ secrets.{secret_name} }}}}" in workflow_text
 
 
 def test_build_adapters_skips_none_credentials_and_null_targets():
