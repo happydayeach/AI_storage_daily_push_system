@@ -237,6 +237,21 @@ def test_render_html_renders_default_general_industry_tag():
     assert "📦 通用" in html
 
 
+def test_render_html_renders_nordic_general_industry_label_and_summary():
+    from src.agent6_render import render_html
+    from src.config_loader import load_theme_config
+    from src.models import DeepReport
+
+    event = make_event("通用存储摘要")
+    event.industry = "general"
+    report = DeepReport(event, {"背景": "企业存储管理软件更新。"}, False)
+
+    html = render_html([report], load_theme_config("nordic_education"))
+
+    assert "📦 通用" in html
+    assert "覆盖产业：通用" in html
+
+
 def test_render_html_uses_configured_page_title_in_all_template_heading_locations():
     from src.agent6_render import render_html
 

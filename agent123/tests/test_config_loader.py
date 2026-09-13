@@ -52,6 +52,16 @@ def test_get_industries_includes_default_general_storage_tag():
     }
 
 
+def test_load_nordic_education_config_includes_explicit_general_industry():
+    industries = get_industries(load_theme_config("nordic_education"))
+
+    assert industries["general"] == {
+        "icon": "📦",
+        "label": "通用",
+        "desc": "存储相关但不属于闪存/分布式/数据保护",
+    }
+
+
 def test_get_categories_normalizes_legacy_string_list():
     categories = get_categories({"categories": ["产业热点", "垂直行业热点", "监管与合规", "产品与技术"]})
 

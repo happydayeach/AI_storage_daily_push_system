@@ -67,6 +67,31 @@ def test_extract_event_keeps_general_for_storage_related_article_outside_three_i
     assert "存储相关但不属于闪存/分布式/数据保护" in llm.prompt
 
 
+@pytest.mark.parametrize(
+    ("industries", "expects_general_rule"),
+    [
+        ({"general": {"label": "通用", "desc": "其他存储"}}, True),
+        ({"flash": {"label": "闪存", "desc": "闪存存储"}}, False),
+    ],
+)
+def test_extract_event_includes_general_rule_only_when_theme_declares_general(industries, expects_general_rule):
+    from src.agent2_extraction import extract_event
+
+    class FakeLLM:
+        def __init__(self):
+            self.prompt = ""
+
+        def chat(self, **kwargs):
+            self.prompt = kwargs["prompt"]
+            return '{"relevant":true,"event_type":"其他","entities":[],"key_numbers":[],"summary_zh":"存储新闻。","category":"产业热点"}'
+
+    llm = FakeLLM()
+    article = RawArticle("https://example.com/storage", "Storage", "Details", "2026-09-06T01:00:00", "example.com")
+
+    assert extract_event(article, llm, {"industries": industries}) is not None
+    assert ("存储相关但不属于上述三类的填 \"general\"" in llm.prompt) is expects_general_rule
+
+
 def test_extract_event_defaults_missing_industry_and_vertical_tags_to_empty_strings():
     from src.agent2_extraction import extract_event
 

@@ -36,6 +36,10 @@ industries:
     icon: "📀"
     label: "数据保护"
     desc: "数据保护/GDPR/数据合规/数据主权"
+  general:
+    icon: "📦"
+    label: "通用"
+    desc: "存储相关但不属于闪存/分布式/数据保护"
 verticals:
   finance:
     icon: "💰"
