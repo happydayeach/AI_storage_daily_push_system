@@ -171,11 +171,19 @@ def render_html(reports: List[DeepReport], theme_config: dict) -> str:
 
 
 def render_push_message(reports: List[DeepReport], theme_config: dict) -> str:
-    """Return one concise plain-text push block for each report."""
+    """Return one escaped HTML push card for each report."""
     blocks = []
     for report in reports:
         event = report.event
         icon = _icon_for(report, theme_config)
-        title = event.title_zh or event.title or event.summary_zh
-        blocks.append(f"{icon} {title}｜{event.category}\n{event.summary_zh}\n{event.source_url}")
-    return "\n\n".join(blocks)
+        title = escape(event.title_zh or event.title or event.summary_zh)
+        category = escape(event.category)
+        summary = escape(event.summary_zh)
+        source_url = escape(event.source_url, quote=True)
+        blocks.append(
+            f'<div><b>{icon} {title}</b><br>'
+            f'<font color="#8a8a8a">｜{category}</font><br>'
+            f'{summary}<br>'
+            f'<a href="{source_url}">🔗 查看原文</a></div>'
+        )
+    return "<br><br>".join(blocks)

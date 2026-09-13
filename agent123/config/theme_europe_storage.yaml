@@ -17,3 +17,4 @@ theme_colors: {primary: "#1a5fb4", accent: "#e66100"}
 icon_map: {财报: "📈", 产品发布: "🚀", 监管: "⚖️", 合作: "🤝", 并购: "🏦", 漏洞: "🔒", 其他: "📌"}
 push_targets:
   - channel: "wechat"  # Pushplus 默认微信渠道
+    template: "html"

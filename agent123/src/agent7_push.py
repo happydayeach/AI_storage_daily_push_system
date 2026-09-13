@@ -57,10 +57,11 @@ class PushplusAdapter(_JsonWebhookAdapter):
 
     channel = "pushplus"
 
-    def __init__(self, token: str, send_channel: str = "wechat", option: str | None = None):
+    def __init__(self, token: str, send_channel: str = "wechat", option: str | None = None, template: str = "html"):
         self.token = token
         self.send_channel = send_channel
         self.option = option
+        self.template = template
 
     def push(self, message: str, title: str = _DEFAULT_TITLE) -> bool:
         return self._post(
@@ -69,7 +70,7 @@ class PushplusAdapter(_JsonWebhookAdapter):
                 "token": self.token,
                 "title": title,
                 "content": message,
-                "template": "txt",
+                "template": self.template,
                 "channel": self.send_channel,
                 **({"option": self.option} if self.option else {}),
             },
@@ -90,6 +91,7 @@ def build_adapters(theme_config: dict, env: Mapping[str, str] | None = None) -> 
             token,
             send_channel=target.get("channel", "wechat"),
             option=target.get("option"),
+            template=target.get("template", "html"),
         )
         for target in theme_config.get("push_targets") or []
     ]

@@ -143,13 +143,16 @@ def test_render_html_falls_back_to_original_title_and_skips_empty_structured_sum
     assert "📋 一段话总结" not in html
 
 
-def test_render_push_message_includes_configured_icon_title_category_summary_and_link():
+def test_render_push_message_renders_escaped_html_card_with_configured_icon():
     from src.agent6_render import render_push_message
     from src.models import DeepReport
 
     event = make_event("推送摘要")
     event.event_type = "合作"
-    event.title = "Acme 与 Contoso 合作"
+    event.title = 'Acme <Storage> & "Contoso" 合作'
+    event.category = "产业 & 市场"
+    event.summary_zh = "摘要含 <标签> & \"引号\""
+    event.source_url = 'https://source.example/article?filter="one"&sort=desc'
     report = DeepReport(event, {}, False)
 
     message = render_push_message(
@@ -157,9 +160,12 @@ def test_render_push_message_includes_configured_icon_title_category_summary_and
         {"categories": ["产业热点"], "icon_map": {"合作": "🤝"}, "theme_colors": {"primary": "#123456", "accent": "#abcdef"}},
     )
 
-    assert "🤝 Acme 与 Contoso 合作｜产业热点" in message
-    assert "推送摘要" in message
-    assert "https://source.example/article" in message
+    assert message == (
+        '<div><b>🤝 Acme &lt;Storage&gt; &amp; &quot;Contoso&quot; 合作</b><br>'
+        '<font color="#8a8a8a">｜产业 &amp; 市场</font><br>'
+        '摘要含 &lt;标签&gt; &amp; &quot;引号&quot;<br>'
+        '<a href="https://source.example/article?filter=&quot;one&quot;&amp;sort=desc">🔗 查看原文</a></div>'
+    )
 
 
 def test_render_push_message_prefers_chinese_title_and_falls_back_to_original_title():
@@ -177,10 +183,10 @@ def test_render_push_message_prefers_chinese_title_and_falls_back_to_original_ti
         {"icon_map": {}},
     )
 
-    first_block, second_block = message.split("\n\n")
-    assert first_block.startswith(" 中文推送标题｜产业热点\n")
+    first_block, second_block = message.split("<br><br>")
+    assert first_block.startswith("<div><b> 中文推送标题</b><br>")
     assert "Original English title" not in first_block
-    assert second_block.startswith(" Fallback English title｜产业热点\n")
+    assert second_block.startswith("<div><b> Fallback English title</b><br>")
 
 
 def test_render_html_uses_custom_tag_and_layout_configuration():

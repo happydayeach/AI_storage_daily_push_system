@@ -86,3 +86,4 @@ icon_map:
   其他: "📌"
 push_targets:
   - channel: "wechat"
+    template: "html"

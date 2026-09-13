@@ -48,7 +48,7 @@ def test_pushplus_adapter_posts_send_channel_and_option_and_accepts_success_resp
     assert captured == {
         "url": "https://www.pushplus.plus/send",
         "method": "POST",
-        "body": b'{"token": "pushplus-token", "title": "Custom title", "content": "briefing", "template": "txt", "channel": "webhook", "option": "webhook-code"}',
+        "body": b'{"token": "pushplus-token", "title": "Custom title", "content": "briefing", "template": "html", "channel": "webhook", "option": "webhook-code"}',
         "content_type": "application/json",
         "timeout": 15,
     }
@@ -84,7 +84,7 @@ def test_pushplus_adapter_omits_option_when_not_configured(monkeypatch):
         "token": "pushplus-token",
         "title": "每日情报简报",
         "content": "briefing",
-        "template": "txt",
+        "template": "html",
         "channel": "wechat",
     }
 
@@ -96,16 +96,16 @@ def test_build_adapters_uses_one_pushplus_adapter_per_target(caplog):
         {
             "push_targets": [
                 {"channel": "wechat"},
-                {"channel": "webhook", "option": "webhook-code"},
+                {"channel": "webhook", "option": "webhook-code", "template": "json"},
             ]
         },
         env={"PUSHPLUS_TOKEN": "environment-token"},
     )
 
     assert [type(adapter) for adapter in adapters] == [PushplusAdapter, PushplusAdapter]
-    assert [(adapter.token, adapter.send_channel, adapter.option) for adapter in adapters] == [
-        ("environment-token", "wechat", None),
-        ("environment-token", "webhook", "webhook-code"),
+    assert [(adapter.token, adapter.send_channel, adapter.option, adapter.template) for adapter in adapters] == [
+        ("environment-token", "wechat", None, "html"),
+        ("environment-token", "webhook", "webhook-code", "json"),
     ]
 
 
