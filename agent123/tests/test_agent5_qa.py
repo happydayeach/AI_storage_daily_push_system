@@ -39,6 +39,37 @@ def test_qa_counts_valid_reports_and_records_one_located_issue_per_invalid_repor
     assert "total=2" in caplog.text
 
 
+def test_qa_accepts_new_report_with_empty_competitor_signal_section():
+    from src.agent5_qa import qa
+
+    event = make_event("竞对布局缺失")
+    event.entities = ["Acme"]
+    event.title = "无厂商布局事件"
+
+    result = qa(
+        [
+            DeepReport(
+                event,
+                {
+                    "背景": "完整背景",
+                    "技术分析": "完整技术分析",
+                    "市场影响": "完整市场影响",
+                    "竞对信号": "",
+                },
+                False,
+            )
+        ],
+        {
+            "analysis_template_sections": ["背景", "技术分析", "市场影响", "竞对信号"],
+        },
+    )
+
+    assert result.passed is True
+    assert result.total == 1
+    assert result.valid == 1
+    assert result.issues == []
+
+
 def test_qa_accepts_update_report_with_only_configured_update_section():
     from src.agent5_qa import qa
 

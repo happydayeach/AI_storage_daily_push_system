@@ -7,12 +7,14 @@ from src.models import DeepReport, QAResult
 
 logger = logging.getLogger(__name__)
 
+OPTIONAL_EMPTY_SECTIONS = frozenset({"竞对信号"})
+
 
 def _report_issues(report: DeepReport, required_sections: List[str]) -> List[str]:
     missing = [
         f"sections.{section}"
         for section in required_sections
-        if not report.sections.get(section)
+        if section not in OPTIONAL_EMPTY_SECTIONS and not report.sections.get(section)
     ]
     event = report.event
     if not event.event_type:
