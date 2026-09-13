@@ -3,75 +3,172 @@
     {
       "event_type": "其他",
       "entities": [
-        "贵阳大数据交易所",
-        "数据合规护航计划",
-        "亚太网络法律研究中心",
-        "北京师范大学法学院",
-        "刘德良"
-      ],
-      "key_numbers": [
-        "2026-09-12T16:00:00+00:00",
-        "首期"
-      ],
-      "summary_zh": "贵阳大数据交易所主办的“数据合规护航计划”首期培训班已圆满结束。亚太网络法律研究中心创始人、北京师范大学法学院教授刘德良以“合规航标：数据合规理论基础”为主题授课，系统梳理了数据合规法规体系。该培训旨在提升数据合规领域的专业能力。",
-      "category": "监管与合规",
-      "source_url": "https://m.sohu.com/a/1075108184_121106687?scm=10001.325_13-325_13.0.0-0-0-0-0.5_1334",
-      "published_at": "2026-09-12T16:00:00+00:00",
-      "domain": "m.sohu.com",
-      "title": "贵阳大数据交易所主办！“数据合规护航计划” 首期培训班圆满收官",
-      "snippet": "亚太网络法律研究中心创始人、北京师范大学法学院教授刘德良以“合规航标：数据合规理论基础”为主题，将庞杂的数据合规法规体系抽丝剥茧，"
-    },
-    {
-      "event_type": "其他",
-      "entities": [
-        "艺博",
-        "DCMM",
-        "家庭教育平台"
+        "西部数据",
+        "WDC",
+        "HDD",
+        "AI",
+        "云",
+        "花旗2026全球TMT大会"
       ],
       "key_numbers": [
         "2026-09-12"
       ],
-      "summary_zh": "随着人工智能和数字化技术在家校服务、线上学习、智能测评等场景的深入应用，家庭教育平台积累了大量用户信息和家庭成长数据。艺博通过获得DCMM认证，在数字化转型过程中强化数据合规实践，以标准化的数据管理能力守护家庭隐私，为行业提供了数据安全与合规的参考案例。",
-      "category": "监管与合规",
-      "source_url": "https://cj.sina.cn/articles/view/2793767913/a68583e900101ma96?froms=ggmp&vt=4",
-      "published_at": "2026-09-12T16:00:00+00:00",
-      "domain": "cj.sina.cn",
-      "title": "数字化转型下的数据合规实践：艺博以 DCMM 认证守护家庭隐私",
-      "snippet": "随着人工智能、数字化技术深度融入各领域，家校服务、线上学习、智能测评、校园共育等场景持续落地，家庭教育平台承载的用户信息、家庭成长数据、"
+      "summary_zh": "西部数据CFO在花旗2026全球TMT大会上发表演讲，指出公司正将HDD业务从依赖传统消费PC周期的模式，转型为面向AI与云时代长期结构性增长的关键数据存储基础设施供应商。这一重新定位凸显了HDD在企业级存储中的战略价值。",
+      "category": "产业热点",
+      "source_url": "https://m.sohu.com/a/1075370783_122014422?scm=10001.325_13-325_13.0.0-0-0-0-0.5_1334",
+      "published_at": "2026-09-12T23:00:00+00:00",
+      "domain": "m.sohu.com",
+      "title": "西部数据CFO出席花旗2026 全球 TMT 大会演讲全文（深度解读）",
+      "snippet": "来源：invest wallstreet）. WDC正把HDD业务从传统消费PC周期股，重新定位为AI/云时代长期结构性增长的关键数据存储基础设施供应商。",
+      "industry": "distributed",
+      "vertical": ""
     }
   ],
   "update": [
     {
       "event": {
-        "event_type": "监管",
+        "event_type": "产品发布",
         "entities": [
-          "申博太阳娱乐评价",
-          "网信办",
-          "企查查"
+          "ASRock",
+          "B860 Challenger Wi-Fi",
+          "PCIe Gen 5 SSD",
+          "PCIe Gen 4 SSD",
+          "Logitech",
+          "GHUB",
+          "XFX R9-390A-8DFR V4.0"
         ],
         "key_numbers": [
-          "1.2万家",
-          "2026-09-12"
+          "80°C",
+          "2026-09-12T16:00:00+00:00"
         ],
-        "summary_zh": "申博太阳娱乐评价因数据隐私问题被网信办点名，行业监管压力升级。企查查数据显示，全国相关企业存量已超过1.2万家。该事件凸显数据合规风险，可能对行业格局产生影响。",
-        "category": "监管与合规",
-        "source_url": "https://m.ttplus.cn/f8gWwikiJOll5o",
+        "summary_zh": "本文是对华擎B860 Challenger Wi-Fi主板的评测，重点考察了其M.2 SSD散热表现。测试显示，双面PCIe Gen 5固态硬盘在持续负载下最终温度突破80°C并出现降速，而单面型号预计可缓解此问题。PCIe Gen 4硬盘在上下两个散热片下温差不大，温度控制尚可。文中还夹杂了论坛关于罗技耳机驱动修改及显卡BIOS求助等讨论内容。",
+        "category": "产品与技术",
+        "source_url": "https://www.techpowerup.com/review/asrock-b860-challenger-wi-fi/9.html",
         "published_at": "2026-09-12T16:00:00+00:00",
-        "domain": "m.ttplus.cn",
-        "title": "申博太阳娱乐评价数据合规风波升级，现存相关企业超1.2万家",
-        "snippet": "申博太阳娱乐评价 查看:jnh20263.com近期申博太阳娱乐评价因数据隐私问题被网信办点名，行业面临监管压力。企查查数据显示，全国相关企业存量已超1.2"
+        "domain": "techpowerup.com",
+        "title": "ASRock B860 Challenger Wi-Fi Review - SSD Performance & Temperatures",
+        "snippet": "SSD heatsink cooling was acceptable, but while our double-sided PCIe Gen 5 SSD managed a little while without throttling, eventually it did top 80°C and saw some speeds curtailed. Opting for a single-sided model will likely solve this issue as it was only in the second half of the test that things got too toasty. Our PCIe Gen 4 SSD didn't show much difference between lower and upper heatsinks and was plenty cool enough, even if it wasn't the best we've seen. [...] Logitech headset Driver mod: Restoring 2.0 Stereo Output to Enable Windows Spatial Audio (Atmos/DTS:X) instead of the muffled surround sound in GHUB (32)\n by wheresmycar\n\n  The TPU UK Clubhouse (27185)\n by Stacts\n\n  The Filthy, Rotten, Nasty, Helpdesk-Nightmare picture clubhouse (2870)\n by Adraps\n\n  Your PC ATM (36211)\n by DavidC1\n\n  Video card repair, need an original BIOS dump for the XFX R9-390A-8DFR V4.0 with Elpida chips 8GB. (22)\n by datnoz [...] # TPU on YouTube\n\n# Controversial News Posts",
+        "industry": "flash",
+        "vertical": ""
       },
-      "story_id": "eaaa0c04086d441898ab373573c84802",
-      "history_summary": "近期，证监会及地方证监局对多家券商和从业人员进行处罚，涉及虚假信息传播、经纪业务违规及廉洁从业问题。浙商证券因合规管理不到位被采取监管谈话，中金财富证券营业部也收到警示函。此外，央行年内对券商罚款超1200万元，显示监管持续加强。"
+      "story_id": "5970ff33fb814d818c16a664e56d9559",
+      "history_summary": "ASRock B860 Challenger Wi-Fi 主板的 SSD 散热测试显示，双面 PCIe Gen 5 SSD 在测试后半段温度超过 80°C 并出现降速，单面型号可能更适合。PCIe Gen 4 SSD 在上下散热片下温度均足够低，差异不大。此外，新闻还提及罗技耳机驱动修改以恢复 2.0 立体声并启用 Windows 空间音频，以及 XFX 显卡 BIOS 求助等内容。"
+    },
+    {
+      "event": {
+        "event_type": "其他",
+        "entities": [
+          "三星",
+          "SK海力士",
+          "美光",
+          "长鑫",
+          "长江存储",
+          "铠侠",
+          "闪迪",
+          "DRAM",
+          "NAND",
+          "HBM"
+        ],
+        "key_numbers": [
+          "2026年二季度",
+          "38%",
+          "25%",
+          "24%",
+          "10%",
+          "2%",
+          "47%",
+          "14%",
+          "13%",
+          "11%",
+          "2027年",
+          "2028年"
+        ],
+        "summary_zh": "全球存储芯片市场呈现韩国、美国、中国三强格局。DRAM领域，三星与SK海力士合计份额超六成，美光紧随其后，长鑫占约一成。NAND闪存方面，韩系双雄合计近半，长江存储与铠侠并列第三，美光、闪迪随后。综合来看，韩国凭借双线优势稳居第一，美国次之，中国位列第三，日本仅在NAND领域有一定份额。",
+        "category": "产业热点",
+        "source_url": "https://m.sohu.com/a/1075429732_121097259?scm=10001.325_13-325_13.0.0-0-0-0-0.5_1334",
+        "published_at": "2026-09-13T11:14:10+00:00",
+        "domain": "m.sohu.com",
+        "title": "存储芯片这一块，韩国排第1，美国排第2，中国只能排第3",
+        "snippet": "## 原创 存储芯片这一块，韩国排第1，美国排第2，中国只能排第3\n\n科技plus\n\n科技plus\n\n这一年多以来，所有的芯片中，存储芯片是站在C位的。\n\n不管是DRAM内存，还是NAND闪存，最近一年以来地，都是四五倍的价格上涨，存储芯片的利润，毛利率等，都超过了英伟达，成为最赚钱的存在。\n\n而机构更是预测，接下来存储芯片还会涨，至少要涨到2027年，现实情况是AI不死，存储涨价不止，如果2028年AI还火爆，那么存储则依然会上涨。\n\n那么问题就来了，目前全球的存储芯片格局，究竟是什么样的呢。\n\n如果从排名来看，目前全球存储芯片是韩国排第一、美国排第二名，而中国只能排在第三名。\n\n为何会有这么一个排名，我们仔细看看DRAM、NAND的排名，大家就会明白了的。\n\n先看DRAM芯片，也就是内存这一块，包含HBM内存。\n\n展开剩余\n\n65\n\n%\n\n到2026年二季度时，第一名是韩国三星，第二名是韩国SK海力士，第三名是美国美光，第四名是中国的长鑫，这四家的份额分别是38%、25%、24%、10%，而其它企业的份额只有2%，基本可以忽略。 [...] 很明显韩国是处于垄断地位，美国次之，中国排在第三名。\n\n再看NAND闪存芯片这一块，2026年二季度的市场份额如下图所示。\n\n韩国三星、SK海力士合计拿下了47%的份额，同样是处于遥遥领先的地位，没有对手。\n\n中国企业长江存储是排在第三名，有14%的份额，再是日本的铠侠份额为14%，再是美光13%，闪迪11%，而闪迪也是美国企业。\n\n可见在NAND闪存这一块，韩国第一、美国第二、中国第三、日本第四。\n\n我们再结合DRAM+NAND闪存这两块，都能够看到，韩国是最强的，美国排在第二名，而中国排在第三名，至于日本，仅有NAND闪存上有14%的份额，而DRAM等于0，所以远不如中国。",
+        "industry": "flash",
+        "vertical": ""
+      },
+      "story_id": "493226c6fd10466380636ca2a7f06a07",
+      "history_summary": "存储芯片价格持续上涨，利润超过英伟达，机构预测涨势将延续至2027年甚至更久。全球格局上，韩国在DRAM和NAND闪存均居首位，美国第二，中国第三。DRAM市场中，三星、SK海力士、美光、长鑫分列前四；NAND市场中，三星与SK海力士合计占47%，长江存储以14%位列第三。日本仅在NAND领域有少量份额。"
+    },
+    {
+      "event": {
+        "event_type": "其他",
+        "entities": [
+          "三星",
+          "SK海力士",
+          "美光",
+          "铠侠",
+          "长鑫存储",
+          "长江存储"
+        ],
+        "key_numbers": [
+          "2026年09月12日",
+          "2027年",
+          "2028年",
+          "5-10倍",
+          "5-10%"
+        ],
+        "summary_zh": "存储芯片价格已持续上涨一年，涨幅达5至10倍。铠侠CEO认为闪存价格已涨够，美国金融机构预测内存价格将在2027年达峰，下半年供需趋于平衡。2028年可能成为内存与闪存市场的转折点，供需关系或从供不应求转向供过于求。市场走向的关键变量在于中国厂商长鑫存储和长江存储的产能释放情况，若不考虑两家产能，内存缺口仍将维持在5%至10%之间。",
+        "category": "产业热点",
+        "source_url": "https://finance.sina.com.cn/tech/roll/2026-09-12/doc-inirqmqv1280900.shtml",
+        "published_at": "2026-09-12T10:40:03+00:00",
+        "domain": "finance.sina.com.cn",
+        "title": "内存、闪存涨价迎来终局：2028年两家中国公司决定走向_新浪科技_新浪网",
+        "snippet": "但是其他厂商不敢这么想，铠侠CEO已经喊话闪存价格涨够多了，今年都不会继续大涨了，美国多家金融机构给出的预测是2027年内存价格达峰，上半年是缺口最高的时候，但下半年供需就开始平衡。\n\n2028年内存芯片的市场甚至可能出现扭转，从供不应求转向供过于求，只不过产能高出需求的比例很低，并不会导致内存价格马上暴跌。\n\n2028年会是内存、闪存芯片的终局之年，但这一年到底是决定内存闪存价格向下还是继续向上高走，可不是三星等公司说了算，而是要看两家中国存储芯片公司——长鑫、长江（2年后可能还会有第三大国产存储芯片公司）。\n\n美国多家调研机构绘制的这个走势图就分析了两种情况——2028年内存及闪存市场考虑或者不考虑两长的产能，市场的供需情况是不一样的。\n\n黑线的是闪存芯片，2027年底就会出现供需平衡甚至供过于求，但2028年如果不算长江存储，整体需求还是高于产能供应的。\n\n内存市场在2027年都会是略有缺口，但是比2026年降低了短缺的数量，2028年如果不考虑长鑫公司的产能，那缺口会回到5-10%之间，跟闪存的情况差不多。 [...] 新浪首页\n 新闻\n 体育\n 财经\n 娱乐\n 科技\n 博客\n 图片\n 专栏\n 更多\n\n 汽车教育时尚女性星座健康\n 房产历史视频收藏育儿读书\n 佛学游戏旅游邮箱导航\n\n 新浪微博\n 新浪新闻\n 新浪财经\n 新浪体育\n 新浪众测\n 新浪博客\n 新浪视频\n 新浪游戏\n 天气通\n\n[](   [](\n\n[](\n\n新浪科技> 滚动新闻 > 正文\n\n# 内存、闪存涨价迎来终局：2028年两家中国公司决定走向\n\n内存、闪存涨价迎来终局：2028年两家中国公司决定走向\n\n2026年09月12日 18:28 快科技\n\n新浪财经APP 缩小字体 放大字体 收藏 微博 微信 分享 \n\n腾讯QQ QQ空间\n\n快科技9月11日消息，内存、闪存价格已经涨了整整一年了，5-10倍的涨幅让三星等公司一年能赚以往几十年的利润，除了这几家上游厂商，下游用户都在问涨价何时才能到头。\n\n对于这一轮存储芯片的涨价周期，各方给出的表态是不一样的，三星、SK海力士及美光这种受益最大的公司一直在表态缺货要长达数年，甚至2030年之后的10年也是长期缺货。 [...] 荣耀 “魔法画报” 事件当事人澄清：个人误解 与荣耀手机无关\n 官方回应“杭州一领克 900 车辆遇外部火情”：他人掉落并被踢至车底的充电宝自燃所致，非车辆动力电池或车辆自身起火\n 何同学上手iPhone Duo:折痕肉眼几乎看不见 18Pro年度重磅\n 8月国内油车销量同比跌40%！燃油车卖不动 加油站怎么办：数量锐减现状揭秘\n 产品力被高度认可具象化！试驾小米汽车误将油门当刹车用户：已下单并锁单澎程汽车\n 苹果首款折叠屏手机 iPhone Duo 分屏不可调整比例，或为适配外屏让路\n 存储有多赚钱！美光宣布发史上最高奖金 6万员工起步36万元\n 杭州一领克900被曝起火自燃 官方回应：非车辆起火 是被车底充电宝引燃\n 突发！陶哲轩、邓煜等25位菲尔兹奖得主联合声明：AI公司正在摧毁数学\n 苹果折叠机iPhone Duo不支持实体SIM卡 海外版本带回国内没法使用\n\n### 科学探索\n\n 威马递表港交所 累计售车不足10万去年亏...\n\n### 科学大家\n\n 《科学大家》| 新冠疫苗接种已不是选择题...\n\n### 苹果汇\n\n 因iPhone包装不含充电器，苹果在美国...",
+        "industry": "flash",
+        "vertical": ""
+      },
+      "story_id": "fd71849f1fdf454485a5122ff56b1f86",
+      "history_summary": "内存与闪存市场供需格局将在2027至2028年发生关键变化。闪存预计2027年底达到供需平衡甚至供过于求，但2028年若不计长江存储，需求仍将超过产能。内存市场2027年维持小幅缺口，2028年若不计长鑫，缺口将回落至5-10%。由于三星、SK海力士、美光扩产意愿不足，而长鑫与长江存储建厂动力强劲，2028年市场走向将主要取决于这两家中国企业的产能决策。"
+    },
+    {
+      "event": {
+        "event_type": "其他",
+        "entities": [
+          "SanDisk",
+          "Samsung Electronics",
+          "SK Hynix",
+          "NAND",
+          "DRAM",
+          "SSD"
+        ],
+        "key_numbers": [
+          "70%",
+          "55%",
+          "90%",
+          "79.2%",
+          "2026-09-13"
+        ],
+        "summary_zh": "SanDisk正积极招募韩国工程师，引发NAND人才争夺战。全球NAND市场收入环比增长70%，价格连续两季度大幅上涨，AI数据中心投资推动企业级SSD需求激增。SanDisk第二季度营业利润率高达79.2%。全球存储巨头争抢韩国人才，主要因为三星电子和SK海力士拥有大量高技能工程师，招募其经验丰富人员是竞争对手快速缩小技术差距的途径之一。",
+        "category": "产业热点",
+        "source_url": "https://finance.biggo.com/news/2c09df69-64a9-4ad9-b475-2f583f37690d",
+        "published_at": "2026-09-13T03:05:20+00:00",
+        "domain": "finance.biggo.com",
+        "title": "SanDisk Launches Aggressive Hiring of Korean Engineers, Igniting NAND Talent War",
+        "snippet": "The NAND market's growth trajectory is equally steep. Global NAND market revenue jumped 70% quarter-over-quarter in Q2, while prices rose 55% during the same period. This followed a 90% price surge in Q1, marking two consecutive quarters of dramatic increases. AI data center investment is driving demand not only for DRAM but also for NAND. [...] SanDisk ranks among the top five companies in the global NAND market by revenue. With infrastructure investment in AI servers and data centers surging, demand for enterprise SSDs has skyrocketed. The company posted an operating margin of 79.2% in the second quarter of this year, reflecting exceptional profitability. [...] The underlying reason global memory companies are actively courting Korean talent lies in the deep pool of highly skilled engineers at Samsung Electronics and SK Hynix. The two companies lead the global market in both DRAM and NAND, making the recruitment of their experienced personnel one of the fastest ways for competitors to close technology gaps.",
+        "industry": "flash",
+        "vertical": ""
+      },
+      "story_id": "5dcf4dccde81466da42c84559254de5c",
+      "history_summary": "SanDisk正积极招募韩国工程师，引发NAND人才争夺战。全球NAND市场收入在第二季度环比增长70%，价格同期上涨55%，此前第一季度价格已飙升90%，连续两个季度大幅增长。AI数据中心投资推动DRAM和NAND需求，企业级SSD需求激增。SanDisk第二季度营业利润率高达79.2%。全球存储公司争抢韩国人才，因为三星电子和SK海力士拥有大量高技能工程师，且主导DRAM和NAND市场，挖角其经验人员是竞争对手快速缩小技术差距的途径之一。"
     }
   ],
-  "duplicate_dropped_count": 29,
+  "duplicate_dropped_count": 12,
   "qa": {
     "passed": false,
-    "valid": 2,
-    "total": 3,
+    "valid": 1,
+    "total": 5,
     "issues": [
-      "报告 申博太阳娱乐评价数据合规风波升级，现存相关企业超1.2万家 缺少或为空: sections.背景, sections.技术分析, sections.市场影响, sections.竞对信号"
+      "报告 ASRock B860 Challenger Wi-Fi Review - SSD Performance & Temperatures 缺少或为空: sections.背景, sections.技术分析, sections.市场影响, sections.竞对信号",
+      "报告 存储芯片这一块，韩国排第1，美国排第2，中国只能排第3 缺少或为空: sections.背景, sections.技术分析, sections.市场影响, sections.竞对信号",
+      "报告 内存、闪存涨价迎来终局：2028年两家中国公司决定走向_新浪科技_新浪网 缺少或为空: sections.背景, sections.技术分析, sections.市场影响, sections.竞对信号",
+      "报告 SanDisk Launches Aggressive Hiring of Korean Engineers, Igniting NAND Talent War 缺少或为空: sections.背景, sections.技术分析, sections.市场影响, sections.竞对信号"
     ]
   }
 }

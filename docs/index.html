@@ -570,9 +570,9 @@
                 <span class="brief-header__date">📅 每日更新</span>
             </div>
             <div class="brief-header__meta">
-                <span class="brief-header__meta-item">📰 今日 <span class="count">1</span> 条</span>
+                <span class="brief-header__meta-item">📰 今日 <span class="count">5</span> 条</span>
                 <span class="brief-header__meta-item">🆕 新事件 <span class="count">1</span></span>
-                <span class="brief-header__meta-item">🔄 持续追踪 <span class="count">0</span></span>
+                <span class="brief-header__meta-item">🔄 持续追踪 <span class="count">4</span></span>
                 <span class="brief-header__meta-item">🏷️ 产业：数据保护 · 分布式 · 闪存</span>
             </div>
         </header>
@@ -580,15 +580,15 @@
         <!-- ===== 执行摘要 ===== -->
         <section class="executive-summary">
             <div class="executive-summary__title">📋 执行摘要</div>
-            <div class="executive-summary__text">今日共 1 条情报，其中新事件 1 条、持续追踪 0 条，覆盖产业：无。</div>
+            <div class="executive-summary__text">今日共 5 条情报，其中新事件 1 条、持续追踪 4 条，覆盖产业：闪存 / 分布式。</div>
         </section>
 
         <!-- ===== 分类锚点导航（四大类） ===== -->
         <nav class="category-nav" id="categoryNav">
-            <a href="#sec-industry" class="category-nav__link category-nav__link--active">🏭 产业热点（1）</a>
+            <a href="#sec-industry" class="category-nav__link category-nav__link--active">🏭 产业热点（4）</a>
             <a href="#sec-vertical" class="category-nav__link">📊 垂直行业热点（0）</a>
             <a href="#sec-regulation" class="category-nav__link">⚖️ 监管与合规（0）</a>
-            <a href="#sec-product" class="category-nav__link">🚀 产品与技术（0）</a>
+            <a href="#sec-product" class="category-nav__link">🚀 产品与技术（1）</a>
         </nav>
 
         <!-- ===== 筛选器（产业 + 行业，辅助过滤） ===== -->
@@ -614,21 +614,69 @@
         </div>
 
         <section class="section" id="sec-industry">
-            <div class="section__header"><h2>🏭 产业热点</h2><span class="section-count">1 条</span></div>
-            <div class="card" data-industry="" data-vertical="" data-type="new">
+            <div class="section__header"><h2>🏭 产业热点</h2><span class="section-count">4 条</span></div>
+            <div class="card" data-industry="distributed" data-vertical="" data-type="new">
                 <div class="card__header" onclick="toggleCard(this)">
-                    <span class="card__icon"></span>
+                    <span class="card__icon">📌</span>
                     <div class="card__info">
-                        <div class="card__title"><a href="https://source.example/article">Acme 动态</a></div>
-                        <div class="card__tags"><span class="tag tag--status tag--status-new">🆕 新事件</span></div>
-                        <div class="card__meta"><span class="source">📰 <strong>source.example</strong></span><span>🕒 2026-09-06 01:00</span></div>
+                        <div class="card__title"><a href="https://m.sohu.com/a/1075370783_122014422?scm=10001.325_13-325_13.0.0-0-0-0-0.5_1334">西部数据CFO出席花旗2026 全球 TMT 大会演讲全文（深度解读）</a></div>
+                        <div class="card__tags"><span class="tag tag--industry tag--distributed">🌐 分布式</span><span class="tag tag--status tag--status-new">🆕 新事件</span></div>
+                        <div class="card__meta"><span class="source">📰 <strong>m.sohu.com</strong></span><span>🕒 2026-09-12 23:00</span></div>
                     </div>
                     <span style="color:var(--text-muted);font-size:var(--font-size-sm);">▼</span>
                 </div>
                 <div class="card__body">
-                    <div class="detail-label">背景</div><p></p><div class="detail-label">技术分析</div><p></p><div class="detail-label">市场影响</div><p></p><div class="detail-label">竞对信号</div><p></p>
-                    <div class="detail-label">🔍 关键实体</div><p>Acme</p>
-                    <div class="detail-label">📎 来源</div><div class="source-link"><a href="https://source.example/article">来源链接</a></div>
+                    <div class="detail-label">背景</div><p>西部数据（WDC）首席财务官克里斯·森内萨尔在花旗2026全球TMT大会上发表演讲，系统阐述了公司从依赖传统消费PC周期的HDD制造商，向面向AI与云时代长期结构性增长的关键数据存储基础设施供应商转型的战略定位。管理层强调，HDD不再是传统周期行业，而是AI时代长期紧缺的关键存储层。公司已完成闪存业务分拆（闪迪独立运营），成为纯机械硬盘制造商，云提供商贡献近89%的收入，前十大客户约占销售额的73%。管理层指出，未来五年EB级需求复合年增长率将超过25%，当前实际增速远高于25%，而自身EB级产品年同比供货增长尚无法超过25%，供需缺口显著。产能至本日历年底已基本售罄，长期客户承诺提供强劲盈利确定性。</p><div class="detail-label">技术分析</div><p>西部数据正通过高容量技术路线巩固竞争壁垒。资本开支主要投向磁头与介质及自动化领域，长期资本支出占营收目标4%-6%，过去几年低于该区间，未来几年可能略高。技术路径聚焦提升面密度（每碟片3TB、4TB、5TB，长远目标10TB）、增加盘片数和工厂自动化，以提高良率与效率，而非单纯扩产。产品路线涵盖ePMR、UltraSMR及下一代HAMR平台。财务指标方面，每TB平均售价同比增长9%，毛利率已升至50%以上，增量毛利率维持在70%-75%，自由现金流利润率接近30%并已连续几个季度达标。营业利润从2023财年亏损转为2025财年超过20亿美元，营业利润率回升至约22%。公司资产负债表处于净现金状态，已完成SanDisk股票变现，并继续处理可转换债券、清理债务。剩余自由现金流主要返还股东，绝大部分用于回购，并已多次提高股息，该政策加速EPS增长。</p><div class="detail-label">市场影响</div><p>演讲后市场反应呈现多空交织。9月9日，管理层在行业会议发布令人放心的最新进展后，西部数据盘中上涨3.35%，投资者对强劲盈利确定性做出积极回应，超大规模云服务商持续强劲支出推动存储板块整体走强。然而，随后两个交易日股价承压：9月10日盘中下跌4.80%，9月12日收盘下跌2.98%，闪迪跌3.50%，希捷科技跌3.73%，存储板块普遍走弱。下跌驱动因素包括：基准国债收益率大幅飙升引发避险情绪，投资者降低高贝塔科技股风险敞口；全板块获利回吐，此前AI驱动的存储股经历大幅上涨后估值审视加剧；市场关注毛利率环比扩张速度放缓，与此前几个季度强劲提升相比引发短期获利回吐；部分机构针对HAMR过渡执行风险下调评级并调整目标价。分析师预测显示，公司未来两年营收增长率约37%，EBITDA增长率约79%，EPS增长率约93%。美国银行将目标价从约610美元上调至约730美元，摩根士丹利从约490美元上调至650美元，巴克莱从约450美元上调至620美元并维持超配评级，但瑞银下调目标价至525美元并维持中性评级，Summit Insights将评级从买入下调至持有。</p><div class="detail-label">竞对信号</div><p>希捷科技作为西部数据最接近的HDD竞争对手，最近报告季度营收约30亿美元，非GAAP毛利率为47%，表明对更高容量存储的需求正在提振整个硬盘市场。然而，Summit Insights分析师指出，希捷在HAMR技术扩产速度上更快，正在威胁西部数据在高利润企业级存储领域的市场份额，这是西部数据面临的关键竞争压力。此外，在更广泛的存储板块中，美光科技、闪迪、SK海力士等同行同样受到全行业获利回吐和宏观压力影响，9月12日美光科技跌0.22%，闪迪跌3.50%，SK海力士涨0.94%，显示板块走势分化。三星最新财报未能平息市场对AI内存行情已过度上涨的担忧，进一步加剧了投资者对存储类股票的谨慎情绪。西部数据作为纯机械硬盘制造商，业务敞口几乎完全集中在超大规模云计算资本支出上，前十大客户约占销售额73%，一旦任何主要超大规模云服务商推迟基础设施部署或削减资本支出，公司极易面临剧烈波动，这一集中度风险在与同业竞争时构成结构性脆弱点。</p>
+                    <div class="detail-label">🔍 关键实体</div><p>西部数据 · WDC · HDD · AI · 云 · 花旗2026全球TMT大会</p>
+                    <div class="detail-label">📎 来源</div><div class="source-link"><a href="https://m.sohu.com/a/1075370783_122014422?scm=10001.325_13-325_13.0.0-0-0-0-0.5_1334">来源链接</a></div>
+                </div>
+            </div>
+            <div class="card card--update" data-industry="flash" data-vertical="" data-type="update">
+                <div class="card__header" onclick="toggleCard(this)">
+                    <span class="card__icon">📌</span>
+                    <div class="card__info">
+                        <div class="card__title"><a href="https://m.sohu.com/a/1075429732_121097259?scm=10001.325_13-325_13.0.0-0-0-0-0.5_1334">存储芯片这一块，韩国排第1，美国排第2，中国只能排第3</a></div>
+                        <div class="card__tags"><span class="tag tag--industry tag--flash">💾 闪存</span><span class="tag tag--status">🔄 持续追踪</span></div>
+                        <div class="card__meta"><span class="source">📰 <strong>m.sohu.com</strong></span><span>🕒 2026-09-13 11:14</span></div>
+                    </div>
+                    <span style="color:var(--text-muted);font-size:var(--font-size-sm);">▼</span>
+                </div>
+                <div class="card__body">
+                    <div class="detail-label">📌 新进展</div><p>2026年二季度最新数据显示，全球存储芯片三强格局进一步固化：韩国在DRAM和NAND双线稳居第一，美国第二，中国第三。DRAM市场中，三星与SK海力士合计份额超六成（38%+25%），美光以24%紧随其后，长鑫占约10%，较此前历史摘要中的第四位份额继续提升；NAND方面，韩系双雄合计近半（47%），长江存储与铠侠以13%并列第三，美光11%、闪迪2%随后，长江存储份额较此前14%略有回落。值得关注的是，HBM被列为关键实体，反映高带宽存储正成为三强竞争的新焦点。机构此前预测涨势将延续至2027年甚至2028年，本次数据未提供价格走势更新，但份额结构显示韩国双线优势、美国单点支撑、中国在DRAM和NAND两端持续追赶的态势未变，日本仍仅在NAND领域保有少量份额。</p><div class="history-block">📎 历史回溯：存储芯片价格持续上涨，利润超过英伟达，机构预测涨势将延续至2027年甚至更久。全球格局上，韩国在DRAM和NAND闪存均居首位，美国第二，中国第三。DRAM市场中，三星、SK海力士、美光、长鑫分列前四；NAND市场中，三星与SK海力士合计占47%，长江存储以14%位列第三。日本仅在NAND领域有少量份额。</div>
+                    <div class="detail-label">🔍 关键实体</div><p>三星 · SK海力士 · 美光 · 长鑫 · 长江存储 · 铠侠 · 闪迪 · DRAM · NAND · HBM</p>
+                    <div class="detail-label">📎 来源</div><div class="source-link"><a href="https://m.sohu.com/a/1075429732_121097259?scm=10001.325_13-325_13.0.0-0-0-0-0.5_1334">来源链接</a></div>
+                </div>
+            </div>
+            <div class="card card--update" data-industry="flash" data-vertical="" data-type="update">
+                <div class="card__header" onclick="toggleCard(this)">
+                    <span class="card__icon">📌</span>
+                    <div class="card__info">
+                        <div class="card__title"><a href="https://finance.sina.com.cn/tech/roll/2026-09-12/doc-inirqmqv1280900.shtml">内存、闪存涨价迎来终局：2028年两家中国公司决定走向_新浪科技_新浪网</a></div>
+                        <div class="card__tags"><span class="tag tag--industry tag--flash">💾 闪存</span><span class="tag tag--status">🔄 持续追踪</span></div>
+                        <div class="card__meta"><span class="source">📰 <strong>finance.sina.com.cn</strong></span><span>🕒 2026-09-12 10:40</span></div>
+                    </div>
+                    <span style="color:var(--text-muted);font-size:var(--font-size-sm);">▼</span>
+                </div>
+                <div class="card__body">
+                    <div class="detail-label">📌 新进展</div><p>存储芯片价格已持续上涨一年，累计涨幅达5至10倍，市场对涨价周期何时见顶的关注显著升温。铠侠CEO公开表态认为闪存价格已经涨够，美国金融机构则预测内存价格将在2027年达到峰值、下半年供需趋于平衡。与此前仅停留在2027至2028年供需格局推演不同，当前新增了产业界与金融界对价格拐点的明确判断，并将2028年进一步定位为内存与闪存市场由供不应求转向供过于求的转折点。市场走向的关键变量仍集中于长鑫存储和长江存储的产能释放情况，若不计入两家中国厂商的产能，内存缺口仍将维持在5%至10%之间。</p><div class="history-block">📎 历史回溯：内存与闪存市场供需格局将在2027至2028年发生关键变化。闪存预计2027年底达到供需平衡甚至供过于求，但2028年若不计长江存储，需求仍将超过产能。内存市场2027年维持小幅缺口，2028年若不计长鑫，缺口将回落至5-10%。由于三星、SK海力士、美光扩产意愿不足，而长鑫与长江存储建厂动力强劲，2028年市场走向将主要取决于这两家中国企业的产能决策。</div>
+                    <div class="detail-label">🔍 关键实体</div><p>三星 · SK海力士 · 美光 · 铠侠 · 长鑫存储 · 长江存储</p>
+                    <div class="detail-label">📎 来源</div><div class="source-link"><a href="https://finance.sina.com.cn/tech/roll/2026-09-12/doc-inirqmqv1280900.shtml">来源链接</a></div>
+                </div>
+            </div>
+            <div class="card card--update" data-industry="flash" data-vertical="" data-type="update">
+                <div class="card__header" onclick="toggleCard(this)">
+                    <span class="card__icon">📌</span>
+                    <div class="card__info">
+                        <div class="card__title"><a href="https://finance.biggo.com/news/2c09df69-64a9-4ad9-b475-2f583f37690d">SanDisk Launches Aggressive Hiring of Korean Engineers, Igniting NAND Talent War</a></div>
+                        <div class="card__tags"><span class="tag tag--industry tag--flash">💾 闪存</span><span class="tag tag--status">🔄 持续追踪</span></div>
+                        <div class="card__meta"><span class="source">📰 <strong>finance.biggo.com</strong></span><span>🕒 2026-09-13 03:05</span></div>
+                    </div>
+                    <span style="color:var(--text-muted);font-size:var(--font-size-sm);">▼</span>
+                </div>
+                <div class="card__body">
+                    <div class="detail-label">📌 新进展</div><p>当前事件与历史摘要内容高度重合，未提供可验证的实质性新增进展。唯一新增信息为来源标注日期2026-09-13，但该日期与事件描述中的第二季度数据存在时间逻辑矛盾，无法据此确认任何新的市场变化、招聘规模或企业动态。因此，本事件应视为对既有信息的重复报道，而非NAND人才争夺战或市场格局的进一步演进。</p><div class="history-block">📎 历史回溯：SanDisk正积极招募韩国工程师，引发NAND人才争夺战。全球NAND市场收入在第二季度环比增长70%，价格同期上涨55%，此前第一季度价格已飙升90%，连续两个季度大幅增长。AI数据中心投资推动DRAM和NAND需求，企业级SSD需求激增。SanDisk第二季度营业利润率高达79.2%。全球存储公司争抢韩国人才，因为三星电子和SK海力士拥有大量高技能工程师，且主导DRAM和NAND市场，挖角其经验人员是竞争对手快速缩小技术差距的途径之一。</div>
+                    <div class="detail-label">🔍 关键实体</div><p>SanDisk · Samsung Electronics · SK Hynix · NAND · DRAM · SSD</p>
+                    <div class="detail-label">📎 来源</div><div class="source-link"><a href="https://finance.biggo.com/news/2c09df69-64a9-4ad9-b475-2f583f37690d">来源链接</a></div>
                 </div>
             </div>
         </section>
@@ -644,8 +692,23 @@
         </section>
 
         <section class="section" id="sec-product">
-            <div class="section__header"><h2>🚀 产品与技术</h2><span class="section-count">0 条</span></div>
-
+            <div class="section__header"><h2>🚀 产品与技术</h2><span class="section-count">1 条</span></div>
+            <div class="card card--update" data-industry="flash" data-vertical="" data-type="update">
+                <div class="card__header" onclick="toggleCard(this)">
+                    <span class="card__icon">🚀</span>
+                    <div class="card__info">
+                        <div class="card__title"><a href="https://www.techpowerup.com/review/asrock-b860-challenger-wi-fi/9.html">ASRock B860 Challenger Wi-Fi Review - SSD Performance &amp; Temperatures</a></div>
+                        <div class="card__tags"><span class="tag tag--industry tag--flash">💾 闪存</span><span class="tag tag--status">🔄 持续追踪</span></div>
+                        <div class="card__meta"><span class="source">📰 <strong>techpowerup.com</strong></span><span>🕒 2026-09-12 16:00</span></div>
+                    </div>
+                    <span style="color:var(--text-muted);font-size:var(--font-size-sm);">▼</span>
+                </div>
+                <div class="card__body">
+                    <div class="detail-label">📌 新进展</div><p>2026年9月12日，TechPowerUp发布华擎B860 Challenger Wi-Fi主板完整评测，在原有SSD散热测试基础上进一步确认：双面PCIe Gen 5固态硬盘在持续负载下最终温度突破80°C并触发降速，单面型号预计可缓解该问题；PCIe Gen 4硬盘在上下两个散热片下温差不大，温度控制尚可。评测同时收录了论坛中关于罗技耳机驱动修改以恢复2.0立体声并启用Windows空间音频，以及XFX R9-390A-8DFR V4.0显卡BIOS求助的讨论。</p><div class="history-block">📎 历史回溯：ASRock B860 Challenger Wi-Fi 主板的 SSD 散热测试显示，双面 PCIe Gen 5 SSD 在测试后半段温度超过 80°C 并出现降速，单面型号可能更适合。PCIe Gen 4 SSD 在上下散热片下温度均足够低，差异不大。此外，新闻还提及罗技耳机驱动修改以恢复 2.0 立体声并启用 Windows 空间音频，以及 XFX 显卡 BIOS 求助等内容。</div>
+                    <div class="detail-label">🔍 关键实体</div><p>ASRock · B860 Challenger Wi-Fi · PCIe Gen 5 SSD · PCIe Gen 4 SSD · Logitech · GHUB · XFX R9-390A-8DFR V4.0</p>
+                    <div class="detail-label">📎 来源</div><div class="source-link"><a href="https://www.techpowerup.com/review/asrock-b860-challenger-wi-fi/9.html">来源链接</a></div>
+                </div>
+            </div>
         </section>
 
         <!-- ===== 页脚 ===== -->
