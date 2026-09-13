@@ -92,6 +92,8 @@
   "tests/test_agent6_render.py::test_render_html_renders_update_history_without_new_event_sections",
   "tests/test_agent6_render.py::test_render_html_returns_complete_designed_skeleton_for_empty_reports",
   "tests/test_agent6_render.py::test_render_html_reuses_designed_template_and_maps_new_report_tags_and_sections",
+  "tests/test_agent6_render.py::test_render_html_uses_custom_tag_and_layout_configuration",
+  "tests/test_agent6_render.py::test_render_html_uses_default_tag_metadata_when_legacy_config_omits_tags",
   "tests/test_agent6_render.py::test_render_push_message_includes_configured_icon_title_category_summary_and_link",
   "tests/test_agent7_push.py::test_build_adapters_skips_missing_token_and_null_targets",
   "tests/test_agent7_push.py::test_build_adapters_uses_one_pushplus_adapter_per_target",
