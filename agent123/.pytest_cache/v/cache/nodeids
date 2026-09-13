@@ -74,6 +74,7 @@
   "tests/test_agent1_discovery.py::test_discover_articles_leaves_keywords_unprefixed_when_region_is_missing_or_empty[theme_config1]",
   "tests/test_agent1_discovery.py::test_discover_articles_logs_warning_and_keeps_article_for_unparseable_timestamp",
   "tests/test_agent1_discovery.py::test_discover_articles_prefixes_every_keyword_with_nonempty_region",
+  "tests/test_agent1_discovery.py::test_discover_articles_searches_every_region_keyword_pair_in_stable_order",
   "tests/test_agent1_discovery.py::test_discover_articles_uses_mock_search_and_filters_blacklisted_domain",
   "tests/test_agent2_extraction.py::test_extract_event_builds_prompt_from_custom_theme_config",
   "tests/test_agent2_extraction.py::test_extract_event_defaults_missing_industry_and_vertical_tags_to_empty_strings",
