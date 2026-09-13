@@ -108,6 +108,9 @@ def render_html(reports: List[DeepReport], theme_config: dict) -> str:
     source = _template_source(theme_config)
     before_content = source[:source.index(_CONTENT_MARKER)]
     footer = source[source.index(_FOOTER_MARKER):]
+    page_title = escape(str(theme_config.get("page_title", "欧洲存储市场")))
+    before_content = before_content.replace("欧洲存储市场", page_title)
+    footer = footer.replace("欧洲存储市场", page_title)
     colors = theme_config.get("theme_colors", {})
     before_content = before_content.replace("--color-primary: #1a5fb4;", f'--color-primary: {escape(colors.get("primary", "#1a5fb4"), quote=True)};', 1)
     before_content = before_content.replace("--color-accent: #e66100;", f'--color-accent: {escape(colors.get("accent", "#e66100"), quote=True)};', 1)

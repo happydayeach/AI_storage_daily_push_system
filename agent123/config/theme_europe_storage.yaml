@@ -1,5 +1,6 @@
 theme_id: "europe_storage"
 theme_name: "存储产业"
+page_title: "欧洲存储市场"
 keywords_matrix:
   - ["数据保护", "GDPR", "云存储", "数据存储"]
   - ["分布式存储", "边缘存储", "多云", "数据湖"]

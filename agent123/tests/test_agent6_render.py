@@ -1,7 +1,7 @@
 """
 被测目标：src/agent6_render.py
 依赖：src/models.py（DeepReport、ExtractedEvent）
-覆盖场景：模板复用、配置驱动的标签/分类/段名/模板、更新历史、空态、HTML 转义与推送消息
+覆盖场景：模板复用、配置驱动的标题/标签/分类/段名/模板、更新历史、空态、HTML 转义与推送消息
 """
 
 import logging
@@ -167,3 +167,14 @@ def test_render_html_uses_default_tag_metadata_when_legacy_config_omits_tags():
 
     assert "💾 闪存" in html
     assert "💰 金融" in html
+
+
+def test_render_html_uses_configured_page_title_in_all_template_heading_locations():
+    from src.agent6_render import render_html
+
+    html = render_html([], {"page_title": "自定义存储专题"})
+
+    assert "<title>自定义存储专题 · 每日情报（四大分类 + 双标签）</title>" in html
+    assert '<h1 class="brief-header__title">📊 自定义存储专题 · 每日情报</h1>' in html
+    assert "© 2026 自定义存储专题 · 每日情报" in html
+    assert "欧洲存储市场" not in html

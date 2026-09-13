@@ -43,8 +43,10 @@ def resolve(config: dict) -> dict:
     """Return a copy of *config* with missing multi-theme fields populated."""
     resolved = deepcopy(config)
     theme_id = resolved.get("theme_id", "")
+    theme_name = resolved.get("theme_name", theme_id)
     defaults = {
-        "theme_name": theme_id,
+        "theme_name": theme_name,
+        "page_title": theme_name,
         "region": "",
         "relevance_theme": _DEFAULT_RELEVANCE_THEME,
         "categories": _DEFAULT_CATEGORIES,

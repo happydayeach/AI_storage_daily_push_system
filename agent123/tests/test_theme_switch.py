@@ -1,7 +1,7 @@
 """
 被测目标：多主题复用（config_loader + agent1/2/6 的 config 驱动）。
 依赖：src/config_loader.py、src/models.py。
-覆盖场景：北欧地域前缀 + education 行业标签驱动，以及 europe_storage 回归不变。
+覆盖场景：北欧地域前缀 + education 行业标签和页面标题驱动，以及 europe_storage 回归不变。
 """
 
 from src import config_loader
@@ -77,3 +77,20 @@ def test_europe_storage_theme_keeps_existing_vertical_labels_without_education()
     europe_config = config_loader.load_theme_config("europe_storage")
 
     assert "education" not in config_loader.get_verticals(europe_config)
+
+
+def test_theme_page_titles_render_from_each_theme_configuration():
+    nordic_config = config_loader.load_theme_config("nordic_education")
+    europe_config = config_loader.load_theme_config("europe_storage")
+
+    nordic_html = render_html([], nordic_config)
+    europe_html = render_html([], europe_config)
+
+    assert nordic_config["page_title"] == "北欧存储·教育行业"
+    assert "<title>北欧存储·教育行业 · 每日情报（四大分类 + 双标签）</title>" in nordic_html
+    assert '<h1 class="brief-header__title">📊 北欧存储·教育行业 · 每日情报</h1>' in nordic_html
+    assert "© 2026 北欧存储·教育行业 · 每日情报" in nordic_html
+    assert europe_config["page_title"] == "欧洲存储市场"
+    assert "<title>欧洲存储市场 · 每日情报（四大分类 + 双标签）</title>" in europe_html
+    assert '<h1 class="brief-header__title">📊 欧洲存储市场 · 每日情报</h1>' in europe_html
+    assert "© 2026 欧洲存储市场 · 每日情报" in europe_html
