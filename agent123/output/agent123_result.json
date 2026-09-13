@@ -1,1 +1,733 @@
-
+{
+  "new": [
+    {
+      "event_type": "其他",
+      "entities": [
+        "SanDisk",
+        "Samsung Electronics",
+        "SK Hynix",
+        "NAND",
+        "DRAM",
+        "AI data center",
+        "enterprise SSDs"
+      ],
+      "key_numbers": [
+        "70%",
+        "55%",
+        "90%",
+        "79.2%",
+        "2026-09-13"
+      ],
+      "summary_zh": "SanDisk正积极招募韩国工程师，引发NAND人才争夺战。全球NAND市场收入在第二季度环比增长70%，价格同期上涨55%，此前第一季度价格已飙升90%，连续两季大幅上涨。AI数据中心投资推动DRAM和NAND需求，企业级SSD需求激增。SanDisk第二季度营业利润率高达79.2%。全球存储公司争抢韩国人才，主要因为三星电子和SK海力士拥有大量高技能工程师，这两家公司在DRAM和NAND市场领先，招募其经验丰富人员是竞争对手快速缩小技术差距的途径之一。",
+      "category": "产业热点",
+      "source_url": "https://finance.biggo.com/news/2c09df69-64a9-4ad9-b475-2f583f37690d",
+      "published_at": "2026-09-13T03:05:20+00:00",
+      "domain": "finance.biggo.com",
+      "title": "SanDisk Launches Aggressive Hiring of Korean Engineers, Igniting NAND Talent War — BigGo Finance",
+      "snippet": "The NAND market's growth trajectory is equally steep. Global NAND market revenue jumped 70% quarter-over-quarter in Q2, while prices rose 55% during the same period. This followed a 90% price surge in Q1, marking two consecutive quarters of dramatic increases. AI data center investment is driving demand not only for DRAM but also for NAND. [...] SanDisk ranks among the top five companies in the global NAND market by revenue. With infrastructure investment in AI servers and data centers surging, demand for enterprise SSDs has skyrocketed. The company posted an operating margin of 79.2% in the second quarter of this year, reflecting exceptional profitability. [...] The underlying reason global memory companies are actively courting Korean talent lies in the deep pool of highly skilled engineers at Samsung Electronics and SK Hynix. The two companies lead the global market in both DRAM and NAND, making the recruitment of their experienced personnel one of the fastest ways for competitors to close technology gaps."
+    },
+    {
+      "event_type": "其他",
+      "entities": [
+        "GF Securities",
+        "NAND",
+        "SanDisk"
+      ],
+      "key_numbers": [
+        "2026-09-13T13:00:00+00:00"
+      ],
+      "summary_zh": "广发证券发布报告指出，NAND闪存价格可能在今年晚些时候趋于稳定。这一预测对NAND市场主要厂商SanDisk的股价走势具有重要参考意义，投资者需关注价格企稳对该公司业绩和估值的影响。",
+      "category": "产业热点",
+      "source_url": "https://www.barchart.com/story/news/4578887/gf-securities-says-nand-prices-may-stabilize-later-this-year-what-this-means-for-sandisk-stock",
+      "published_at": "2026-09-13T13:00:00+00:00",
+      "domain": "barchart.com",
+      "title": "GF Securities Says NAND Prices May Stabilize Later This Year. What This Means for Sandisk Stock.",
+      "snippet": "Chinese financial services firm GF Securities has cautioned that NAND prices will stabilize by the end of the year. For NAND king SanDisk"
+    },
+    {
+      "event_type": "其他",
+      "entities": [
+        "Sandisk",
+        "SNDK",
+        "Kioxia",
+        "Flash Ventures",
+        "The Aerospace Forum",
+        "Seeking Alpha"
+      ],
+      "key_numbers": [
+        "2026-09-13T07:08:49+00:00",
+        "Sep 13, 2026"
+      ],
+      "summary_zh": "该分析文章将Sandisk评为强力买入，理由是在NAND超级周期中，公司通过覆盖过半出货量的多年期协议锁定最低价格，降低周期性并提升盈利可见性。同时公司积极回购股票且保持净现金。但风险包括NAND供应可能回升、对Kioxia/Flash Ventures的依赖、客户承诺执行以及当前高利润率可能快于预期地回归正常。",
+      "category": "产业热点",
+      "source_url": "https://seekingalpha.com/article/4945829-sandisk-the-nand-supercycle-makes-this-a-strong-buy",
+      "published_at": "2026-09-13T07:08:49+00:00",
+      "domain": "seekingalpha.com",
+      "title": "Sandisk: The NAND Supercycle Makes This A Strong Buy",
+      "snippet": "Risks include a future NAND supply response, dependence on Kioxia/Flash Ventures, execution against customer commitments, and potential for current exceptional margins to normalize faster than expected. [...] New multiyear business model agreements now cover over half of bits shipped, securing minimum pricing, reducing cyclicality, and enhancing earnings visibility.\n Capital returns are robust, with aggressive share repurchases and a net cash balance, but risks remain from NAND supply responses, Kioxia dependence, and potential margin normalization.\n Looking for a helping hand in the market? Members of The Aerospace Forum get exclusive ideas and guidance to navigate any climate. Learn More » [...] Home page Seeking Alpha - Power to Investors\n\nSearch for Symbols, analysts, keywords\n\n# Sandisk: The NAND Supercycle Makes This A Strong Buy\n\nSep 13, 2026, 3:08 AM ETSandisk Corporation (SNDK) Stock, SNDK:CA Stock\n\nDhierin Bechai\n\nInvesting Group Leader\n\n## Summary"
+    },
+    {
+      "event_type": "其他",
+      "entities": [
+        "任正非",
+        "伦敦风险控制中心",
+        "贸易合规系统",
+        "金融合规",
+        "风控中心"
+      ],
+      "key_numbers": [
+        "2017年9月13日",
+        "四年",
+        "2026-09-13T11:37:17+00:00"
+      ],
+      "summary_zh": "任正非在讲话中强调，金融合规管理需适度，不能简单拒绝，应寻找合规方案以支持业务。他要求风险管理人员贴近业务，将规则转化为行动，并到一线解决问题。同时，需回顾旧文件，突出重点，简化管理。风控中心应走出围墙，深入现实，确保多产粮食。",
+      "category": "监管与合规",
+      "source_url": "https://www.huxiu.com/article/4890803.html",
+      "published_at": "2026-09-13T11:37:17+00:00",
+      "domain": "huxiu.com",
+      "title": "任正非：要找到合规的解决方案，不能一概说No-虎嗅网",
+      "snippet": "金融合规的管理要适度，不是所有金融的条款都适用于我们的业务场景，要具体问题具体分析。基线是一个管理参考线，不仅仅是一个严格的高压线，你们要研究的是如何规避风险。实在要擦边，越过红线，要研究预案以及善后处理。管理风险的主官，要懂得规则，更要懂得业务，要负责把规则转化为业务行动，在业务作业中督促落实。你们走上战场，有两方面好处：一，可以培训了前线指挥官；二，使你们的专家更丰富了能力。你们需要增加人力，可以增加编制，要充分利用伦敦的人才优势。\n\n3、要对过去发布的文件进行回顾，时刻保证我们适用的是最新的规则和要求。文件不要面面俱到，否则会抓不住重点。不重要的地方，你们认为又有必要保留的，也可以保留，但可以用淡淡的小字体保留，要把那些关键重点的部分突出出来，让业务执行部门快速抓住重点，并容易理解。公司推行把管理的内容压缩，就可以更有效地管理重点，简化管理。 [...] 2017年9月13日\n\n1、首先要肯定，伦敦风险控制中心成立四年以来，从无到有，做了很多贡献，也取得了很大的成绩。贸易合规系统也做出了很大的贡献，公司至今没有出现大的问题，这就是成绩。不管是伦敦、东京和纽约，风险管理都要贴近我们的项目，而不是贴近大规则。管理风险的人要懂规则，更要懂业务，要负责把规则转化成业务行动，并监督落实。你们不是要贴近金融，也不是贴近财经，而是要贴近业务。财经也是要对业务服务的。\n\n2、金融合规要服务于业务\n\n金融合规的目标也是多产粮食，而不是影响或阻碍粮食的生产。法律上有风险和障碍的地方，不能一概说No，而是要找到合规的解决方案，指导一线如何合规地把业务做成，最终目标还是要紧紧锁在“多产粮食”上。台风来了，不是放弃水稻，还要把水稻扶起来，这样虽然会减产，但还是有粮食。必要时，你们要背上背包，拿上铁锹，奔赴战场，与业务部门一同在战壕中解决问题。 [...] 4、风控中心现在已经建设了基本的规则，规则建设后就要推广。就像美国权威机构说的，规则是可控的，但是执行不可控。这也就意味着我们要更多地到一线去，保障项目成功，多产粮食。要关注和加强对全球子公司业务执行的监督和管理。对于员工个人的非工作违规或者违法行为，公司不袒护。专家要到一线去蹲点，要知晓业务，业务也要知晓风险管控的要点，这样循环迭代管理矩阵就建立起来了。\n\n5、我们的业务越做越好，攻击目标明显，议论的人会越来越多，小漏洞就很容易被抓住和放大。所以要管好风险。怎么管好，就是要走到业务中去，飞到风险国家去。风控中心要走出围墙，要走到现实生活中去。林彪为什么能打好仗，就是自己亲自到战场上去看地形。不去看地形，就是纸上谈兵。你们也应该去一线看地形，滚上一身泥巴，就是真正的专家。\n\n6、对于重点领域的合规建设，要把我们作为全球领导者，看我们如何来做。要对美国盯得最严的国家做好合规和风险控制。业务有难度，可以对考核进行调整，不要把业务逼上梁山。不能做的事情，和业务达成决议，就坚决不碰。\n\n7、沿着服务对象梳理机关组织"
+    },
+    {
+      "event_type": "监管",
+      "entities": [
+        "拼多多",
+        "支付机构",
+        "王蓬博",
+        "北京商报",
+        "支付牌照"
+      ],
+      "key_numbers": [
+        "2026-09-13T12:00:00+00:00"
+      ],
+      "summary_zh": "拼多多关联支付机构近期再次调整核心高管，此举被视为为满足支付牌照合规要求铺路。专家王蓬博向北京商报表示，支付机构作为支付服务提供方，核心职能是承担支付牌照合规主体责任，负责平台交易资金清算、账户收付处理及备付金管理等。此次高管更替反映出支付行业在强监管下持续强化合规治理的趋势。",
+      "category": "监管与合规",
+      "source_url": "https://m.sohu.com/a/1075571162_122014422?scm=10001.325_13-325_13.0.0-0-0-0-0.5_1334",
+      "published_at": "2026-09-13T12:00:00+00:00",
+      "domain": "m.sohu.com",
+      "title": "铺路合规，拼多多关联支付机构核心高管再更替",
+      "snippet": "王蓬博告诉北京商报记者，一般来讲，支付机构作为支付服务提供方，核心承担的是支付牌照合规主体职能，负责平台交易资金清算、账户收付处理、备付"
+    },
+    {
+      "event_type": "其他",
+      "entities": [
+        "蓄能器安全阀块",
+        "派克汉尼汾公司",
+        "博世力士乐",
+        "伊顿公司",
+        "SMC株式会社",
+        "费斯托公司",
+        "ASME",
+        "PED",
+        "工业物联网",
+        "预测性维护"
+      ],
+      "key_numbers": [
+        "2026—2035年",
+        "4%—6%",
+        "40%—50%",
+        "18%",
+        "10%—15%",
+        "2026-09-12T18:00:00+00:00"
+      ],
+      "summary_zh": "全球蓄能器安全阀块市场预计2026至2035年复合年增长4%至6%，合规要求与存量更换需求构成结构性支撑。亚太和中东产能扩张成为中期增长引擎，智能安全阀块与工业物联网预测性维护加速渗透。供应仍集中于欧美，但中印厂商在标准级市场扩大份额，或使均价下压10%至15%。",
+      "category": "垂直行业热点",
+      "source_url": "https://www.indexbox.io/zh-hans/blog/accumulator-safety-blocks-market-forecast-to-2035-growth-accelerates-on-mandatory-compliance-and-asia-pacific-capacity-expansion",
+      "published_at": "2026-09-12T18:00:00+00:00",
+      "domain": "indexbox.io",
+      "title": "蓄能器安全阀块市场展望2035：合规驱动需求与亚太扩张支撑增长 - 新闻和统计 - IndexBox",
+      "snippet": "值得关注的需求侧指标包括工业机器人安装量、过程控制设备支出和制造业PMI走势。向内置诊断功能的智能安全阀块转型在此尤为相关，因为自动化终端用户希望借助预测性维护能力减少停机。不过，标准自动化应用对价格较为敏感，可能限制部分子领域的高端化进程。总体来看，该板块预计将随大盘同步增长，受益于安全合规的刚性属性。当前趋势：工厂自动化和过程控制升级驱动稳步增长。\n\n主要趋势： 内置压力传感器和通信接口的智能安全阀块加速普及；亚太和拉美工厂自动化项目增长；北美和欧洲老化液压系统的更换需求；安全阀块融入支持工业物联网的预测性维护平台；液压系统能效关注度上升推动升级改造。\n\n代表性企业： 派克汉尼汾公司、博世力士乐、伊顿公司、SMC株式会社、费斯托公司。\n\n### 电子与光学系统（估计占比：18%） [...] 值得关注的需求侧指标包括工业机器人安装量、过程控制设备支出和制造业PMI走势。向内置诊断功能的智能安全阀块转型在此尤为相关，因为自动化终端用户希望借助预测性维护能力减少停机。不过，标准自动化应用对价格较为敏感，可能限制部分子领域的高端化进程。总体来看，该板块预计将随大盘同步增长，受益于安全合规的刚性属性。当前趋势：工厂自动化和过程控制升级驱动稳步增长。\n\n主要趋势： 内置压力传感器和通信接口的智能安全阀块加速普及；亚太和拉美工厂自动化项目增长；北美和欧洲老化液压系统的更换需求；安全阀块融入支持工业物联网的预测性维护平台；液压系统能效关注度上升推动升级改造。\n\n代表性企业： 派克汉尼汾公司、博世力士乐、伊顿公司、SMC株式会社、费斯托公司。\n\n### 电子与光学系统（估计占比：18%） [...] 全球蓄能器安全阀块市场正进入以合规为锚的稳步扩张阶段，2026—2035年预测期复合年增长率为4%—6%。这类关键液压元件用于在检修或系统停机时隔离并安全泄放蓄能器，依据ASME、PED及各国压力容器规范属于强制性配置。存量设备老化带来的更换需求约占市场总量的40%—50%，即便新增资本开支放缓，也能为市场提供结构性支撑。\n\n中期增长主要受亚太和中东地区产能扩张支撑，当地新建工业自动化项目、半导体晶圆厂建设以及能源基础设施投资是主要引擎。该市场增速略高于全球GDP增速，反映出其受安全规范驱动的特性。供应仍集中于欧洲和北美，德国、意大利和美国的专业制造商贡献了全球一半以上的产量。不过，中国和印度生产商正在标准级细分市场抢占份额，预计将在预测期内使平均售价下压约10%—15%。"
+    },
+    {
+      "event_type": "监管",
+      "entities": [
+        "浙商证券",
+        "公司高管",
+        "经纪人"
+      ],
+      "key_numbers": [
+        "2026-09-13T12:00:00+00:00",
+        "09.13 19:28"
+      ],
+      "summary_zh": "浙商证券及其部分高管因经纪人合规管理不到位等问题，被监管部门约谈。该事件于2026年9月13日由深圳商报报道，反映出公司在合规管理方面存在疏漏，并已引发监管关注。",
+      "category": "监管与合规",
+      "source_url": "https://finance.sina.cn/stock/ggyj/2026-09-13/detail-inirsuvw4447910.d.html?vt=4",
+      "published_at": "2026-09-13T12:00:00+00:00",
+      "domain": "finance.sina.cn",
+      "title": "视频|因经纪人合规管理不到位等问题，浙商证券、公司高管等一同被监管约谈",
+      "snippet": "视频|因经纪人合规管理不到位等问题，浙商证券、公司高管等一同被监管约谈. 滚动播报 09.13 19:28. 来源：深圳商报. 因经纪人合规管理不到位等问题，"
+    },
+    {
+      "event_type": "监管",
+      "entities": [
+        "券商",
+        "证券从业人员",
+        "监管部门",
+        "经纪业务"
+      ],
+      "key_numbers": [
+        "7家",
+        "15名",
+        "2026-09-13"
+      ],
+      "summary_zh": "监管部门近期集中公布了对证券行业的一批处罚，涉及7家券商和15名从业人员。从违规事项看，经纪业务依然是券商合规风险的高发领域。此次密集处罚反映出监管对证券行业合规问题的持续关注。",
+      "category": "监管与合规",
+      "source_url": "https://finance.ifeng.com/c/8wOKM8TwHrS",
+      "published_at": "2026-09-13T10:00:00+00:00",
+      "domain": "finance.ifeng.com",
+      "title": "7家券商、15名从业人员被处罚，多项业务曝出合规风险",
+      "snippet": "近期，监管部门密集披露一批针对证券行业的处罚信息，涉及7家券商及15名证券从业人员。 从罚单涉及的违规事项来看，经纪业务仍是券商合规风险的高发"
+    },
+    {
+      "event_type": "监管",
+      "entities": [
+        "国家药监局",
+        "珍视明",
+        "妥布霉素地塞米松滴眼液",
+        "关于37批次不符合规定药品的通告"
+      ],
+      "key_numbers": [
+        "10批次",
+        "37批次",
+        "2026年第30号",
+        "9月4日",
+        "2026-09-12"
+      ],
+      "summary_zh": "国家药监局于9月4日发布通告，指出37批次药品不符合规定，其中珍视明品牌的妥布霉素地塞米松滴眼液有10批次不合规。该通告编号为2026年第30号，但具体不合规原因尚未明确。珍视明作为知名眼药品牌，此次事件引发关注。",
+      "category": "监管与合规",
+      "source_url": "http://www.cb.com.cn/index/show/bzyc/cv/cv135290711641",
+      "published_at": "2026-09-12T15:00:00+00:00",
+      "domain": "cb.com.cn",
+      "title": "珍视明10批次滴眼液不合规 原因待解",
+      "snippet": "9月4日，国家药监局官网发布了《关于37批次不符合规定药品的通告》（2026年第30号）。其中，被誉为国民眼药品牌的珍视明共有10批次妥布霉素地塞米松滴"
+    },
+    {
+      "event_type": "其他",
+      "entities": [
+        "南方财经全媒体集团",
+        "南方财经网",
+        "21世纪经济报道",
+        "TVS1",
+        "投资快报",
+        "21财经客户端"
+      ],
+      "key_numbers": [
+        "2026-09-13T11:00:00+00:00"
+      ],
+      "summary_zh": "南方财经网作为南方财经全媒体集团的门户网站，以财经新闻为核心，集中呈现21世纪经济报道、TVS1、投资快报等原创内容，并整合21财经客户端，形成多平台联动的财经资讯传播体系。",
+      "category": "产业热点",
+      "source_url": "https://m.sfccn.com/2026/9-13/1NMDE0MDRfMjIzOTk1Ng.html",
+      "published_at": "2026-09-13T11:00:00+00:00",
+      "domain": "m.sfccn.com",
+      "title": "南方财经全媒体集团",
+      "snippet": "南方财经网是南方财经全媒体集团门户网站，主打财经新闻，是21世纪经济报道、TVS1、投资快报等原创新闻最重要的展现平台。同时有机整合21财经客户端"
+    },
+    {
+      "event_type": "监管",
+      "entities": [
+        "EU Court",
+        "GDPR",
+        "shareholder data"
+      ],
+      "key_numbers": [
+        "2026-09-13T13:00:00+00:00"
+      ],
+      "summary_zh": "欧盟法院作出裁决，认为允许公众无限制地访问股东数据不符合GDPR中必要性和相称性的要求。该判决强调，此类数据公开必须受到限制，以保护个人隐私。这一裁定可能影响欧盟范围内公司股东信息的公开方式，要求相关做法在透明度和数据保护之间取得平衡。",
+      "category": "监管与合规",
+      "source_url": "https://ua.news/en/world/sud-es-viznav-neobmezhenii-dostup-do-danikh-aktsioneriv-nesumisnim-iz-gdpr",
+      "published_at": "2026-09-13T13:00:00+00:00",
+      "domain": "ua.news",
+      "title": "EU Court rules unrestricted shareholder data access violates GDPR",
+      "snippet": "The EU Court ruled that unrestricted public access to shareholder data is incompatible with GDPR requirements of necessity and"
+    },
+    {
+      "event_type": "其他",
+      "entities": [
+        "全球分布式云市场"
+      ],
+      "key_numbers": [
+        "32.76亿美元",
+        "20.73%",
+        "2035年",
+        "2026-09-13"
+      ],
+      "summary_zh": "根据最新报告，全球分布式云市场预计到2035年将实现32.76亿美元的增长，复合年增长率达20.73%。该数据反映出分布式云领域强劲的扩张势头，主要受企业数字化转型和边缘计算需求推动。市场前景广阔，吸引众多厂商布局。",
+      "category": "产业热点",
+      "source_url": "https://www.sphericalinsights.com/zh/blogs/top-20-companies-in-global-distributed-cloud-market-2026-2035-expert-view-by-spherical-insights",
+      "published_at": "2026-09-13T00:00:00+00:00",
+      "domain": "sphericalinsights.com",
+      "title": "全球分布式云市场20强公司",
+      "snippet": "全球分布式云市场规模预计到2035年将增长32.76亿美元,CAGR为20.73%"
+    },
+    {
+      "event_type": "产品发布",
+      "entities": [
+        "中国银行",
+        "分布式下传文本的方法、装置、设备及可读存储介质",
+        "天眼查APP",
+        "证券之星"
+      ],
+      "key_numbers": [
+        "601988",
+        "2026-09-12T19:00:00+00:00"
+      ],
+      "summary_zh": "中国银行（股票代码601988）新获得一项发明专利授权，该专利名为“分布式下传文本的方法、装置、设备及可读存储介质”。据天眼查APP数据显示，此项专利授权信息由证券之星报道，发布时间为2026年9月12日。该专利涉及分布式文本下传技术，有助于提升银行在分布式系统中的文本传输效率。",
+      "category": "产品与技术",
+      "source_url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002j9hk",
+      "published_at": "2026-09-12T19:00:00+00:00",
+      "domain": "cj.sina.cn",
+      "title": "中国银行获得发明专利授权：“分布式下传文本的方法、装置、设备及可读存储介质”",
+      "snippet": "证券之星消息，根据天眼查APP数据显示中国银行（601988）新获得一项发明专利授权，专利名为“分布式下传文本的方法、装置、设备及可读存储介质”，专利"
+    },
+    {
+      "event_type": "产品发布",
+      "entities": [
+        "IBGDA",
+        "scaleFabric",
+        "DeepEP",
+        "英伟达",
+        "NDR",
+        "RoCE",
+        "GPU",
+        "InfiniBand",
+        "RDMA",
+        "GDR",
+        "MoE",
+        "CLOS"
+      ],
+      "key_numbers": [
+        "38%至43%",
+        "30%至50%",
+        "35%至40%",
+        "260纳秒",
+        "1微秒",
+        "4KB",
+        "63%",
+        "两个数量级",
+        "2026-09-13"
+      ],
+      "summary_zh": "国产网络产品scaleFabric率先规模化落地IBGDA技术，并完成与DeepEP等框架适配。该技术让GPU内核直接驱动网卡，无需CPU参与，大幅提升小包通信效率，消除MoE架构的CPU瓶颈。实测显示，其单跳时延260纳秒，三跳端到端低于1微秒，较主流RoCE方案低约63%，性能与英伟达NDR持平，为大规模分布式训练和推理提供低时延、低抖动的跨节点传输保障。",
+      "category": "产品与技术",
+      "source_url": "http://m.cyol.com/gb/keji/articles/2026-09/13/content_o6Bn6pH5pd.html",
+      "published_at": "2026-09-13T00:00:00+00:00",
+      "domain": "m.cyol.com",
+      "title": "攻克大模型算力互联关键技术，国产 IBGDA 实现规模化落地",
+      "snippet": "当前，数据中心模型浮点运算利用率（MFU）仅为38%至43%——这意味着超过一半的计算资源处于闲置状态。研究表明，在大规模分布式训练中，网络通信耗时已占整体训练时长的30%至50%。顶级AI实验室在使用高性能GPU进行万亿参数训练时，模型算力利用率仅达35%至40%，高价芯片超过一半时间处于等待数据状态。推理场景下，预填充阶段的集中通信可占近一半执行时间。\n\n国产算力集群面临的这一挑战尤为突出。在硬件层面，国产加速卡的单卡算力正在快速追赶国际先进水平；但在集群互联层面，如何让成千上万张卡高效协同、如何让数据在训练、推理与存储之间“飞驰”，依然是制约国产算力体系效能释放的短板。\n\n如果将GPU比作“大脑”，那么网络就是连接这些大脑的“神经网络”。若神经网络传导迟滞、信号衰减，再多的神经元也无法形成强大的“超级大脑”。 [...] 在性能验证层面，实测数据进一步印证了其工程价值。 大模型分布式训练和推理涉及多级网络交换，一个Token从源GPU发出，需依次经历接入交换机（Leaf）→汇聚交换机（Spine）→目标接入交换机（Leaf）三跳转发。在这一典型的两层CLOS架构下，scaleFabric展现出多跳性能：其单跳转发时延低至260纳秒，端到端（三跳）时延小于1微秒；以4KB以上的大消息报文为例，scaleFabric三跳时延较主流RoCE方案低约63% 。这一性能指标与英伟达NDR持平，达到国际一流水平。在PD分离架构的KV Cache跨节点搬运和MoE模型的All-to-All大规模通信中，这一低时延、低抖动的网络能力为Token生成提供了稳定、可预期的跨节点传输保障，确保集群规模越大、网络优势越明显。\n\nscaleFabric成为国内首个规模化落地IBGDA技术的网络产品，并率先完成与DeepEP等框架的适配使用。IBGDA的落地并非孤立的技术突破，而是构建在完整的scaleFabric加速体系之上。 [...] IBGDA则实现了GDR的“二次进化” 。它允许GPU内核直接驱动和控制InfiniBand网卡，使GPU可以不依赖CPU，完全自主地发起和管理节点间的通信。其技术流程是：GPU内核直接在显存中准备好数据并写入工作队列，然后直接向网卡的门铃寄存器发起写入操作以通知网卡，网卡随后通过GDR技术从GPU显存中读取工作描述符和数据，完成后续的RDMA发送。整个过程从数据搬运到任务下发，全部在GPU上完成，实现了“GPU直达网卡”。\n\n这一“去中心化”的通信模式，将小包通信效率提升了两个数量级，消除了长期以来困扰MoE架构大规模并发的“CPU惩罚”瓶颈。"
+    },
+    {
+      "event_type": "产品发布",
+      "entities": [
+        "9game体育登陆注册",
+        "鸿蒙分布式数据库组件"
+      ],
+      "key_numbers": [
+        "2026-09-12T17:00:00+00:00"
+      ],
+      "summary_zh": "9game体育登陆注册宣布深度集成鸿蒙分布式数据库组件，旨在解决新闻类应用流畅度不足的痛点。文章从用户实际体验出发，详细介绍了该应用率先接入这一技术组件的实践过程，并称此举将树立新闻类应用流畅度的新标杆。",
+      "category": "产品与技术",
+      "source_url": "https://m.ttplus.cn/pilpwikioq.shtml",
+      "published_at": "2026-09-12T17:00:00+00:00",
+      "domain": "m.ttplus.cn",
+      "title": "9game体育登陆注册深度集成鸿蒙分布式数据库组件，引领新闻类应用流畅度新标杆",
+      "snippet": "9game体育登陆注册✓打开:jnh20260.com本文深入解析9game体育登陆注册率先接入鸿蒙分布式数据库组件的技术实践，从用户痛点出发，阐述其如何实现应用"
+    },
+    {
+      "event_type": "产品发布",
+      "entities": [
+        "Dell",
+        "戴尔多云与数据中心服务"
+      ],
+      "key_numbers": [
+        "2026-09-12"
+      ],
+      "summary_zh": "戴尔推出多云与数据中心服务，旨在帮助企业优化IT基础设施。该服务采用多云框架，可对核心数据中心、云端及边缘场景的基础设施进行集中管理，从而提升效率、增强性能并加速数字化转型。",
+      "category": "产品与技术",
+      "source_url": "https://www.dell.com/zh-cn/lp/multicloud-services",
+      "published_at": "2026-09-12T15:00:00+00:00",
+      "domain": "dell.com",
+      "title": "多云和数据中心服务| Dell 中国大陆",
+      "snippet": "借助戴尔多云与数据中心服务,优化您的IT 基础设施。 多云采用框架… 实现基础设施集中管理,覆盖核心数据中心、云端和边缘场景。 ,提升效率、增强性能、加速数字化转型。"
+    },
+    {
+      "event_type": "其他",
+      "entities": [
+        "NVMe SSD",
+        "SATA SSD",
+        "M.2",
+        "PCIe 4.0",
+        "PCIe 5.0",
+        "Samsung"
+      ],
+      "key_numbers": [
+        "$200",
+        "550MB/s",
+        "7,000MB/s",
+        "14,000MB/s",
+        "1TB",
+        "2026-09-13"
+      ],
+      "summary_zh": "作者原本打算花200美元购买NVMe固态硬盘，但发现主板上的SATA接口能以一半价格完成存储升级。将游戏、照片视频和DVD翻录等大容量数据迁移到SATA SSD，可避免主硬盘写满并减少写入放大。同品牌同容量下，SATA硬盘价格约为M.2方案的一半，省下的钱足以再买一块1TB SSD。虽然NVMe在顺序读写上远超SATA，但多数用户日常使用根本跑不满其速度。",
+      "category": "产品与技术",
+      "source_url": "https://www.xda-developers.com/i-almost-spent-200-on-an-nvme-ssd-but-this-one-motherboard-port-let-me-upgrade-my-storage-for-half-the-price",
+      "published_at": "2026-09-13T11:00:16+00:00",
+      "domain": "xda-developers.com",
+      "title": "I almost spent $200 on an NVMe SSD, but this one motherboard port let me upgrade my storage for half the price",
+      "snippet": "Most of the bulk of my storage can be comfortably migrated over to a SATA SSD, including the games I've installed but hardly ever get to play, my photo and video gallery, and an entire folder full of my DVD rips that I promised myself I'd get to watching some day. This prevents my main drive from ballooning up to the limits of its capacity, and prevents write amplification from reducing its life. [...] Around the same brand tier and same capacity, a SATA drive costs roughly half of either M.2 option. This difference can effectively buy me a second 1TB SSD with some change left over for a cappuccino. That's a better deal in more ways than one, considering I would've spent money on a single fast drive that I would spend most of my time not saturating. [...] ## SATA SSDs are not the compromise everyone thinks they are\n\n### NVMe SSDs win against SATA III on one criterion, and it hardly matters to most users\n\nSamsung SATA SSD plugged into a PC.\n\nSATA SSDs have, for long, been seen as the inferior counterparts to their M.2 siblings. However, the single biggest advantage NVMe has over SATA is sequential throughput. While SATA tops at around 550MB/s, a good PCIe 4.0 drive can push up to 7,000MB/s and PCIe 5.0 drives approach up to 14,000MB/s."
+    },
+    {
+      "event_type": "产品发布",
+      "entities": [
+        "PlayStation 6",
+        "PlayStation 5",
+        "NVMe M.2 SSD",
+        "PCIe Gen5",
+        "AMD",
+        "Neural Texture Compression"
+      ],
+      "key_numbers": [
+        "14,9 GB/s",
+        "5,5 GB/s",
+        "14,0 GB/s",
+        "170%",
+        "2026-09-12"
+      ],
+      "summary_zh": "据2026年内部泄露，PlayStation 6将采用定制NVMe M.2 SSD，支持PCIe Gen5接口，顺序读取速度达14.9 GB/s，写入14.0 GB/s，较PS5的5.5 GB/s提升170%，可消除加载等待。为应对存储限制，工程师将结合软硬件优化，AMD定制GPU引入神经纹理压缩，高分辨率纹理以高压缩格式存储并由GPU实时解压。此外，索尼正开发混合流媒体系统，核心游戏文件本地运行，大型内容从升级云下载。",
+      "category": "产品与技术",
+      "source_url": "https://en.gamegpu.com/news/zhelezo/playstation-6-poluchit-ssd-so-skorostyu-do-14-9-gb-s-protiv-5-5-gb-s-u-playstation-5",
+      "published_at": "2026-09-12T15:00:00+00:00",
+      "domain": "en.gamegpu.com",
+      "title": "PlayStation 6 will receive an SSD with speeds of up to 14,9 GB/s, compared to 5,5 GB/s for PlayStation 5.",
+      "snippet": "To address the limited storage capacity, engineers will use hardware and software optimization techniques. AMD's custom-architecture GPU will feature hardware-based AI compression called Neural Texture Compression. High-resolution textures will be stored on the SSD in highly compressed format and decompressed on the fly by the GPU. The company is also developing a hybrid streaming system, whereby core game files are run locally, while heavy content is downloaded from an upgraded cloud. [...] ASUS banner\n\nASUS banner\n\nVideo card test and IT technology news Video card test and IT technology news\n\nPlayStation 6 will receive an SSD with speeds of up to 14,9 GB/s, compared to 5,5 GB/s for PlayStation 5. \n\n# PlayStation 6 will receive an SSD with speeds of up to 14,9 GB/s, compared to 5,5 GB/s for PlayStation 5.\n\nMaxim Boldson    HARDWARE     Views: 1874 [...] According to insider leaks from 2026, the next-generation PlayStation 6 console's storage subsystem will undergo significant technical changes. The device will switch to a custom NVMe M.2 SSD with a PCIe Gen5 interface. The new subsystem will deliver sequential read speeds of 14,9 GB/s and sequential write speeds of 14,0 GB/s. Compared to the base PlayStation 5, which boasts approximately 5,5 GB/s, this represents a 170% throughput increase, allowing for the complete elimination of loading"
+    },
+    {
+      "event_type": "产品发布",
+      "entities": [
+        "ASRock",
+        "B860 Challenger Wi-Fi",
+        "TechPowerUp",
+        "PCIe Gen 5 SSD",
+        "PCIe Gen 4 SSD",
+        "Logitech",
+        "GHUB",
+        "Windows Spatial Audio",
+        "Atmos",
+        "DTS:X",
+        "XFX R9-390A-8DFR V4.0",
+        "Elpida"
+      ],
+      "key_numbers": [
+        "80°C",
+        "2026-09-12T15:00:00+00:00"
+      ],
+      "summary_zh": "TechPowerUp 发布了华擎 B860 Challenger Wi-Fi 主板的评测，重点考察 SSD 散热表现。测试显示，双面 PCIe Gen 5 SSD 在短暂运行后温度突破 80°C 并出现降速，若换用单面型号可能避免此问题；PCIe Gen 4 SSD 在上下散热片下温差不大，温度足够低但并非最佳。摘要还提及罗技耳机驱动修改以恢复 2.0 立体声并启用 Windows 空间音频，以及多个论坛帖子和显卡 BIOS 求助信息。",
+      "category": "产品与技术",
+      "source_url": "https://www.techpowerup.com/review/asrock-b860-challenger-wi-fi/9.html",
+      "published_at": "2026-09-12T15:00:00+00:00",
+      "domain": "techpowerup.com",
+      "title": "ASRock B860 Challenger Wi-Fi Review - SSD Performance & Temperatures | TechPowerUp",
+      "snippet": "SSD heatsink cooling was acceptable, but while our double-sided PCIe Gen 5 SSD managed a little while without throttling, eventually it did top 80°C and saw some speeds curtailed. Opting for a single-sided model will likely solve this issue as it was only in the second half of the test that things got too toasty. Our PCIe Gen 4 SSD didn't show much difference between lower and upper heatsinks and was plenty cool enough, even if it wasn't the best we've seen. [...] Logitech headset Driver mod: Restoring 2.0 Stereo Output to Enable Windows Spatial Audio (Atmos/DTS:X) instead of the muffled surround sound in GHUB (32)\n by wheresmycar\n\n  The TPU UK Clubhouse (27185)\n by Stacts\n\n  The Filthy, Rotten, Nasty, Helpdesk-Nightmare picture clubhouse (2870)\n by Adraps\n\n  Your PC ATM (36211)\n by DavidC1\n\n  Video card repair, need an original BIOS dump for the XFX R9-390A-8DFR V4.0 with Elpida chips 8GB. (22)\n by datnoz [...] # TPU on YouTube\n\n# Controversial News Posts"
+    },
+    {
+      "event_type": "产品发布",
+      "entities": [
+        "Kioxia",
+        "Exceria Pro G2",
+        "Tom's Hardware",
+        "Shane Downing"
+      ],
+      "key_numbers": [
+        "2TB",
+        "1TB",
+        "4TB",
+        "M.2 2280",
+        "2280-S3-M",
+        "2280-S4-M",
+        "2.63mm",
+        "2.38mm",
+        "16-die",
+        "8-die",
+        "2026-09-12"
+      ],
+      "summary_zh": "Tom's Hardware 发布了 Kioxia Exceria Pro G2 2TB SSD 的评测。该硬盘为单面 M.2 2280 规格，1TB 和 2TB 版本符合 2280-S3-M，4TB 版本为 2280-S4-M 且稍厚。评测指出其持续写入性能、能效和随机读取延迟表现优秀，虽非最快，但可靠性优先。",
+      "category": "产品与技术",
+      "source_url": "https://www.tomshardware.com/pc-components/ssds/kioxia-exceria-pro-g2-2tb-ssd-review",
+      "published_at": "2026-09-12T11:05:00+00:00",
+      "domain": "tomshardware.com",
+      "title": "Kioxia Exceria Pro G2 2TB SSD Review — Speed built to last | Tom's Hardware",
+      "snippet": "This is a single-sided drive in the M.2 2280 form factor. Specifically, the 1TB and 2TB conform to 2280-S3-M, while the 4TB is 2280-S4-M. These are all single-sided, but the 4TB is slightly thicker at 2.63mm versus 2.38mm. This is because it needs 16-die, rather than 8-die, NAND flash packages to achieve 2TB per package. The resulting extra height should not be an issue in most cases but is worth noting for devices with specific limitations. [...] The important bit is that this drive still delivers what you’d expect. That means high performance, including sustained write performance, good power efficiency, and very low random read latency. These are the hallmarks of a drive that offers an excellent user experience. This is a very fast drive, just not the very fastest, but we make the argument that this is a deliberate trade-off for a drive with roots in an area where reliability is a bigger priority. For some, that might otherwise tip [...] Shane Downing is a Freelance Reviewer for Tom’s Hardware US, covering consumer storage hardware."
+    },
+    {
+      "event_type": "产品与技术",
+      "entities": [
+        "DeepSeek",
+        "KV-Cache",
+        "HBM",
+        "SSD",
+        "Micron",
+        "Sandisk Corporation",
+        "NASDAQ:SNDK"
+      ],
+      "key_numbers": [
+        "75%",
+        "87.5%",
+        "2026-09-13T01:16:03+00:00"
+      ],
+      "summary_zh": "DeepSeek 在推理阶段通过架构优化，将 KV 缓存所需的 HBM 用量降低 75%，SSD 存储需求减少 87.5%。该改进仅针对 KV 缓存，不涉及模型权重或训练内存，但推理环节的持续 token 增长可能使这一架构优化转化为需求冲击，值得美光与闪迪投资者关注。",
+      "category": "产品与技术",
+      "source_url": "https://finance.yahoo.com/technology/ai/articles/deepseek-cut-kv-cache-hbm-011603128.html",
+      "published_at": "2026-09-13T01:16:03+00:00",
+      "domain": "finance.yahoo.com",
+      "title": "DeepSeek Cut Its KV-Cache HBM Need 75% and SSD Need 87.5%. Micron and Sandisk Investors Should Pay Attention",
+      "snippet": "READ NEXT:The Trillion-Dollar AI Capex Gap: Why Too Much Hardware Could Be Nvidia's Trap and Microsoft's OpportunityandRedditors Are Skeptical of SpaceX's Orbital Data Centers. Are They Right?\n\nDisclosure: None. Follow Insider Monkey on Google News.\n\nView Comments \n\nTerms and Privacy Policy\n\nPrivacy Dashboard\n\nMore Info\n\n  \n\n     \n\n  \n\n     \n\n  \n\n     \n\n  \n\n     \n\n  \n\n     \n\n  \n\n     \n\n  \n\n     \n\n## Recommended Stories\n\n\n\nTrending Topics\n\nDow JonesS&P 500DAX IndexNvidiaTeslaDJTTariffs [...] Explore Further\n\nMortgagesCredit CardsSectorsCrypto HeatmapFinancial News\n\nAbout\n\nData DisclaimerHelpFeedbackSitemapLicensingWhat's NewAbout Our AdsPremium Plans\n\nTerms and Privacy Policy\n\nPrivacy Dashboard\n\nMore Info\n\nTip: Try a valid symbol or a specific company name for relevant results\n\n### Trending Tickers [...] and Sandisk Corporation (NASDAQ:SNDK).\n\nThe qualification is essential. DeepSeek did not claim the entire model or data center uses 75% less HBM and 87.5% less SSD storage. The comparison covers KV cache, which stores attention state during inference, and it is against DeepSeek's preceding architecture. It does not eliminate memory used for model weights or training. Still, inference is where sustained token growth can turn an architectural improvement into a demand shock."
+    },
+    {
+      "event_type": "其他",
+      "entities": [
+        "MSI",
+        "Z790",
+        "eBay",
+        "NVMe Gen 4 SSD",
+        "Windows",
+        "TheQxx",
+        "Reddit",
+        "RTX 5070",
+        "Walmart",
+        "M5 Max MacBook Pro",
+        "Apple",
+        "M2 Max",
+        "DRAM",
+        "Crucial P310",
+        "Newegg",
+        "Acer Predator GM7000",
+        "Amazon",
+        "WD SN580"
+      ],
+      "key_numbers": [
+        "2TB",
+        "$129",
+        "$300",
+        "$298.95",
+        "$314.99",
+        "2026-09-12T08:00:18+00:00"
+      ],
+      "summary_zh": "一位 Reddit 用户 TheQxx 在 eBay 上购买了一块标注为“仅限零件/无法工作”的微星 Z790 主板，原本期望不高，结果发现主板不仅能正常使用，还成功启动进入 Windows，并在插槽中找到一块 2TB 的 WD SN580 PCIe NVMe Gen 4 固态硬盘。由于 DRAM 短缺，同容量 SSD 目前售价至少 300 美元，例如 Crucial P310 在 Newegg 标价 298.95 美元，带缓存 Acer Predator GM7000 在亚马逊为 314.99 美元。",
+      "category": "产品与技术",
+      "source_url": "https://wccftech.com/msi-z790-motherboard-ebay-for-parts-hidden-2tb-gen4-ssd-boots-windows",
+      "published_at": "2026-09-12T08:00:18+00:00",
+      "domain": "wccftech.com",
+      "title": "An MSI Z790 Motherboard Listed On eBay As “For Parts/Not Working” Became A Lucky Find As Customer Found A 2TB NVMe Gen 4 SSD That Also Booted Into Windows",
+      "snippet": "For anyone building a new gaming PC or upgrading the storage, even 2TB SSDs have reached a price bracket where consumers have to compromise and opt for a 1TB drive instead, but fate had a different intention for TheQxx. Sure, he was not as lucky as another Redditor who successfully purchased an RTX 5070 from Walmart for $129, or getting a free M5 Max MacBook Pro from Apple to replace the M2 Max, but a working motherboard and a free SSD are still something to brag about.\n\nNews Source: Reddit [...] Due to the DRAM shortage, each of these 2TB drives will set you back by at least $300 on various online retailers. At the time of writing, we checked and found that 2TB PCIe NVMe Gen 4 SSDs like the Crucial P310 were listed on Newegg for $298.95, while drives with a DRAM cache, like the Acer Predator GM7000 with the same capacity, could be purchased from Amazon for $314.99. [...] Keep in mind that the eBay listing apparently stated “For Parts/Not Working,” meaning that the seller has clearly mentioned that the hardware doesn’t function. Naturally, the buyer kept his expectations low, but imagine the look on his face when he realized that the motherboard not only worked but also successfully booted into Windows, thanks to a 2TB WD SN580 PCIe NVMe Gen 4 SSD hiding in one of the slots."
+    },
+    {
+      "event_type": "产品发布",
+      "entities": [
+        "SHARGE",
+        "Disk Pro 2 Ultra",
+        "NVMe SSD",
+        "HDMI 2.1",
+        "SD",
+        "microSD",
+        "USB-C"
+      ],
+      "key_numbers": [
+        "10-Gbit/s",
+        "2026-09-13"
+      ],
+      "summary_zh": "SHARGE 推出 Disk Pro 2 Ultra 扩展坞，集成了可更换 NVMe SSD、HDMI 2.1 接口、SD/microSD 读卡器以及 USB-C 扩展功能。该设备采用 10-Gbit/s 接口，但这一带宽限制了内置 SSD 的性能发挥。整体定位为多功能存储扩展解决方案。",
+      "category": "产品与技术",
+      "source_url": "https://www.igorslab.de/en/sharge-disk-pro-2-ultra-sd-docking-station-card-reader-compact-enclosure",
+      "published_at": "2026-09-13T04:00:00+00:00",
+      "domain": "igorslab.de",
+      "title": "SHARGE Disk Pro 2 Ultra Review: SSD Dock with HDMI 2.1",
+      "snippet": "The SHARGE Disk Pro 2 Ultra combines a replaceable NVMe SSD, HDMI 2.1, SD/microSD and USB-C docking; the 10-Gbit/s interface limits the SSD."
+    },
+    {
+      "event_type": "产品发布",
+      "entities": [
+        "OD介绍官方版",
+        "jnh20266.com",
+        "ttplus.cn"
+      ],
+      "key_numbers": [
+        "2026年5月15日",
+        "2026-09-12T15:00:00+00:00"
+      ],
+      "summary_zh": "该新闻以2026年5月15日发布的OD介绍官方版为案例，分析大数据、AI及数据湖技术如何改变女足赛事分析方式，并指出这一升级可能成为体育科技投资的新风口。文章还探讨了相关市场前景。",
+      "category": "产品与技术",
+      "source_url": "https://www.ttplus.cn/wiki-2026-09-11-qjzmrhlx.html",
+      "published_at": "2026-09-12T15:00:00+00:00",
+      "domain": "ttplus.cn",
+      "title": "OD介绍官方版数据驱动AI预测模型升级或体育科技投资新风口",
+      "snippet": "访问:jnh20266.com←本文以2026年5月15日的OD介绍官方版为切入点，深度分析大数据、AI及数据湖技术如何重塑女足赛事分析，并探讨体育科技市场的投资"
+    },
+    {
+      "event_type": "其他",
+      "entities": [
+        "林同省委礼堂",
+        "省网络安全指导委员会",
+        "2026年网络安全和个人数据保护培训实操项目"
+      ],
+      "key_numbers": [
+        "2026年9月11日",
+        "2026年9月12日",
+        "第一阶段"
+      ],
+      "summary_zh": "2026年9月11日上午，林同省网络安全指导委员会在省委礼堂举办了2026年网络安全与个人数据保护培训实操项目第一阶段的结业典礼。该活动标志着第一阶段培训的结束，旨在提升相关人员对网络安全和个人数据保护的实践能力。",
+      "category": "监管与合规",
+      "source_url": "https://www.vietnam.vn/zh-cn/be-mac-dot-1-chuong-trinh-tap-huan-dien-tap-thuc-chien-bao-dam-an-ninh-mang-bao-ve-du-lieu-ca-nhan-nam-2026",
+      "published_at": "2026-09-12T15:00:00+00:00",
+      "domain": "vietnam.vn",
+      "title": "2026年网络安全和个人数据保护培训实践演练计划第一阶段闭幕式。",
+      "snippet": "2026年9月11日上午，在林同省委礼堂，省网络安全指导委员会举行了2026年网络安全和个人数据保护培训实操项目第一阶段结业典礼。"
+    },
+    {
+      "event_type": "其他",
+      "entities": [
+        "环球国际",
+        "B体育",
+        "jnh20264.com",
+        "ttplus.cn"
+      ],
+      "key_numbers": [
+        "2026-09-12T21:00:00+00:00"
+      ],
+      "summary_zh": "该内容围绕环球国际注册展开，从平台资质、用户反馈和数据加密等角度分析B体育的安全性，旨在帮助用户全面了解该平台是否合规可靠。发布时间为2026年9月12日，来源域名为ttplus.cn。",
+      "category": "监管与合规",
+      "source_url": "https://www.ttplus.cn/stories/wiki/2026-09-10/eqnr6ErBFOwC-TtJr6I",
+      "published_at": "2026-09-12T21:00:00+00:00",
+      "domain": "ttplus.cn",
+      "title": "平台资质与合规性：环球国际注册？",
+      "snippet": "直达:jnh20264.com〕探讨环球国际注册？本文从平台资质、用户反馈、数据加密等多角度分析，帮助用户全面了解B体育的安全性。"
+    },
+    {
+      "event_type": "其他",
+      "entities": [
+        "长江存储",
+        "长鑫",
+        "三星",
+        "SK海力士",
+        "美光",
+        "内存",
+        "闪存",
+        "存储芯片"
+      ],
+      "key_numbers": [
+        "2027年底",
+        "2028年",
+        "5-10%"
+      ],
+      "summary_zh": "据快科技报道，内存与闪存市场供需格局将在2027至2028年发生关键变化。闪存预计2027年底供需平衡甚至供过于求，内存2027年仍有缺口但短缺收窄。若不计长江存储和长鑫的产能，2028年两者缺口均约5-10%。三星、SK海力士、美光扩产意愿低，而两家中国公司建厂动力更强，2028年市场走向将取决于它们。",
+      "category": "产业热点",
+      "source_url": "http://news.17173.com/content/09122026/190103386.shtml",
+      "published_at": "2026-09-12T15:00:00+00:00",
+      "domain": "news.17173.com",
+      "title": "内存、闪存涨价迎来终局：2028年两家中国公司决定走向_网络游戏新闻_17173.com中国游戏门户站",
+      "snippet": "王者万象棋   王者万象棋  编辑推荐 09-10\n 洛克王国：世界   洛克王国：世界  编辑推荐 09-10\n 剑与远征2：启程   剑与远征2：启程  编辑推荐 09-10\n 疾风之刃   疾风之刃  09-10\n 机战：钢铁巨舰   机战：钢铁巨舰  09-10\n 物华弥新   物华弥新  09-10\n 大唐无双   大唐无双  编辑推荐 09-11\n 封神榜   封神榜  编辑推荐 09-11\n 传奇之梦复古合击版   传奇之梦复古合击版  09-11\n 三国：谋定天下   三国：谋定天下  编辑推荐 09-12\n 黑白之地   黑白之地  编辑推荐 09-15\n 沙巴克传奇-再战沙巴克   沙巴克传奇-再战沙巴克  09-15\n 仙侠世界2   仙侠世界2  09-15\n 地牢猎手6   地牢猎手6  09-15\n 现代战舰   现代战舰  编辑推荐 09-16\n 暗区突围   暗区突围  编辑推荐 09-16\n 诛仙   诛仙  编辑推荐 09-16\n 地下城与勇士：起源   地下城与勇士：起源  编辑推荐 09-16\n 交错战线   交错战线  09-16 [...] 黑线的是闪存芯片，2027年底就会出现供需平衡甚至供过于求，但2028年如果不算长江存储，整体需求还是高于产能供应的。\n\n内存市场在2027年都会是略有缺口，但是比2026年降低了短缺的数量，2028年如果不考虑长鑫公司的产能，那缺口会回到5-10%之间，跟闪存的情况差不多。\n\n这就意味着2028年的内存及闪存市场走向要看两长的脸色了，因为三星、SK海力士及美光等公司并不是真心扩产，或者扩产速度很慢，但两长现在投资建厂的热情、动力是远高于三星等公司的，哪怕价格大幅下降也是值得的。\n\n【来源：快科技】\n\n关于内存,闪存,存储芯片,涨价,三星,SK海力士,美光,长鑫,长江存储,供需的新闻 [...] 交错战线   交错战线  09-16\n 闪耀吧！噜咪   闪耀吧！噜咪  09-17\n 元气骑士   元气骑士  09-17\n 龙吟山海   龙吟山海  09-19\n 粒粒的小人国   粒粒的小人国  编辑推荐 09-22\n 无畏契约：源能行动   无畏契约：源能行动  编辑推荐 09-22\n 逆战：未来   逆战：未来  09-22"
+    },
+    {
+      "event_type": "其他",
+      "entities": [
+        "三星",
+        "SK海力士",
+        "美光",
+        "长鑫",
+        "长江存储",
+        "铠侠",
+        "闪迪",
+        "DRAM",
+        "NAND闪存",
+        "HBM内存"
+      ],
+      "key_numbers": [
+        "2026年二季度",
+        "38%",
+        "25%",
+        "24%",
+        "10%",
+        "2%",
+        "47%",
+        "14%",
+        "13%",
+        "11%",
+        "2026-09-13"
+      ],
+      "summary_zh": "2026年二季度数据显示，全球存储芯片格局中韩国居首、美国第二、中国第三。DRAM领域三星、SK海力士、美光、长鑫份额分别为38%、25%、24%、10%。NAND领域三星与SK海力士合计占47%，长江存储与铠侠各占14%，美光13%，闪迪11%。综合DRAM与NAND，韩国最强，美国次之，中国第三，日本仅靠NAND占14%份额。",
+      "category": "产业热点",
+      "source_url": "https://m.sohu.com/a/1075429732_121097259?scm=10001.325_13-325_13.0.0-0-0-0-0.5_1334",
+      "published_at": "2026-09-13T11:14:10+00:00",
+      "domain": "m.sohu.com",
+      "title": "存储芯片这一块，韩国排第1，美国排第2，中国只能排第3_搜狐网",
+      "snippet": "很明显韩国是处于垄断地位，美国次之，中国排在第三名。\n\n再看NAND闪存芯片这一块，2026年二季度的市场份额如下图所示。\n\n韩国三星、SK海力士合计拿下了47%的份额，同样是处于遥遥领先的地位，没有对手。\n\n中国企业长江存储是排在第三名，有14%的份额，再是日本的铠侠份额为14%，再是美光13%，闪迪11%，而闪迪也是美国企业。\n\n可见在NAND闪存这一块，韩国第一、美国第二、中国第三、日本第四。\n\n我们再结合DRAM+NAND闪存这两块，都能够看到，韩国是最强的，美国排在第二名，而中国排在第三名，至于日本，仅有NAND闪存上有14%的份额，而DRAM等于0，所以远不如中国。 [...] ## 原创 存储芯片这一块，韩国排第1，美国排第2，中国只能排第3\n\n科技plus\n\n科技plus\n\n这一年多以来，所有的芯片中，存储芯片是站在C位的。\n\n不管是DRAM内存，还是NAND闪存，最近一年以来地，都是四五倍的价格上涨，存储芯片的利润，毛利率等，都超过了英伟达，成为最赚钱的存在。\n\n而机构更是预测，接下来存储芯片还会涨，至少要涨到2027年，现实情况是AI不死，存储涨价不止，如果2028年AI还火爆，那么存储则依然会上涨。\n\n那么问题就来了，目前全球的存储芯片格局，究竟是什么样的呢。\n\n如果从排名来看，目前全球存储芯片是韩国排第一、美国排第二名，而中国只能排在第三名。\n\n为何会有这么一个排名，我们仔细看看DRAM、NAND的排名，大家就会明白了的。\n\n先看DRAM芯片，也就是内存这一块，包含HBM内存。\n\n展开剩余\n\n65\n\n%\n\n到2026年二季度时，第一名是韩国三星，第二名是韩国SK海力士，第三名是美国美光，第四名是中国的长鑫，这四家的份额分别是38%、25%、24%、10%，而其它企业的份额只有2%，基本可以忽略。"
+    },
+    {
+      "event_type": "其他",
+      "entities": [
+        "长江存储",
+        "长鑫科技",
+        "NAND闪存",
+        "DRAM内存芯片",
+        "科创板",
+        "AI大模型",
+        "AI算力服务器",
+        "大数据中心"
+      ],
+      "key_numbers": [
+        "200%-250%",
+        "2027年",
+        "76.8%",
+        "2750亿-3300亿",
+        "3.27万亿",
+        "1.5万亿",
+        "500股",
+        "14万",
+        "2026-09-12"
+      ],
+      "summary_zh": "长江存储作为国内NAND闪存龙头，受益于AI驱动的存储需求爆发和闪存价格暴涨，一季度毛利率达76.8%，产能满产满销。其科创板IPO发行估值仅2750亿至3300亿元，远低于同行长鑫科技上市首日3.27万亿市值，机构测算保守合理市值可达1.5万亿，打新单签最高收益或达14万元。",
+      "category": "产业热点",
+      "source_url": "https://k.sina.com.cn/article_7879996580_1d5af34a402001v28y.html",
+      "published_at": "2026-09-12T09:10:00+00:00",
+      "domain": "k.sina.com.cn",
+      "title": "A股打新王炸诞生！长江存储打新收益曝光，单签最高赚14万",
+      "snippet": "随着AI大模型、AI算力服务器、大数据中心持续扩容，全球数据存储需求迎来爆发式增长，直接带动闪存价格持续暴涨。数据显示，本轮上行周期中，NAND闪存全年涨幅达到200%-250%，行业供需紧缺的格局，机构普遍预判至少持续维持到2027年，周期持续性远超以往。\n\n　　在行业整体爆发的背景下，长江存储作为国内龙头，直接实现量价齐升。目前公司产能持续满产满销，订单排期饱满，一季度毛利率直接飙升至76.8%，盈利能力创下历史新高。\n\n　　和其他周期股不同，当下的存储行业没有库存压力、没有需求疲软、没有价格回落风险，业绩确定性拉满，这是支撑新股高溢价的核心基本面保障。\n\n　　逻辑二：发行估值严重低估，对标同行存在数倍修复空间\n\n　　一只新股的上涨空间，核心看发行估值与行业对标估值的差值，差值越大，修复空间越大。\n\n　　根据官方募资规划与股本结构测算，长江存储本次上市发行估值仅2750亿-3300亿，处于行业绝对低位。\n\n　　我们做一个直观对比：同赛道的长鑫科技，上市首日市值直接突破3.27万亿。哪怕不给予乐观情绪溢价，仅按照行业合理估值测算，长江存储保守合理市值可达1.5万亿。 [...] 此前上市爆火的长鑫科技，主打DRAM内存芯片；而本次冲刺上市的长江存储，是国内NAND闪存芯片唯一龙头。\n\n　　我们日常使用的手机存储、电脑固态硬盘、AI服务器大容量存储、云端数据中心，核心硬件全部依赖NAND闪存芯片。在当下AI算力大规模落地、数据存储需求爆炸式增长的时代，NAND闪存早已成为数字经济、人工智能的刚需核心硬件，行业刚需属性、成长确定性极强。\n\n　　从行业格局来看，过去全球NAND市场长期被海外巨头垄断，国内自主可控率极低。而长江存储是国内唯一实现3D NAND闪存规模化量产、技术迭代突破的企业，也是国家半导体自主可控战略的核心载体，背靠国资深度赋能，技术壁垒、行业地位、政策优势全部拉满。\n\n　　这也是它能超越绝大多数新股，成为年度压轴大肉签的核心底层底气。\n\n　　二、打新收益理性测算：三档情景全覆盖，真实溢价一目了然\n\n　　随着IPO进度推进，各大机构结合发行规则、行业估值、市场情绪，给出了完整的收益测算模型。所有测算均基于A股科创板500股为一签的基础规则，数据真实可溯源，没有夸大炒作。 [...] 而2026年A股收官压轴的顶级新股，毫无疑问就是长江存储。\n\n　　近期长江存储科创板IPO进度持续提速，上市节奏逐步落地，直接引爆整个打新圈和半导体赛道的讨论热度。不同于市面上很多蹭热度、炒概念的新股，长江存储是实打实的国产存储芯片绝对龙头，赶上了AI存储超级上行周期，业绩、产能、行业景气度全部拉满。\n\n　　网上关于这只新股的收益测算层出不穷，从单签数万到数十万的收益预期，让无数散户心动不已。但绝大多数内容只讲收益、不讲逻辑，只吹利好、不提风险，很容易让普通投资者盲目跟风。\n\n　　今天我站在客观中立的角度，不吹不捧、实事求是，带大家深度拆解长江存储的打新收益测算、行业核心逻辑、估值对比优势、潜在隐性风险，帮大家彻底看懂这只年度压轴新股的真实含金量，避开市场普遍存在的认知误区。\n\n　　一、全面认知：长江存储，国产NAND存储的绝对龙头\n\n　　想要看懂一只新股的溢价空间，首先要读懂企业的行业地位和核心价值。\n\n　　很多散户分不清半导体存储赛道的细分差异，简单把所有存储企业归为一类。其实存储芯片主要分为两大核心品类：一是内存DRAM，二是闪存NAND。"
+    },
+    {
+      "event_type": "并购",
+      "entities": [
+        "园林股份",
+        "杭州华澜微电子股份有限公司",
+        "雪天盐业",
+        "河北坤天新能源股份有限公司",
+        "有研硅",
+        "云海科技",
+        "易大设计",
+        "东方财富网",
+        "中新经纬"
+      ],
+      "key_numbers": [
+        "9月11日",
+        "9月14日",
+        "9月28日",
+        "不超过10个交易日",
+        "不超过35名特定投资者",
+        "100%股份",
+        "2011年",
+        "2018年5月"
+      ],
+      "summary_zh": "三家A股上市公司近期筹划重大资产重组。园林股份拟收购存储芯片企业华澜微控股权，股票自9月14日起停牌。雪天盐业计划通过发行股份及现金购买坤天新能源全部股份，切入锂电池负极材料领域，股票同日复牌。有研硅则加码功率半导体材料布局。三起交易均涉及半导体、新能源等热门赛道，预计均构成重大资产重组。",
+      "category": "产业热点",
+      "source_url": "https://wap.eastmoney.com/a/202609123872720965.html",
+      "published_at": "2026-09-12T07:00:00+00:00",
+      "domain": "wap.eastmoney.com",
+      "title": "3家A股公司，筹划重大资产重组，涉存储芯片、半导体材料等 _ 东方财富网",
+      "snippet": "点击阅读全文\n\n前往东方财富APP阅读全文\n\n取消 前往\n\n分享成功\n\n#### 热门推荐\n\n即将前往东方财富APP查看原文\n\n取消 确定\n\n 分享至：\n 微信\n 朋友圈\n 微博\n\n郑重声明：东方财富发布此内容旨在传播更多信息，与本站立场无关，不构成投资建议。据此操作，风险自担。\n\n热点阅读\n:   习近平出席金砖国家领导人第十八次会晤第一阶段会议并发表重要讲话\n\n    习近平出席金砖国家领导人第十八次会晤第一阶段会议并发表重要讲话\n\n    新华社 17评论\n:   不止加息一次？美国8月CPI引发市场疯狂猜测\n\n    不止加息一次？美国8月CPI引发市场疯狂猜测\n\n    第一财经 1686评论\n:   全球市场：美股三大指数集体收涨 大型科技股普涨 戴尔科技涨近12%\n\n    全球市场：美股三大指数集体收涨 大型科技股普涨 戴尔科技涨近12%\n\n    东方财富Choice数据 413评论\n:   能源危机骤然升级！沙特关键输油管道遇袭后预防性关闭\n\n    能源危机骤然升级！沙特关键输油管道遇袭后预防性关闭\n\n    财联社 406评论 [...] 雪天盐业拟切入锂电池负极领域\n\n雪天盐业9月11日晚间发布交易预案，公司拟通过发行股份及支付现金方式购买河北坤天新能源股份有限公司100%股份并募集配套资金。截至目前，交易相关的审计、评估工作尚未完成，坤天新能源估值及定价尚未最终确定，经初步判断，预计本次交易将构成重大资产重组。公司股票将于9月14日（下周一）复牌。\n\n公告显示，坤天新能源成立于2018年5月，成立初期主要从事锂电池负极材料石墨化加工，目前已成长为集负极前驱体粉碎、造粒、整形、纯化、成品等工序于一体的专业锂离子电池负极材料头部企业，并聚焦人造石墨负极材料、硅基负极材料、储能硬碳负极材料的研发、生产和销售。目前，公司拥有河北、四川、云南三大一体化生产基地。\n\n雪天盐业8月28日晚公告称，公司正在筹划以发行股份及支付现金的方式购买河北坤天新能源股份有限公司控制权，并向不超过35名特定投资者发行股份募集配套资金。本次交易预计构成重大资产重组及关联交易，不会导致公司实际控制人变更。\n\n来源：中国证券报\n\n（文章来源：中新经纬）\n\n文章来源：中新经纬\n\n原标题：3家A股公司，筹划重大资产重组，涉存储芯片、半导体材料等 [...] # 3家A股公司，筹划重大资产重组，涉存储芯片、半导体材料等\n\n中新经纬 7小时前 评论\n\n园林股份拟并购存储芯片公司\n\n园林股份9月11日晚公告，公司正筹划以发行股份及支付现金的方式购买杭州华澜微电子股份有限公司控股权。截至目前，华澜微公司的估值尚未最终确定。此次交易预计构成重大资产重组，预计不构成重组上市。公司股票自9月14日起开始停牌，预计停牌时间不超过10个交易日。\n\n图片来源：公司公告（下同）\n\n公告显示，华澜微成立于2011年，经营范围包括电子产品、电子设备、计算机软硬件、服务器、集成电路及应用产品、数据存储和信息安全产品的技术开发等。\n\n园林股份从事的主营业务主要包括市政园林工程业务与半导体存储业务，市政园林工程业务由公司及全资子公司易大设计等市政建设板块子公司负责经营，半导体存储业务主要由公司控股公司云海科技负责经营。\n\n有研硅加码功率半导体材料布局"
+    }
+  ],
+  "update": [],
+  "duplicate_dropped_count": 1,
+  "qa": {
+    "passed": true,
+    "valid": 29,
+    "total": 29,
+    "issues": []
+  }
+}
