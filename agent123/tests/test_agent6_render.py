@@ -1,7 +1,7 @@
 """
 被测目标：src/agent6_render.py
 依赖：src/models.py（DeepReport、ExtractedEvent）
-覆盖场景：模板复用、配置驱动的标题/标签/分类/段名/模板、更新历史、空态、HTML 转义与推送消息
+覆盖场景：模板复用、配置驱动的标题/标签/分类/段名/模板、中文标题与一段话总结、更新历史、空态、HTML 转义与推送消息
 """
 
 import logging
@@ -108,6 +108,39 @@ def test_render_html_escapes_report_body_text():
     assert "<img src=x onerror=alert(1)>" not in html
     assert "&lt;script&gt;alert(&#x27;body&#x27;)&lt;/script&gt;" in html
     assert "&lt;img src=x onerror=alert(1)&gt;" in html
+
+
+def test_render_html_prefers_chinese_title_and_renders_structured_summary_before_sections():
+    from src.agent6_render import render_html
+    from src.models import DeepReport
+
+    event = make_event("摘要")
+    event.title = "Original English title"
+    event.title_zh = "中文标题"
+    event.structured_summary = "时间：今日；地点：北京；起因：扩容；经过：发布新品；结果：将带动存储升级。"
+    report = DeepReport(event, {"背景": "背景内容"}, False)
+
+    html = render_html([report], {"categories": ["产业热点"], "analysis_template_sections": ["背景"]})
+
+    assert ">中文标题</a>" in html
+    assert "Original English title" not in html
+    assert "📋 一段话总结" in html
+    assert event.structured_summary in html
+    assert html.index("📋 一段话总结") < html.index("背景")
+
+
+def test_render_html_falls_back_to_original_title_and_skips_empty_structured_summary():
+    from src.agent6_render import render_html
+    from src.models import DeepReport
+
+    event = make_event("摘要")
+    event.title = "Original English title"
+    report = DeepReport(event, {"背景": "背景内容"}, False)
+
+    html = render_html([report], {"categories": ["产业热点"], "analysis_template_sections": ["背景"]})
+
+    assert ">Original English title</a>" in html
+    assert "📋 一段话总结" not in html
 
 
 def test_render_push_message_includes_configured_icon_title_category_summary_and_link():

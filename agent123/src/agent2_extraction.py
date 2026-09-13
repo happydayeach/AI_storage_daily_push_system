@@ -36,6 +36,8 @@ def extract_event(article: RawArticle, llm_client: LLMClient, theme_config: dict
 - "entities": 关键实体列表（公司名、产品名、法规名等）。
 - "key_numbers": 关键数字或日期列表（如金额、百分比、发布日期）。
 - "summary_zh": 用中文转述摘要，严禁逐句引用原文，必须用自己的话重新组织，控制在 100-150 字。
+- "title_zh": 新闻标题的中文翻译。
+- "structured_summary": 一段话总结，不超过 200 字，按“时间、地点、起因、经过、结果”归纳；结果部分须用一句话分析该新闻对存储行业的影响。
 - "category": 分类，从 {json.dumps(categories, ensure_ascii=False)} 中选择一个最合适的。
 - "relevant": 布尔值。判断这篇新闻是否与“{relevance_theme}”直接相关；与该主题无关时填 false。
 - "industry": 产业标签，从 [{", ".join(json.dumps(key, ensure_ascii=False) for key in config_loader.get_industries(theme_config))}] 选一个，不属于任何产业填 ""。判断标准：{industries}。
@@ -73,6 +75,12 @@ def extract_event(article: RawArticle, llm_client: LLMClient, theme_config: dict
         vertical = data.get("vertical", "")
         if not isinstance(vertical, str):
             vertical = ""
+        title_zh = data.get("title_zh", "")
+        if not isinstance(title_zh, str):
+            title_zh = ""
+        structured_summary = data.get("structured_summary", "")
+        if not isinstance(structured_summary, str):
+            structured_summary = ""
         
         event = ExtractedEvent(
             event_type=data.get("event_type", "其他"),
@@ -87,6 +95,8 @@ def extract_event(article: RawArticle, llm_client: LLMClient, theme_config: dict
             snippet=article.snippet,
             industry=industry,
             vertical=vertical,
+            title_zh=title_zh,
+            structured_summary=structured_summary,
         )
         return event
     except Exception as e:

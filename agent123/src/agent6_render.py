@@ -38,7 +38,7 @@ def _tag_html(tag_class: str, value: str, labels: dict) -> str:
 
 def _card_html(report: DeepReport, theme_config: dict, sections: List[str], industry_tags: dict, vertical_tags: dict) -> str:
     event = report.event
-    title = escape(event.title or event.summary_zh)
+    title = escape(event.title_zh or event.title or event.summary_zh)
     source_url = escape(event.source_url, quote=True)
     industry = escape(event.industry, quote=True)
     vertical = escape(event.vertical, quote=True)
@@ -60,6 +60,11 @@ def _card_html(report: DeepReport, theme_config: dict, sections: List[str], indu
         body = "".join(
             f'<div class="detail-label">{escape(name)}</div><p>{escape(report.sections.get(name, ""))}</p>'
             for name in sections
+        )
+    if event.structured_summary:
+        body = (
+            f'<div class="structured-summary"><div class="detail-label">📋 一段话总结</div>'
+            f'<p>{escape(event.structured_summary)}</p></div>{body}'
         )
     entities = " · ".join(escape(str(entity)) for entity in event.entities)
     timestamp = escape((event.published_at or "").replace("T", " ")[:16])

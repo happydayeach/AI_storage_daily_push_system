@@ -1,7 +1,7 @@
 """
 被测目标：src/agent2_extraction.py
 依赖：src/models.py（RawArticle、ExtractedEvent）、src/llm_client.py（LLMClient）
-覆盖场景：relevant 相关性过滤、industry/vertical 双标签、JSON 清理容错、主题配置驱动的提取 prompt
+覆盖场景：relevant 相关性过滤、industry/vertical 双标签、title_zh/structured_summary 兜底、JSON 清理容错、主题配置驱动的提取 prompt
 """
 
 import logging
@@ -75,6 +75,40 @@ def test_extract_event_normalizes_non_string_industry_and_vertical_tags_to_empty
     assert event is not None
     assert event.industry == ""
     assert event.vertical == ""
+
+
+@pytest.mark.parametrize(
+    ("title_zh", "structured_summary", "expected_title_zh", "expected_structured_summary"),
+    [
+        ("Acme 推出新产品", "时间：2026年9月；地点：美国；起因：扩容；经过：发布新品；结果：将促进企业级存储升级。", "Acme 推出新产品", "时间：2026年9月；地点：美国；起因：扩容；经过：发布新品；结果：将促进企业级存储升级。"),
+        (None, 42, "", ""),
+    ],
+)
+def test_extract_event_parses_new_chinese_title_and_structured_summary_with_string_fallbacks(
+    title_zh, structured_summary, expected_title_zh, expected_structured_summary
+):
+    from src.agent2_extraction import extract_event
+
+    class FakeLLM:
+        def chat(self, **kwargs):
+            import json
+            return json.dumps({
+                "event_type": "产品发布",
+                "entities": [],
+                "key_numbers": [],
+                "summary_zh": "Acme 发布了存储产品。",
+                "category": "产品与技术",
+                "title_zh": title_zh,
+                "structured_summary": structured_summary,
+            }, ensure_ascii=False)
+
+    article = RawArticle("https://example.com/product", "New product", "Details", "2026-09-06T01:00:00", "example.com")
+
+    event = extract_event(article, FakeLLM(), {})
+
+    assert event is not None
+    assert event.title_zh == expected_title_zh
+    assert event.structured_summary == expected_structured_summary
 
 
 def test_extract_event_discards_article_marked_irrelevant(caplog):

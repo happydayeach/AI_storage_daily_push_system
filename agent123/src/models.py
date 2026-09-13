@@ -25,6 +25,8 @@ class ExtractedEvent:
     snippet: str = ""
     industry: str = ""
     vertical: str = ""
+    title_zh: str = ""
+    structured_summary: str = ""
 
 
 @dataclass
