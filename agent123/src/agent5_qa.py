@@ -31,12 +31,14 @@ def qa(reports: List[DeepReport], theme_config: dict) -> QAResult:
     total = len(reports)
     issues = []
     valid = 0
-    required_sections = theme_config["analysis_template_sections"]
+    new_report_sections = theme_config["analysis_template_sections"]
+    update_report_sections = [theme_config.get("update_section_name", "新进展")]
 
     if total == 0:
         issues.append("无深度报告")
 
     for report in reports:
+        required_sections = update_report_sections if report.is_update else new_report_sections
         missing = _report_issues(report, required_sections)
         if not missing:
             valid += 1
