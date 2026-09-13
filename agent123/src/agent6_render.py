@@ -142,6 +142,6 @@ def render_push_message(reports: List[DeepReport], theme_config: dict) -> str:
     for report in reports:
         event = report.event
         icon = _icon_for(report, theme_config)
-        title = event.title or event.summary_zh
+        title = event.title_zh or event.title or event.summary_zh
         blocks.append(f"{icon} {title}｜{event.category}\n{event.summary_zh}\n{event.source_url}")
     return "\n\n".join(blocks)

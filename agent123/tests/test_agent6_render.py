@@ -162,6 +162,27 @@ def test_render_push_message_includes_configured_icon_title_category_summary_and
     assert "https://source.example/article" in message
 
 
+def test_render_push_message_prefers_chinese_title_and_falls_back_to_original_title():
+    from src.agent6_render import render_push_message
+    from src.models import DeepReport
+
+    chinese_title_event = make_event("中文标题推送摘要")
+    chinese_title_event.title = "Original English title"
+    chinese_title_event.title_zh = "中文推送标题"
+    fallback_event = make_event("英文标题推送摘要")
+    fallback_event.title = "Fallback English title"
+
+    message = render_push_message(
+        [DeepReport(chinese_title_event, {}, False), DeepReport(fallback_event, {}, False)],
+        {"icon_map": {}},
+    )
+
+    first_block, second_block = message.split("\n\n")
+    assert first_block.startswith(" 中文推送标题｜产业热点\n")
+    assert "Original English title" not in first_block
+    assert second_block.startswith(" Fallback English title｜产业热点\n")
+
+
 def test_render_html_uses_custom_tag_and_layout_configuration():
     from src.agent6_render import render_html
     from src.models import DeepReport
