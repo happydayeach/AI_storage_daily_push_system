@@ -4,6 +4,7 @@
   "tests/test_agent123.py::test_analyze_update_skips_search_and_generates_progress_from_history",
   "tests/test_agent123.py::test_build_adapters_resolves_placeholders_skips_missing_and_dispatches_channels",
   "tests/test_agent123.py::test_build_adapters_skips_none_credentials_and_null_targets",
+  "tests/test_agent123.py::test_daily_workflow_is_valid_and_configures_scheduled_secret_backed_pipeline",
   "tests/test_agent123.py::test_data_models_match_the_specification",
   "tests/test_agent123.py::test_deduplicator_classifies_new_update_and_duplicate_without_model_download",
   "tests/test_agent123.py::test_deep_report_preserves_event_sections_and_update_history",
