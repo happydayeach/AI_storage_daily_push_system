@@ -142,7 +142,8 @@ def main():
     )
 
     # 9. Agent 6: 渲染
-    docs_dir = os.path.join(_REPO_ROOT, "docs")
+    output_root = os.getenv("OUTPUT_ROOT", _REPO_ROOT)
+    docs_dir = os.path.join(output_root, "docs")
     os.makedirs(docs_dir, exist_ok=True)
     html = render_html(reports, theme_config)
     with open(os.path.join(docs_dir, "index.html"), "w", encoding="utf-8") as f:

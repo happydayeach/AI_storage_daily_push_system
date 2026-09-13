@@ -141,6 +141,7 @@ def test_main_continues_after_qa_failure_and_writes_rendered_outputs(monkeypatch
     requests = []
     monkeypatch.chdir(tmp_path)
     monkeypatch.setenv("THEME", "nordic_education")
+    monkeypatch.setenv("OUTPUT_ROOT", str(tmp_path))
     monkeypatch.setattr(config_loader, "load_theme_config", load_theme_config)
     monkeypatch.setattr(main, "load_dotenv", lambda: None)
     monkeypatch.setattr(main, "LLMClient", lambda: object())
@@ -157,9 +158,7 @@ def test_main_continues_after_qa_failure_and_writes_rendered_outputs(monkeypatch
 
     assert loaded_theme_ids == ["nordic_education"]
     output = tmp_path / "output"
-    repo_root = Path(main.__file__).resolve().parents[2]
-    assert (repo_root / "docs" / "index.html").is_file()
-    assert not (tmp_path / "docs" / "index.html").exists()
+    assert (tmp_path / "docs" / "index.html").is_file()
     saved = json.loads((output / "agent123_result.json").read_text(encoding="utf-8"))
     assert saved["qa"] == {"passed": False, "valid": 0, "total": 1, "issues": ["报告 Acme 动态 缺少或为空: sections.背景"]}
     assert len(requests) == 1
