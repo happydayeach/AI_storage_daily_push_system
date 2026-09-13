@@ -787,3 +787,87 @@ def test_push_all_continues_after_adapter_exception():
         "successful": True,
     }
     assert successful.calls == [("briefing", "Custom title")]
+
+
+def test_main_continues_after_qa_failure_and_writes_rendered_outputs(monkeypatch, tmp_path):
+    import json
+
+    from src import main
+    from src.agent7_push import PushplusAdapter
+    from src.models import DeepReport
+
+    event = make_event("缺字段的摘要")
+    event.entities = ["Acme"]
+    event.title = "Acme 动态"
+    report = DeepReport(event, {"背景": ""}, False)
+    config_dir = tmp_path / "config"
+    config_dir.mkdir()
+    (config_dir / "theme_europe_storage.yaml").write_text(
+        "theme_id: test\nanalysis_template_sections: [背景]\npush_targets:\n  - channel: pushplus\n    token: token\n",
+        encoding="utf-8",
+    )
+
+    class Response:
+        status = 200
+
+        def read(self):
+            return b'{"code": 200}'
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, exc_type, exc_value, traceback):
+            return False
+
+    requests = []
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setattr(main, "load_dotenv", lambda: None)
+    monkeypatch.setattr(main, "LLMClient", lambda: object())
+    monkeypatch.setattr(main, "EmbeddingClient", lambda: object())
+    monkeypatch.setattr(main, "discover_articles", lambda config, searcher: [])
+    monkeypatch.setattr(main, "process_articles", lambda articles, llm: [])
+    monkeypatch.setattr(main, "load_story_store", lambda theme_id: [])
+    monkeypatch.setattr(main, "save_story_store", lambda *args: None)
+    monkeypatch.setattr(main, "analyze", lambda result, searcher, llm, config: [report])
+    monkeypatch.setattr(main, "build_adapters", lambda config: [PushplusAdapter("token")])
+    monkeypatch.setattr("src.agent7_push.urlopen", lambda request, timeout: requests.append(request) or Response())
+
+    main.main()
+
+    output = tmp_path / "output"
+    assert (output / "briefing.html").is_file()
+    saved = json.loads((output / "agent123_result.json").read_text(encoding="utf-8"))
+    assert saved["qa"] == {"passed": False, "valid": 0, "total": 1, "issues": ["报告 Acme 动态 缺少或为空: sections.背景"]}
+    assert len(requests) == 1
+
+
+def test_build_adapters_skips_none_credentials_and_null_targets():
+    from src.agent7_push import build_adapters
+
+    assert build_adapters({"push_targets": [{"channel": "pushplus", "token": None}]}) == []
+    assert build_adapters({"push_targets": None}) == []
+
+
+@pytest.mark.parametrize("response_body, expected", [
+    (b'{"code": 0}', True),
+    (b'{"StatusCode": 0}', True),
+    (b'{"code": 1}', False),
+])
+def test_feishu_adapter_accepts_only_zero_code_responses(monkeypatch, response_body, expected):
+    from src.agent7_push import FeishuAdapter
+
+    class Response:
+        status = 200
+
+        def read(self):
+            return response_body
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, exc_type, exc_value, traceback):
+            return False
+
+    monkeypatch.setattr("src.agent7_push.urlopen", lambda *args, **kwargs: Response())
+
+    assert FeishuAdapter("https://feishu.example/hook").push("briefing") is expected

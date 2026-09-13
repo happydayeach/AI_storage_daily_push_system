@@ -12,6 +12,10 @@ from src.models import StoryRecord
 from src.agent1_discovery import discover_articles
 from src.agent2_extraction import process_articles
 from src.agent3_dedupe import Deduplicator
+from src.agent4_analysis import analyze
+from src.agent5_qa import qa
+from src.agent6_render import render_html, render_push_message
+from src.agent7_push import build_adapters, push_all
 from src.llm_client import LLMClient
 from src.embedding_client import EmbeddingClient
 from src.search_tool import MockSearchTool, TavilySearchTool
@@ -124,7 +128,33 @@ def main():
 
     save_story_store(theme_id, result.new, result.update, embedder)
 
-    # 7. 输出结果
+    # 7. Agent 4: 深度分析
+    reports = analyze(result, searcher, deepseek, theme_config)
+    logger.info(f"Deep reports: {len(reports)}")
+
+    # 8. Agent 5: 质检（不阻断后续渲染和推送）
+    qa_result = qa(reports, theme_config)
+    logger.info(
+        f"QA passed={qa_result.passed} valid={qa_result.valid}/{qa_result.total} "
+        f"issues={len(qa_result.issues)}"
+    )
+
+    # 9. Agent 6: 渲染
+    os.makedirs("output", exist_ok=True)
+    html = render_html(reports, theme_config)
+    with open("output/briefing.html", "w", encoding="utf-8") as f:
+        f.write(html)
+    push_message = render_push_message(reports, theme_config)
+
+    # 10. Agent 7: 推送
+    adapters = build_adapters(theme_config)
+    if adapters and push_message.strip():
+        push_results = push_all(adapters, push_message)
+        logger.info(f"Push results: {push_results}")
+    else:
+        logger.info("No push adapters configured or empty message; skipping push.")
+
+    # 11. 输出结果
     output_data = {
         "new": [vars(e) for e in result.new],
         "update": [
@@ -135,7 +165,13 @@ def main():
             }
             for u in result.update
         ],
-        "duplicate_dropped_count": result.duplicate_dropped_count
+        "duplicate_dropped_count": result.duplicate_dropped_count,
+        "qa": {
+            "passed": qa_result.passed,
+            "valid": qa_result.valid,
+            "total": qa_result.total,
+            "issues": qa_result.issues,
+        },
     }
     os.makedirs("output", exist_ok=True)
     with open("output/agent123_result.json", "w", encoding="utf-8") as f:
