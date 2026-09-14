@@ -1,47 +1,399 @@
 {
   "new": [
     {
-      "event_type": "其他",
+      "event_type": "监管",
       "entities": [
-        "Smart Sustainable Campus (SSC)",
-        "Higher Education Institutions (HEIs)",
-        "Netherlands",
-        "Denmark",
-        "U.S.",
-        "Middle East",
-        "electric bus shuttles",
-        "smart parking",
-        "congestion pricing",
-        "cycling",
-        "Malagnino et al. (2021)",
-        "González-García et al. (2023)",
-        "Okeniyi et al. (2018)",
-        "Amr et al. (2021)",
-        "Pan et al. (2023)"
+        "Ray-Ban Meta",
+        "Meta",
+        "GDPR",
+        "European Privacy-by-Design",
+        "Article 26 GDPR"
       ],
       "key_numbers": [
-        "2015-2025",
+        "2026-09-13T19:36:00+00:00",
+        "Article 26"
+      ],
+      "summary_zh": "报道指出，Ray-Ban Meta 智能眼镜的防偷拍机制可被锡箔或盖子轻易绕过，录制启动后即使遮住指示灯仍会继续，不符合欧盟隐私设计原则，可能构成违反 GDPR 的隐蔽监控。监管机构明确，用户在公共场所拍摄他人或上传社交平台将失去家庭豁免，成为完全责任的数据控制者；若默认允许 Meta 用交互数据训练 AI，用户还可能依 GDPR 第 26 条与美国公司共同担责。",
+      "category": "监管与合规",
+      "source_url": "https://www.heise.de/en/news/GDPR-trap-Smart-Glasses-Why-Ray-Ban-Meta-wearers-can-be-held-liable-11451626.html",
+      "published_at": "2026-09-13T19:36:00+00:00",
+      "domain": "heise.de",
+      "title": "GDPR trap Smart Glasses: Why Ray-Ban Meta wearers can be held liable | heise online",
+      "snippet": "In addition, there is the susceptibility to manipulation. The protective mechanism, which is intended to prevent recordings when the LED is covered, can be tricked with foils or caps. Once started, video recordings continue even if the signal light is subsequently taped over. Thus, the glasses fail to meet the European Privacy-by-Design requirement. According to the report, this enables covert surveillance that is incompatible with the General Data Protection Regulation (GDPR). [...] The data protection classification has serious consequences for the buyers themselves. The household exemption protects private individuals from GDPR obligations when recording in private environments. Anyone who films uninvolved persons in public spaces or publishes recordings on social media loses this privilege. The authority clarifies that wearers then become fully responsible data processors.\n\n### Insurmountable hurdles in everyday use\n\nContinue after ad [...] Continue after ad\n\nThe situation becomes even trickier if users do not object to the default Meta setting and train the AI model with interaction data. If images and audio signals of third parties are transmitted to the USA for AI training, the data leaves the private sphere. Users then fall into joint responsibility with the US company according to Article 26 GDPR. Since Meta does not offer an agreement for the division of responsibilities, glasses wearers are treading on thin ice.",
+      "industry": "data-protection",
+      "vertical": "",
+      "title_zh": "GDPR 陷阱下的智能眼镜：为何 Ray-Ban Meta 佩戴者可能被追责",
+      "structured_summary": "2026年9月，德国 heise.de 报道，Ray-Ban Meta 智能眼镜因防偷拍机制可被简单遮挡绕过，录制无法被指示灯有效阻止，被指不符合欧盟隐私设计原则并可能违反 GDPR。监管机构指出，用户在公共场所拍摄他人或发布录像将失去家庭豁免，成为责任数据控制者；若默认允许 Meta 用交互数据训练 AI，还可能依第26条共同担责。该事件强化数据合规与数据主权要求，将推动企业级存储与云服务加强本地化留存、访问审计和隐私保护能力。"
+    },
+    {
+      "event_type": "其他",
+      "entities": [
+        "微软公司",
+        "Twist生物科学公司",
+        "光明日报股份有限公司",
+        "西方数字公司",
+        "CATALOG技术",
+        "Iridia, Inc.",
+        "安萨生物技术股份有限公司",
+        "DNA脚本",
+        "分子集会公司",
+        "球面透视LLP"
+      ],
+      "key_numbers": [
+        "2026-09-13T19:00:00+00:00",
+        "前20家公司"
+      ],
+      "summary_zh": "全球DNA数据存储市场正受到广泛关注，该技术利用合成DNA分子编码和保存数字信息，具备存储密度高、耐久性强和物理存储需求低等优势。随着数字数据量激增，长期档案存储需求上升，DNA合成与测序技术进步及成本下降共同推动市场发展。报告分析了微软、Twist生物科学等前20家主要企业，涵盖产品组合、市场份额和战略举措等维度。",
+      "category": "产品与技术",
+      "source_url": "https://www.sphericalinsights.com/zh/blogs/top-20-companies-in-global-dna-data-storage-market-2026-2035-expert-view-by-spherical-insights",
+      "published_at": "2026-09-13T19:00:00+00:00",
+      "domain": "sphericalinsights.com",
+      "title": "全球DNA数据存储市场规模、份额和趋势中前20家公司",
+      "snippet": "导言\n\n全球DNA数据存储市场是一种新兴的数据存储技术,它利用合成DNA分子编码、保存和检索数字信息。 与常规储存技术相比,DNA提供了异常高的储存密度、长期耐久性以及潜在的较低的物理储存要求。 这些特点正在吸引技术公司、研究机构、数据中心和管理迅速增加的数字信息量的组织的兴趣。 市场增长的动力是数字数据的成指数生成,对高密度和长期档案解决方案的需求增加,DNA合成和测序的进步,技术成本下降,以及对下一代存储技术的投资不断增加。 日益需要保存大型数据集,包括科学研究、保健记录、文化档案和企业信息,这进一步支持了技术发展。\n\nDNA合成,测序,编码算法,自动化,误差校正技术等方面的技术进步正在提高以DNA为基础的存储系统的可行性. 随着研究朝着更快的书写和读取过程以及更大的可扩展性迈进,DNA数据存储被定位为冷、存档和长期数据存储应用的潜在互补解决方案。 技术公司、生物技术公司和研究组织的持续投资可望加速商业化并拓展市场的未来潜力。\n\n自信地导航未来市场:从球面透视 LLP获得的透视 [...] 长期档案应用的增长\n\nDNA数据存储对于长期档案应用越来越感兴趣,因为DNA可以在适当的保存条件下长期保持稳定。 潜在的应用包括科学数据集、文化档案、政府记录、保健信息和公司数据。 越来越多的长期有价值的数字信息正在鼓励各组织将DNA作为一种持久的档案媒介进行调查。\n\n 高规格DNA序列方面的进展\n\nDNA测序方面的进展正在提高从DNA储存系统检索信息的潜在速度和效率。 测序吞吐量较高,精度提高,处理速度加快,可以缩短数据检索时间. 这些发展对于克服现有性能限制和提高基于DNA的储存技术的实用性、可靠性和可扩展性十分重要。\n\n增强战略规划能力:\n\n了解最新行业见解和市场趋势,以确定新的机会并推动DNA数据存储市场的增长。 为探讨更深入的趋势、见解和预测,请参阅我们的详细报告。\n\n前20名 领导DNA数据存储市场的公司 [...] 报告深入分析了在全球DNA数据存储市场运营的主要公司. 其中包括基于其产品组合、业务概览、地理足迹、战略举措、市场份额和SWOT分析的比较评估。 每个公司采用标准格式进行简介,包括:\n\n公司简介\n\n1. 微软公司\n\n 业务概览\n 公司快照\n 产品概况\n 公司市场份额分析\n 公司覆盖面组合\n 金融分析\n 最近的事态发展\n 合并和收购\n SWOT 分析\n\n1. Twist生物科学公司\n2. 光明日报股份有限公司.\n3. 西方数字公司\n4. CATALOG技术\n5. Iridia, Inc. (美国)\n6. 安萨生物技术股份有限公司.\n7. DNA 脚本\n8. 分子集会公司\n9. 其别者.\n\n结论\n\n全球脱氧核糖核酸数据储存市场正在成为解决数字信息量日益增加和长期档案要求的有希望的解决办法。 对超高密度存储的需求不断增长,DNA合成和测序的进步,自动化程度的提高,档案应用的扩大,都支持了市场发展. 预计技术和生物技术公司继续进行技术创新、降低成本并进行投资,将加速商业化,并增强基于DNA的数据存储解决方案的未来潜力。\n\n我们的报告:",
+      "industry": "general",
+      "vertical": "",
+      "title_zh": "全球DNA数据存储市场规模、份额和趋势中前20家公司",
+      "structured_summary": "2026年9月，全球DNA数据存储市场报告发布，起因是数字信息量指数级增长带来长期高密度存储需求。经过是DNA合成、测序、编码算法和误差校正等技术进步提升了系统可行性，微软、Twist生物科学等前20家公司成为市场主要参与者。结果是该技术有望成为冷数据和长期归档存储的补充方案，对存储行业而言，DNA存储的逐步商业化将为超长期、超高密度归档场景提供全新路径，并可能重塑未来冷存储市场格局。"
+    },
+    {
+      "event_type": "其他",
+      "entities": [
+        "NOR闪存",
+        "全球NOR闪存市场"
+      ],
+      "key_numbers": [
+        "2026年下半年",
+        "近十年",
+        "2026-09-14"
+      ],
+      "summary_zh": "2026年下半年，全球NOR闪存市场将出现近十年来最重大的供需结构变化。由于制程微缩困难、良率提升缓慢以及客户验证周期较长，新增产能无法迅速投入市场，导致高容量产品供应紧张，价格可能翻倍。",
+      "category": "产业热点",
+      "source_url": "https://www.donews.com/news/detail/8/6709097.html",
+      "published_at": "2026-09-14T07:00:00+00:00",
+      "domain": "donews.com",
+      "title": "NOR闪存供需结构剧变，高容量产品价格或翻倍",
+      "snippet": "2026年下半年，全球NOR闪存市场迎来近十年最重要供需结构转变。受制程微缩、良率爬坡及客户验证周期长等因素影响，新增产能难以快速释放，",
+      "industry": "flash",
+      "vertical": "",
+      "title_zh": "NOR闪存供需结构剧变，高容量产品价格或翻倍",
+      "structured_summary": "2026年下半年，全球NOR闪存市场迎来近十年最重要的供需结构转变。受制程微缩、良率爬坡及客户验证周期长等因素影响，新增产能难以快速释放，导致高容量产品供应紧张。结果将是高容量NOR闪存价格可能翻倍，这一变化将加剧存储行业供需失衡，推高相关存储芯片成本。"
+    },
+    {
+      "event_type": "产品发布",
+      "entities": [
+        "Lexar",
+        "Muse",
+        "IFA 2026",
+        "PogoPin",
+        "Apple"
+      ],
+      "key_numbers": [
+        "3.8mm",
+        "1mm",
+        "80 x 48 mm",
+        "1,050 MB/s",
+        "1,000 MB/s",
+        "512 GB",
+        "1 TB",
+        "Q4 2026",
         "2026-09-13"
       ],
-      "summary_zh": "该研究探讨了全球高校向智慧可持续校园转型的趋势与挑战。荷兰和丹麦高校侧重推广自行车出行，而美国和中东等汽车主导地区更关注电动班车与智能停车，部分校园还通过拥堵收费或车辆限行减少燃油车使用。研究指出，从传统校园向智慧可持续校园转型不仅是技术升级，更是高校在可持续治理理念和运营模式上的根本转变，需打破设施管理、学术部门与学生事务之间的数据孤岛，实现可持续目标的协同与数据互通。",
-      "category": "垂直行业热点",
-      "source_url": "https://www.frontiersin.org/journals/sustainable-cities/articles/10.3389/frsc.2026.1747438/full",
-      "published_at": "2026-09-13T00:00:00+00:00",
-      "domain": "frontiersin.org",
-      "title": "Sustainable development strategies for smart sustainable campus operations: global trends, challenges and opportunities",
-      "snippet": "lifestyle (Okeniyi et al., 2018). Universities in Netherlands and Denmark lead in incorporating of cycling as a mode of transportation. In comparison, institutions in automobile-centred areas such as the U.S. and the Middle East pay more attention to electric bus shuttles and smart parking (Amr et al., 2021). Congestion pricing or bans on access to specific vehicles are in place in some campuses to minimise the use of vehicles that use internal combustion (Pan et al., 2023). Mobile applications [...] According to Malagnino et al. (2021), transitioning from a conventional campus to a Smart Sustainable Campus (SSC) is not just about technology; it is a paradigmatic shift of how HEIs view and operationalise sustainability. Traditional campuses operate on fragmented systems in which facilities management, academic departments, and student affairs feel like silos, with no shared sustainability objectives or interoperable sustainability data (González-García et al., 2023). Such campuses are [...] combinations of the words, such as; (“smart sustainable campus” OR “smart campus” OR “sustainable campus”) AND (“energy management” OR “waste management” OR “water management” OR “infrastructure” OR “mobility”) AND (“higher education” OR “university” OR “college”). The search was restricted to English-language peer-reviewed journal articles and conference papers published between 2015 and 2025 to capture contemporary developments while allowing temporal breadth for trend identification.",
-      "industry": "general",
-      "vertical": "education",
-      "title_zh": "智慧可持续校园运营的可持续发展策略：全球趋势、挑战与机遇",
-      "structured_summary": "2026年9月，发表在frontiersin.org的一项研究分析了2015至2025年间全球高校智慧可持续校园运营策略。起因是传统校园系统碎片化、缺乏共享可持续目标与互操作数据。经过是研究比较了荷兰、丹麦、美国和中东等地区在绿色出行、智能停车和车辆限行等方面的差异。结果是提出向智慧可持续校园转型需实现理念与运营模式变革。该研究虽聚焦校园可持续运营，但其对数据互通和系统整合的强调，间接利好教育行业存储与数据管理方案，推动智慧校园数据基础设施建设。"
+      "summary_zh": "Lexar在柏林IFA 2026上发布了号称全球最薄的便携式SSD——Muse。该产品最厚处仅3.8毫米，边缘薄至1毫米，采用精密加工的一体化金属外壳、超薄PCB架构和高密度NAND堆叠技术。为适应超薄设计，Lexar放弃了传统USB Type-C接口，改用PogoPin磁吸数据连接。性能方面，顺序读取速度可达1050 MB/s，写入速度1000 MB/s，将提供512GB和1TB两种容量，计划于2026年第四季度上市，售价尚未公布。",
+      "category": "产品与技术",
+      "source_url": "https://wccftech.com/lexar-showcases-worlds-thinnest-portable-ssd-at-ifa-2026",
+      "published_at": "2026-09-13T15:38:12+00:00",
+      "domain": "wccftech.com",
+      "title": "Lexar Showcases World's Thinnest Portable SSD At IFA 2026, Measuring Just 3.8mm Thick And 1mm At The Edge",
+      "snippet": "The drive measures 80 x 48 mm and uses a precision-machined unibody metal enclosure. To achieve this extremely thin design, Lexar deployed an ultra-thin PCB architecture, high-density NAND stacking, and an optimized internal component layout. Since the SSD is ultra-thin, Lexar had to rethink its connectivity, which is why, instead of deploying the conventional USB Type-C port directly on the SSD, it introduced PogoPina magnetic data connection. [...] Lexar says that, unlike conventional portable SSDs, which need more space, its Muse delivers an ultra-thin form factor, making it convenient for mobile creators. Lexar unveiled the Muse at IFA 2026 in Berlin, claiming it to be the world's thinnest portable SSD ever made. As per the company, the Muse SSD measures just 3.8 mm at its thickest point while it tapers down to just 1 mm at the edges. [...] A Lexar Muse Ultra-Slim Portable SSD is displayed on a stand with promotional text highlighting its thin design and compatibility with Apple devices.\n\nDespite such an ultra-compact form factor, Lexar's Muse doesn't compromise on performance and can run at up to 1,050 MB/s sequential read and up to 1,000 MB/s sequential write speeds. This drive will be available in 512 GB and 1 TB capacities, and is planned to launch in Q4 2026. Lexar hasn't disclosed any information regarding its pricing yet.",
+      "industry": "flash",
+      "vertical": "",
+      "title_zh": "Lexar在IFA 2026展示全球最薄便携式SSD，厚度仅3.8毫米，边缘薄至1毫米",
+      "structured_summary": "2026年9月，在柏林IFA 2026展会上，Lexar发布了号称全球最薄的便携式SSD——Muse。该产品通过超薄PCB架构、高密度NAND堆叠和优化内部布局，将最厚处控制在3.8毫米、边缘仅1毫米，并采用PogoPin磁吸连接替代传统USB Type-C接口。Muse提供512GB和1TB容量，读写速度分别达1050 MB/s和1000 MB/s，计划2026年第四季度上市。此举将推动便携式存储向极致轻薄化演进，并可能引发行业对超薄SSD设计与连接方案的重新思考。"
+    },
+    {
+      "event_type": "其他",
+      "entities": [
+        "康宁",
+        "迈威尔科技",
+        "Lumentum",
+        "Coherent",
+        "Credo",
+        "Ciena",
+        "SK海力士",
+        "闪迪",
+        "美光科技",
+        "西部数据",
+        "招商证券",
+        "证券时报",
+        "东方财富"
+      ],
+      "key_numbers": [
+        "9月14日",
+        "2026年09月14日 16:43",
+        "跌超6%",
+        "跌超5%",
+        "跌近5%",
+        "跌超4%"
+      ],
+      "summary_zh": "9月14日美股盘前，光通信与存储芯片板块集体大幅下挫，康宁、迈威尔科技、SK海力士、闪迪、美光科技、西部数据等个股跌幅普遍在4%至6%以上。招商证券指出，当前市场成交已进入过去一年极低区间，历史经验显示极致缩量后一周通常出现普遍修复，一个月后重新回归基本面与产业趋势定价。配置上建议关注加息落地后的修复窗口，重点围绕有业绩支撑的科技成长、AI算力链、CPO产业链及资源品涨价方向。",
+      "category": "产业热点",
+      "source_url": "https://finance.eastmoney.com/a/202609143873462263.html",
+      "published_at": "2026-09-14T08:00:00+00:00",
+      "domain": "finance.eastmoney.com",
+      "title": "美股光通信、存储芯片，盘前集体杀跌！",
+      "snippet": "招商证券认为，市场成交进入过去一年极低区间，历史经验显示极致缩量后一周通常普遍修复，一个月后重新回到基本面和产业趋势定价；缩量期价值资产提供净值稳定性，风险偏好恢复后高弹性收益仍来自成长主线。配置上建议关注加息落地后的修复窗口，重点围绕有业绩支撑的科技成长、AI算力链、CPO产业链以及资源品涨价方向。\n\n（文章来源：证券时报）\n\n文章来源：证券时报 责任编辑：6\n\n原标题：美股光通信、存储芯片，盘前集体杀跌！\n\n郑重声明：东方财富发布此内容旨在传播更多信息，与本站立场无关，不构成投资建议。据此操作，风险自担。\n\n举报\n\n东方财富网\n\n分享到微信朋友圈\n\n打开微信，\n\n点击底部的“发现”\n\n使用“扫一扫”\n\n即可将网页分享至朋友圈\n\n扫描二维码关注\n\n东方财富官网微信\n\n 沪股通\n\n 深股通\n\n 港股通(沪)\n\n 港股通(深)\n\n热门资讯\n\n AI利空突袭！三大巨头呼吁：放缓！\n 十大券商策略：迎接关键时刻！\n 沪指震荡整理 医疗服务板块大涨\n 智谱重金押注“完全自训练”体系\n\n焦点专题\n\n 2026年全国两会\n 党的二十届四中全会\n 第十二届Choice最佳分析师 [...] 财经\n 焦点\n 股票\n 新股\n 期指\n 期权\n 行情\n 数据\n 全球\n 美股\n 港股\n 期货\n 外汇\n 银行\n 基金\n 理财\n 债券\n 直播\n 股吧\n 基金吧\n 博客\n 财富号\n 搜索\n\n指数 期指 期权 个股 板块 排行 新股 基金 港股 美股 期货 外汇 黄金 自选股 自选基金\n\n资金流向 主力排名 板块资金 个股研报 新股申购 转债申购 北交所申购 AH股比价 年报大全 融资融券 龙虎榜 限售解禁 IPO审核 大宗交易 估值分析\n\n首页 > 财经频道 > 正文\n\n2026年09月14日 16:43\n\n来源： 证券时报\n\n小 中 大\n\n东方财富APP\n\n方便，快捷\n\n手机查看财经快讯\n\n专业，丰富\n\n一手掌握市场脉搏\n\n手机上阅读文章\n\n提示：\n\n微信扫一扫\n\n分享到您的\n\n朋友圈\n\nAI利空突袭。\n\n　　今日（9月14日）美股盘前，光通信板块大跌。康宁跌超6%，迈威尔科技、Lumentum、Coherent跌超5%，Credo、Ciena跌近5%。\n\n存储芯片股盘前大跌，SK海力士跌超6%，闪迪跌超5%，美光科技跌近5%，西部数据跌超4%。 [...] 沪ICP证:沪B2-20070217 网站备案号:沪ICP备05006054号-11  沪公网安备 31010402000120号 版权所有:东方财富网 意见与建议:4000300059/952500\n\n关于我们 可持续发展 广告服务 供应商平台 联系我们 诚聘英才 法律声明 隐私保护 征稿启事 友情链接",
+      "industry": "flash",
+      "vertical": "",
+      "title_zh": "美股光通信、存储芯片，盘前集体杀跌！",
+      "structured_summary": "2026年9月14日，美股盘前交易时段，光通信与存储芯片板块遭遇集体抛售，康宁、迈威尔科技、SK海力士、闪迪、美光科技、西部数据等个股普遍下跌4%至6%以上。起因是市场情绪转弱与AI利空消息冲击，经过为盘前资金集中撤离相关板块，结果导致光通信与存储芯片股价大幅承压。招商证券认为极致缩量后市场有望修复，建议关注加息落地后的科技成长与AI算力链机会。该事件短期内加剧了存储芯片板块的抛压，但机构观点认为缩量修复窗口临近，对存储行业中长期基本面影响有限。"
+    },
+    {
+      "event_type": "产品发布",
+      "entities": [
+        "AMD",
+        "DRAM",
+        "3D DRAM"
+      ],
+      "key_numbers": [
+        "2026年9月第一周",
+        "2026-09-14"
+      ],
+      "summary_zh": "2026年9月第一周，存储芯片行业迎来两则重要消息。AMD在内部技术研讨会上披露了基于3D DRAM的实验数据，引发业界关注。文章指出，3D DRAM正成为各大巨头竞相布局的焦点，标志着DRAM技术可能进入新的十年发展阶段。",
+      "category": "产品与技术",
+      "source_url": "http://www.36kr.com/p/3983065197738757",
+      "published_at": "2026-09-14T11:00:00+00:00",
+      "domain": "36kr.com",
+      "title": "DRAM的下一个十年，要“站起来”",
+      "snippet": "2026年9月的第一周，两则新闻让整个存储芯片行业为之一振。 01 3D DRAM，巨头角力. AMD近日在内部技术研讨会上披露了一项令人振奋的实验数据：基于",
+      "industry": "flash",
+      "vertical": "",
+      "title_zh": "DRAM的下一个十年，要“站起来”",
+      "structured_summary": "2026年9月第一周，存储芯片行业因两则新闻而振奋。AMD在内部技术研讨会上披露了基于3D DRAM的实验数据，引发巨头在3D DRAM领域的角力。这一进展预示着DRAM技术将向三维堆叠方向演进，有望突破传统平面微缩瓶颈，对存储行业而言，将推动更高密度、更低功耗的存储芯片加速落地。"
+    },
+    {
+      "event_type": "其他",
+      "entities": [
+        "康宁",
+        "应用光电",
+        "Lumentum",
+        "Coherent",
+        "迈威尔科技",
+        "SK海力士",
+        "闪迪",
+        "美光科技",
+        "超威半导体",
+        "Anthropic",
+        "OpenAI",
+        "xAI",
+        "达里奥·阿莫代伊",
+        "萨姆·奥尔特曼",
+        "埃隆·马斯克"
+      ],
+      "key_numbers": [
+        "2026-09-14",
+        "道琼斯指数期货跌0.13%",
+        "纳斯达克指数期货跌1.75%",
+        "标普500指数期货跌0.68%",
+        "康宁跌超7%",
+        "应用光电、Lumentum、Coherent等跌超6%",
+        "迈威尔科技跌超7%",
+        "SK海力士跌超6%",
+        "闪迪、美光科技、超威半导体等跌超5%"
+      ],
+      "summary_zh": "2026年9月14日美股盘前，三大股指期货齐跌。因Anthropic CEO呼吁全行业放缓前沿AI模型研发，OpenAI CEO及马斯克均表示支持，市场担忧AI算力需求放缓，导致美股光通信概念股和存储芯片股集体下挫。康宁跌超7%，迈威尔科技跌超7%，SK海力士跌超6%，闪迪、美光科技等跌超5%。分析人士认为短期股价承压，但长期算力基础设施投入仍强劲。",
+      "category": "产业热点",
+      "source_url": "https://www.chnfund.com/article/ARe95a5aef-a75b-7d1e-27a9-3a23b16a43a5",
+      "published_at": "2026-09-14T09:00:00+00:00",
+      "domain": "chnfund.com",
+      "title": "美股存储芯片、光通信概念股盘前集体下挫",
+      "snippet": "官方微信\n 官方APP\n 官方视频号\n 电子报\n 登录 |退出\n\n      {{ countdown > 0 ? countdown + 's' : '获取验证码' }}   登录\n\n\n\nGlobal Perspective, China Value\n\n首页\n\n资管\n\n公募\n\n环球\n\n闪讯\n\n电子报\n\n私募\n\n大湾区\n\n券商\n\n论坛\n\n银行\n\n视频\n\n市场\n\n访谈\n\n公司\n\n投教\n\nIPO\n\nInvest Insight\n\n# 美股存储芯片、光通信概念股盘前集体下挫\n\n2026-09-14 17:47\n\n微信分享\n\n【导读】美股存储芯片、光通信概念股盘前集体下挫\n\n中国基金报记者 李智\n\n9月14日美股盘前，三大股指期货齐跌，道琼斯指数期货跌0.13%，纳斯达克指数期货跌1.75%，标普500指数期货跌0.68%。\n\n因多家AI巨头呼吁放缓AI模型研发，美股光通信概念股盘前集体下挫。其中，康宁跌超7%，应用光电、Lumentum、Coherent等跌超6%。\n\n美股半导体、存储芯片股盘前集体下挫，迈威尔科技跌超7%，SK海力士跌超6%，闪迪、美光科技、超威半导体等跌超5%。 [...] 编辑：格林\n\n校对：乔伊\n\n制作：鹿米\n\n审核：木鱼\n\n版权声明\n\n《中国基金报》对本平台所刊载的原创内容享有著作权，未经授权禁止转载，否则将追究法律责任。\n\n授权转载合作联系人：于先生（电话：0755-82468670）\n\nAPP\n\n中国基金报\n\n#### 首页\n\n 关于我们\n 加入我们\n 联系我们\n 版权声明\n\n#### 合作伙伴\n\n紫荆杂志社| 凤凰网| 东方财富网| 金融界| 中新经纬| 每日经济新闻| 21世纪网| 财经网| 和讯网| 搜狐| 中金在线| 一财网\n\nCopyright © 2026 《中国基金报》社有限公司版权所有，未经许可不得转载使用，违者必究。\n\n网站备案号： 粤ICP备14037591号\n\n违法和不良信息举报电话：(0755) 83501616 [...] 消息面上，Anthropic CEO达里奥·阿莫代伊当地时间周六表示，公司将采取新的安全措施，例如引入第三方评估机构，同时呼吁全行业放缓最前沿模型的研发速度。OpenAI CEO奥尔特曼对该提议表示支持，运营xAI的埃隆·马斯克也表示：“达里奥说得对。”\n\n此外，OpenAI据称正在讨论放缓前沿AI研发并呼吁同行减速。\n\n据媒体当地时间9月10日报道，多位知情人士透露，公司CEO萨姆·奥尔特曼在本周召开的全员大会上告诉员工，OpenAI会考虑放缓AI研发步伐，并有意联合几家同行一起行动。不过他也坦言，未必所有实验室都愿意跟进。\n\nOpenAI此前表示，出于安全考虑，公司已放缓部分模型研发，并暂停了某些内部AI训练。OpenAI首席科学家Jakub Pachocki也曾发文警示AI的危险性，表示AI公司应当在必要时协调放缓未来的研发，并希望在共同安全标准确立之前，自愿放缓能够成为行业常态。\n\n据彭博社报道，市场观察人士表示，AI行业高管呼吁放缓技术研发，短期内可能对芯片厂商及供应链板块的股价形成压力，但长期影响大概率有限，因为算力基础设施的投入规模依旧保持强劲。\n\n编辑：格林",
+      "industry": "flash",
+      "vertical": "",
+      "title_zh": "美股存储芯片、光通信概念股盘前集体下挫",
+      "structured_summary": "2026年9月14日，美股盘前交易时段，因Anthropic CEO达里奥·阿莫代伊呼吁全行业放缓前沿AI模型研发，OpenAI CEO奥尔特曼和xAI的马斯克均表示支持，引发市场对AI算力需求放缓的担忧。受此影响，美股光通信和存储芯片概念股集体下挫，康宁跌超7%，迈威尔科技跌超7%，SK海力士跌超6%，闪迪、美光科技等跌超5%。该事件短期内对存储芯片板块股价形成压力，但长期来看算力基础设施投入规模依旧强劲，存储行业基本面影响有限。"
+    },
+    {
+      "event_type": "其他",
+      "entities": [
+        "SK海力士",
+        "闪迪",
+        "美光科技",
+        "康宁",
+        "迈威尔科技",
+        "Lumentum",
+        "Coherent",
+        "Credo",
+        "Ciena"
+      ],
+      "key_numbers": [
+        "跌超6%",
+        "跌超5%",
+        "跌近5%",
+        "2026-09-14T09:00:00+00:00"
+      ],
+      "summary_zh": "2026年9月14日美股盘前，存储芯片与光通信板块遭遇集体重挫。存储芯片方面，SK海力士跌幅超过6%，闪迪跌超5%，美光科技跌近5%。光通信板块同样表现疲软，康宁跌超6%，迈威尔科技、Lumentum、Coherent跌超5%，Credo和Ciena跌近5%。市场情绪明显承压。",
+      "category": "产业热点",
+      "source_url": "https://m.21jingji.com/article/20260914/herald/ddfe75f2662668d357c9fd2ed01881de.html",
+      "published_at": "2026-09-14T09:00:00+00:00",
+      "domain": "m.21jingji.com",
+      "title": "美股盘前：存储芯片、光通信板块集体大跌；SK海力士跌超6%，闪迪跌超5%，美光科技跌近5%；康宁跌超6%，迈威尔科技、Lumentum跌超5%",
+      "snippet": "今日美股盘前，光通信板块大跌。康宁跌超6%，迈威尔科技、Lumentum、Coherent跌超5%，Credo、Ciena跌近5%。存储芯片股盘前大跌，SK海力士跌超6%，",
+      "industry": "flash",
+      "vertical": "",
+      "title_zh": "美股盘前：存储芯片、光通信板块集体大跌；SK海力士跌超6%，闪迪跌超5%，美光科技跌近5%；康宁跌超6%，迈威尔科技、Lumentum跌超5%",
+      "structured_summary": "2026年9月14日美股盘前，存储芯片与光通信板块集体大跌。起因或为市场情绪恶化，经过是SK海力士跌超6%、闪迪跌超5%、美光科技跌近5%，康宁跌超6%、迈威尔科技和Lumentum跌超5%。结果是存储芯片股普遍重挫，短期将加剧存储行业波动并可能影响投资者信心。"
     }
   ],
-  "update": [],
-  "duplicate_dropped_count": 0,
+  "update": [
+    {
+      "event": {
+        "event_type": "其他",
+        "entities": [
+          "三星电子",
+          "美光",
+          "闪迪",
+          "高带宽内存（HBM）",
+          "NAND闪存"
+        ],
+        "key_numbers": [
+          "2026-09-14"
+        ],
+        "summary_zh": "三星电子为维持市场领先地位，正采取措施保护核心人才。与此同时，美光、闪迪等全球竞争对手进入韩国，争夺高带宽内存与NAND闪存设计领域的高端人才。三星通过加码激励来应对这场人才争夺战。",
+        "category": "产业热点",
+        "source_url": "https://m.sohu.com/a/1075871772_114760?scm=10001.325_13-325_13.0.0-0-0-0-0.5_1334",
+        "published_at": "2026-09-14T07:00:00+00:00",
+        "domain": "m.sohu.com",
+        "title": "美光、闪迪赴韩争抢半导体核心人才，三星加码激励应对挖角",
+        "snippet": "三星电子为守住市场龙头地位，不得不着手保护核心人才；与此同时，美光、闪迪等全球竞争对手也涌入韩国本土，争抢高带宽内存（HBM）与NAND 闪存设计",
+        "industry": "flash",
+        "vertical": "",
+        "title_zh": "美光、闪迪赴韩争抢半导体核心人才，三星加码激励应对挖角",
+        "structured_summary": "2026年9月14日，韩国半导体市场出现人才争夺战。起因是美光、闪迪等全球存储厂商涌入韩国，争抢HBM与NAND闪存设计人才。经过是三星电子为守住龙头地位，着手保护核心人才并加码激励措施。结果是三星面临人才流失压力，此举将加剧全球存储芯片行业的人才竞争，并可能影响HBM与NAND技术的研发进度与市场格局。"
+      },
+      "story_id": "493226c6fd10466380636ca2a7f06a07",
+      "history_summary": "全球存储芯片市场呈现韩国、美国、中国三强格局。DRAM领域，三星与SK海力士合计份额超六成，美光紧随其后，长鑫占约一成。NAND闪存方面，韩系双雄合计近半，长江存储与铠侠并列第三，美光、闪迪随后。综合来看，韩国凭借双线优势稳居第一，美国次之，中国位列第三，日本仅在NAND领域有一定份额。"
+    },
+    {
+      "event": {
+        "event_type": "产品发布",
+        "entities": [
+          "PSP 3 Handheld",
+          "PlayStation 5",
+          "AMD",
+          "Neural Texture Compression",
+          "SSD"
+        ],
+        "key_numbers": [
+          "7.5 GB/s",
+          "5.5 GB/s",
+          "85%",
+          "2026-09-13"
+        ],
+        "summary_zh": "据GameGPU报道，索尼下一代掌机PSP 3将配备速度高达7.5 GB/s的固态硬盘，远超PS5的5.5 GB/s。为节省内置存储空间，工程师将采用AMD的神经纹理压缩硬件技术，由专用GPU硅片在从SSD读取时直接解压经神经网络压缩的高分辨率纹理。该方法可将纹理包体积缩小85%，减轻内存总线负载，并显著提升磁盘子系统的有效吞吐量。",
+        "category": "产品与技术",
+        "source_url": "https://en.gamegpu.com/news/zhelezo/psp-3-handheld-poluchit-ssd-do-7-5-gb-s-protiv-5-5-gb-s-u-playstation-5",
+        "published_at": "2026-09-13T17:34:21+00:00",
+        "domain": "en.gamegpu.com",
+        "title": "The PSP 3 Handheld will get an SSD of up to 7,5 GB/s, compared to ...",
+        "snippet": "Using our benchmark results or creating charts based on them requires an active indexed link to our resource. We monitor even changed data and in case of violation we will submit a blocking request through Google without warning.\n\nVideo card test and IT technology news\nVideo card test and IT technology news [...] ASUS banner\nASUS banner\nVideo card test and IT technology news\nVideo card test and IT technology news\nThe PSP 3 Handheld will get an SSD of up to 7,5 GB/s, compared to 5,5 GB/s for the PlayStation 5.\n\n# The PSP 3 Handheld will get an SSD of up to 7,5 GB/s, compared to 5,5 GB/s for the PlayStation 5. [...] To conserve storage space on the built-in drive, engineers will implement AMD's Neural Texture Compression hardware compression technology. Dedicated GPU silicon will decompress high-resolution textures compressed using neural networks directly as they are read from the solid-state drive. This method reduces texture packet size by 85%, reduces the load on the device's RAM bus, and virtually increases the effective throughput of the console's disk subsystem.\n\n### @GameGPU\\_com",
+        "industry": "flash",
+        "vertical": "",
+        "title_zh": "PSP 3掌机将配备高达7.5 GB/s的SSD，远超PS5的5.5 GB/s",
+        "structured_summary": "2026年9月13日，据GameGPU报道，索尼下一代掌机PSP 3将搭载速度高达7.5 GB/s的SSD，相比PS5的5.5 GB/s有明显提升。为应对存储空间压力，该设备将引入AMD的神经纹理压缩硬件技术，由专用GPU硅片在读取时实时解压经神经网络压缩的高分辨率纹理，使纹理包体积缩小85%，同时降低内存总线负载并提升磁盘子系统有效吞吐量。此举表明游戏掌机对高速存储的需求持续攀升，将推动SSD在消费电子领域的进一步渗透，并加速硬件级压缩技术的商用落地。"
+      },
+      "story_id": "c6bd0b4cd163475a9d3d65732bdde25a",
+      "history_summary": "据2026年内部泄露，PlayStation 6的存储子系统将迎来重大升级，采用定制NVMe M.2 SSD和PCIe Gen5接口，顺序读取速度达14.9 GB/s，写入速度14.0 GB/s，较PS5的5.5 GB/s提升170%，有望彻底消除加载等待。为应对存储容量限制，工程师将结合软硬件优化，AMD定制GPU支持神经纹理压缩，高分辨率纹理以高压缩格式存储并由GPU实时解压。此外，索尼还在开发混合流媒体系统，核心游戏文件本地运行，大型内容从升级后的云端下载。"
+    },
+    {
+      "event": {
+        "event_type": "其他",
+        "entities": [
+          "铠侠",
+          "软银集团",
+          "SK海力士",
+          "三星电子",
+          "OpenAI",
+          "Anthropic",
+          "达里奥·阿莫迪",
+          "日经225指数",
+          "韩国KOSPI指数",
+          "韩国交易所",
+          "NXT盘后市场",
+          "美联储",
+          "日本央行",
+          "英国央行"
+        ],
+        "key_numbers": [
+          "9月14日",
+          "日经225指数跌1.63%",
+          "62970.7点",
+          "韩国KOSPI指数跌3.18%",
+          "6690.8点",
+          "铠侠跌近10%",
+          "软银集团跌近13%",
+          "日经半导体指数跌超5%",
+          "SK海力士跌超5%",
+          "三星电子跌超3%",
+          "9月11日",
+          "日经225指数跌1.93%",
+          "64011.34点",
+          "韩国KOSPI指数跌1.76%",
+          "6909.91点",
+          "SK海力士跌2.21%",
+          "三星电子跌3.53%",
+          "铠侠跌6.99%",
+          "16:00—20:00",
+          "15:30—20:00"
+        ],
+        "summary_zh": "9月14日，日韩股市大幅走低，日经225指数跌1.63%，韩国KOSPI指数跌3.18%。日股存储芯片巨头铠侠一度大跌近10%，软银集团盘中跌近13%，日经半导体指数跌超5%。韩股SK海力士跌超5%，三星电子跌超3%。市场消息称OpenAI今年不会上市，Anthropic CEO呼吁放缓AI模型发展速度。同日韩国股市正式开启盘后交易。本周市场聚焦美联储、日本央行、英国央行议息会议。",
+        "category": "产业热点",
+        "source_url": "https://m.sohu.com/a/1075694826_120988533?scm=10001.325_13-325_13.0.0-0-0-0-0.5_1334",
+        "published_at": "2026-09-14T09:24:31+00:00",
+        "domain": "m.sohu.com",
+        "title": "AI大消息，存储芯片巨头大跌",
+        "snippet": "## AI大消息，存储芯片巨头大跌\n\n中国证券报\n\n中国证券报\n\n9月14日，日韩股市开盘大幅走低。截至发稿，日经225指数跌1.63%，报62970.7点，此前一度跌超2%；韩国KOSPI指数跌3.18%，报6690.8点。\n\n日股存储芯片巨头铠侠一度大跌近10%，截至发稿跌幅收窄至8.35%；全球科技投资巨头软银集团股价盘中跌近13%。日经半导体指数盘中跌超5%。\n\n有市场消息称，OpenAI今年不会上市。\n\n此外，美国人工智能企业Anthropic CEO达里奥·阿莫迪发文呼吁人工智能行业应放缓AI模型发展速度，其提出“驻场评估、国家协同、全球协同”的三步限速计划。\n\n韩股两大存储芯片巨头大幅低开。截至发稿，SK海力士跌超5%，三星电子跌超3%。\n\n展开剩余\n\n59\n\n%\n\n今日起，韩国股市将正式开启盘后交易。 [...] 今日起，韩国股市将正式开启盘后交易。\n\n日前，韩国交易所公告称，当地时间9月14日（周一）起，在常规交易时段（9:00—15:30）结束后，16:00—20:00将在盘后市场实时成交订单，与NXT盘后市场（15:30—20:00）并行运行。KOSPI和KOSDAQ市场中的大多数股票均可在盘后交易；经综合考虑，目前决定在盘后市场的交易标的中剔除ETF、ETN。\n\n本周，市场聚焦“央行超级周”，美联储、日本央行、英国央行将召开议息会议。当前市场普遍预期，美联储将开启年内首次加息，日本央行有望继续加息，而英国央行大概率将维持现有利率水平不变。\n\n上周五（9月11日），日经225指数收盘跌1.93%，报64011.34点，上周累计跌1.55%；韩国KOSPI指数跌1.76%，报6909.91点，上周累计涨3.33%。11日，SK海力士跌2.21%，上周累计涨10.02%；三星电子跌3.53%，上周累计涨1.57%；铠侠跌6.99%，上周累计跌0.79%。",
+        "industry": "flash",
+        "vertical": "",
+        "title_zh": "AI大消息，存储芯片巨头大跌",
+        "structured_summary": "2026年9月14日，日韩股市开盘大幅走低，起因是市场传出OpenAI今年不会上市的消息，叠加Anthropic CEO呼吁放缓AI模型发展速度，引发科技股抛售。经过：日经225指数跌1.63%，韩国KOSPI指数跌3.18%，铠侠一度大跌近10%，软银集团盘中跌近13%，SK海力士跌超5%，三星电子跌超3%。结果：存储芯片巨头股价集体重挫，反映出市场对AI投资回报周期和存储芯片需求前景的担忧加剧，短期内存储行业估值承压。"
+      },
+      "story_id": "fd71849f1fdf454485a5122ff56b1f86",
+      "history_summary": "存储芯片价格已持续上涨一年，涨幅达5至10倍。铠侠CEO认为闪存价格已涨够，美国金融机构预测内存价格将在2027年达峰，下半年供需趋于平衡。2028年可能成为内存与闪存市场的转折点，供需关系或从供不应求转向供过于求。市场走向的关键变量在于中国厂商长鑫存储和长江存储的产能释放情况，若不考虑两家产能，内存缺口仍将维持在5%至10%之间。"
+    },
+    {
+      "event": {
+        "event_type": "其他",
+        "entities": [
+          "AI",
+          "存储芯片",
+          "智谱"
+        ],
+        "key_numbers": [
+          "13%",
+          "5%",
+          "2026-09-14"
+        ],
+        "summary_zh": "中财网报道，AI领域传出重大消息，导致存储芯片巨头股价大幅下跌，其中某产品跌幅超过13%。与此同时，AI应用类股票表现低迷，智谱股价下跌超过5%。该报道为行情更新中的内容，反映了市场对AI相关板块的负面反应。",
+        "category": "产业热点",
+        "source_url": "https://www.cfi.net.cn/p20260914000211.html",
+        "published_at": "2026-09-14T01:00:00+00:00",
+        "domain": "cfi.net.cn",
+        "title": "AI大消息，存储芯片巨头大跌(行情)-更新中",
+        "snippet": "中财网版权所有(C) HTTPS://WWW.CFi.CN [...] |  |\n\n| CFI.CN 中财网 | [...] 产品跌超13%；AI应用股低迷，智谱跌超5%。    |  |  |  --- | | [01导读] [第02页] [第03页] | >>下一页 |   中财网  各版头条 |  |",
+        "industry": "flash",
+        "vertical": "",
+        "title_zh": "AI大消息，存储芯片巨头大跌(行情)-更新中",
+        "structured_summary": "2026年9月14日，据中财网报道，AI领域传出重大消息，引发市场剧烈反应。存储芯片巨头股价大幅下挫，相关产品跌幅超过13%，AI应用股同样表现低迷，智谱跌超5%。此次下跌反映出市场对AI产业链的担忧情绪升温，短期内可能加剧存储芯片板块的波动，对存储行业市场信心构成一定压力。"
+      },
+      "story_id": "3a3b22311a20410f90961f1172664f87",
+      "history_summary": "全球蓄能器安全阀块市场预计2026至2035年复合增长4%至6%，合规要求与存量更换构成主要支撑。亚太及中东产能扩张、工厂自动化升级推动需求，智能安全阀块和预测性维护成为趋势。供应仍集中于欧美，但中印厂商在标准级市场扩大份额，可能压低均价10%至15%。"
+    }
+  ],
+  "duplicate_dropped_count": 7,
   "qa": {
     "passed": true,
-    "valid": 1,
-    "total": 1,
+    "valid": 12,
+    "total": 12,
     "issues": []
   }
 }
