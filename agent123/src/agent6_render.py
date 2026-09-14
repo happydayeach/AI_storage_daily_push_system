@@ -92,10 +92,11 @@ def _card_html(report: DeepReport, theme_config: dict, sections: List[str], indu
             for name in sections
             if report.sections.get(name)
         )
+    summary_block = ""
     if event.structured_summary:
-        body = (
+        summary_block = (
             f'<div class="structured-summary"><div class="detail-label">📋 一段话总结</div>'
-            f'<p>{escape(event.structured_summary)}</p></div>{body}'
+            f'<p>{escape(event.structured_summary)}</p></div>'
         )
     entities = " · ".join(escape(str(entity)) for entity in event.entities)
     timestamp = escape((event.published_at or "").replace("T", " ")[:16])
@@ -110,6 +111,7 @@ def _card_html(report: DeepReport, theme_config: dict, sections: List[str], indu
                     </div>
                     <span style="color:var(--text-muted);font-size:var(--font-size-sm);">▼</span>
                 </div>
+                {summary_block}
                 <div class="card__body">
                     {body}
                     <div class="detail-label">🔍 关键实体</div><p>{entities}</p>

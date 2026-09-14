@@ -451,7 +451,8 @@
             }
         }
 
-        .card__body p {
+        .card__body p,
+        .structured-summary p {
             font-size: var(--font-size-sm);
             color: var(--text-secondary);
             line-height: 1.7;
@@ -461,7 +462,8 @@
             margin-bottom: 0;
         }
 
-        .card__body .detail-label {
+        .card__body .detail-label,
+        .structured-summary .detail-label {
             font-weight: 600;
             color: var(--text-primary);
             font-size: var(--font-size-xs);
@@ -469,6 +471,11 @@
             letter-spacing: 0.3px;
             margin-top: var(--space-sm);
             margin-bottom: 2px;
+        }
+
+        .structured-summary {
+            padding: var(--space-md) var(--space-lg) var(--space-sm);
+            border-top: 1px solid var(--border-color);
         }
 
         .card__body .history-block {

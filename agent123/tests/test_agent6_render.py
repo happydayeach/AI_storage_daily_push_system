@@ -110,7 +110,7 @@ def test_render_html_escapes_report_body_text():
     assert "&lt;img src=x onerror=alert(1)&gt;" in html
 
 
-def test_render_html_prefers_chinese_title_and_renders_structured_summary_before_sections():
+def test_render_html_places_structured_summary_between_header_and_collapsed_body():
     from src.agent6_render import render_html
     from src.models import DeepReport
 
@@ -126,7 +126,22 @@ def test_render_html_prefers_chinese_title_and_renders_structured_summary_before
     assert "Original English title" not in html
     assert "📋 一段话总结" in html
     assert event.structured_summary in html
-    assert html.index("📋 一段话总结") < html.index("背景")
+    header_start = html.index('<div class="card__header"')
+    summary_start = html.index('<div class="structured-summary">')
+    body_start = html.index('<div class="card__body">')
+    assert header_start < summary_start < body_start
+
+
+def test_render_html_includes_visible_structured_summary_styles():
+    from src.agent6_render import render_html
+
+    html = render_html([], {})
+
+    assert ".structured-summary {" in html
+    assert "padding: var(--space-md) var(--space-lg) var(--space-sm);" in html
+    assert "border-top: 1px solid var(--border-color);" in html
+    assert ".structured-summary .detail-label" in html
+    assert ".structured-summary p" in html
 
 
 def test_render_html_falls_back_to_original_title_and_skips_empty_structured_summary():
