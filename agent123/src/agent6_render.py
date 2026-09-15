@@ -182,13 +182,16 @@ def render_html(reports: List[DeepReport], theme_config: dict) -> str:
     return f"{before_content}{sections}\n\n{footer}"
 
 
-def render_push_message(reports: List[DeepReport], theme_config: dict) -> str:
+def render_push_message(reports: List[DeepReport], theme_config: dict, max_reports: int | None = None) -> str:
     """Return one escaped, complete HTML briefing body for each report."""
+    max_reports = max_reports if max_reports is not None else int(theme_config.get("push_max_reports", 10))
+    if max_reports <= 0:
+        return ""
     blocks = []
     sections = config_loader.get_sections(theme_config)
     industries = config_loader.get_industries(theme_config)
     verticals = config_loader.get_verticals(theme_config)
-    for report in reports:
+    for report in reports[:max_reports]:
         event = report.event
         icon = escape(_icon_for(report, theme_config))
         title = escape(event.title_zh or event.title or event.summary_zh)

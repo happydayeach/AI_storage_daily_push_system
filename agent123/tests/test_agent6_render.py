@@ -316,6 +316,35 @@ def test_render_push_message_skips_empty_analysis_sections():
     assert "<b>竞对信号</b>" not in message
 
 
+def test_render_push_message_limits_reports_by_default_and_explicit_override():
+    from src.agent6_render import render_push_message
+    from src.models import DeepReport
+
+    reports = [DeepReport(make_event(f"推送摘要 {index}"), {}, False) for index in range(12)]
+
+    default_message = render_push_message(reports, {})
+    explicit_message = render_push_message(reports, {}, max_reports=3)
+
+    assert all(f"推送摘要 {index}" in default_message for index in range(10))
+    assert "推送摘要 10" not in default_message
+    assert default_message.count("<br><br>") == 9
+    assert all(f"推送摘要 {index}" in explicit_message for index in range(3))
+    assert "推送摘要 3" not in explicit_message
+
+
+def test_render_push_message_uses_configured_limit_and_returns_empty_for_zero_limit():
+    from src.agent6_render import render_push_message
+    from src.models import DeepReport
+
+    reports = [DeepReport(make_event(f"推送摘要 {index}"), {}, False) for index in range(10)]
+
+    configured_message = render_push_message(reports, {"push_max_reports": 2})
+
+    assert all(f"推送摘要 {index}" in configured_message for index in range(2))
+    assert "推送摘要 2" not in configured_message
+    assert render_push_message(reports, {}, max_reports=0) == ""
+
+
 def test_render_html_uses_custom_tag_and_layout_configuration():
     from src.agent6_render import render_html
     from src.models import DeepReport

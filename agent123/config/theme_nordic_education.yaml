@@ -85,6 +85,7 @@ icon_map:
   并购: "🏦"
   漏洞: "🔒"
   其他: "📌"
+push_max_reports: 10
 push_targets:
   - channel: "wechat"
     template: "html"
