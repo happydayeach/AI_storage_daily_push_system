@@ -28,13 +28,23 @@ def _template_source(theme_config: dict) -> str:
     return template_files[0].read_text(encoding="utf-8")
 
 
-def _tag_html(tag_class: str, value: str, labels: dict) -> str:
+def _plain_tag(value: str, labels: dict) -> str:
     tag = labels.get(value)
     if not tag:
         return ""
-    icon, label = tag
+    if isinstance(tag, dict):
+        icon, label = tag["icon"], tag["label"]
+    else:
+        icon, label = tag
+    return f"{escape(str(icon))} {escape(str(label))}"
+
+
+def _tag_html(tag_class: str, value: str, labels: dict) -> str:
+    tag = _plain_tag(value, labels)
+    if not tag:
+        return ""
     extra_class = f" tag--{value}" if tag_class == "tag--industry" else ""
-    return f'<span class="tag {tag_class}{extra_class}">{icon} {label}</span>'
+    return f'<span class="tag {tag_class}{extra_class}">{tag}</span>'
 
 
 def _filter_bar_html(industries: dict, verticals: dict) -> str:
@@ -173,26 +183,38 @@ def render_html(reports: List[DeepReport], theme_config: dict) -> str:
 
 
 def render_push_message(reports: List[DeepReport], theme_config: dict) -> str:
-    """Return one escaped HTML push card for each report."""
+    """Return one escaped, complete HTML briefing body for each report."""
     blocks = []
-    frontend_url = escape(str(theme_config.get("frontend_url") or "").strip(), quote=True)
+    sections = config_loader.get_sections(theme_config)
+    industries = config_loader.get_industries(theme_config)
+    verticals = config_loader.get_verticals(theme_config)
     for report in reports:
         event = report.event
-        icon = _icon_for(report, theme_config)
+        icon = escape(_icon_for(report, theme_config))
         title = escape(event.title_zh or event.title or event.summary_zh)
-        category = escape(event.category)
-        summary = escape(event.summary_zh)
+        summary = escape(event.structured_summary or event.summary_zh)
         source_url = escape(event.source_url, quote=True)
-        frontend_link = (
-            f'<a href="{frontend_url}">🔗 查看完整简报</a><br>'
-            if frontend_url
-            else ""
-        )
-        blocks.append(
-            f'<div><b>{icon} {title}</b><br>'
-            f'<font color="#8a8a8a">｜{category}</font><br>'
-            f'{summary}<br>'
-            f'{frontend_link}'
-            f'<a href="{source_url}">📄 原文</a></div>'
-        )
+        tags = []
+        for value, labels in ((event.industry, industries), (event.vertical, verticals)):
+            tag = _plain_tag(value, labels)
+            if tag:
+                tags.append(tag)
+        tags.append("🔄 持续追踪" if report.is_update else "🆕 新事件")
+        names = [theme_config.get("update_section_name", "新进展")] if report.is_update else sections
+        analysis = [
+            f'<b>{escape(name)}</b><br>{escape(content)}'
+            for name in names
+            if (content := report.sections.get(name))
+        ]
+        parts = [
+            f"<b>{icon} {title}</b>",
+            " · ".join(tags),
+        ]
+        if summary:
+            parts.append(f"📋 一段话总结<br>{summary}")
+        parts.extend(analysis)
+        if report.is_update and report.history_summary:
+            parts.append(f"📎 历史回溯：{escape(report.history_summary)}")
+        parts.append(f'<a href="{source_url}">📄 原文</a>')
+        blocks.append(f'<div>{"<br>".join(parts)}</div>')
     return "<br><br>".join(blocks)

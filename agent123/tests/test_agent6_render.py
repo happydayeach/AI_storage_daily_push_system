@@ -158,7 +158,7 @@ def test_render_html_falls_back_to_original_title_and_skips_empty_structured_sum
     assert "📋 一段话总结" not in html
 
 
-def test_render_push_message_renders_escaped_html_card_with_frontend_and_source_links():
+def test_render_push_message_renders_escaped_complete_briefing_body_without_frontend_link():
     from src.agent6_render import render_push_message
     from src.models import DeepReport
 
@@ -168,52 +168,73 @@ def test_render_push_message_renders_escaped_html_card_with_frontend_and_source_
     event.category = "产业 & 市场"
     event.summary_zh = "摘要含 <标签> & \"引号\""
     event.source_url = 'https://source.example/article?filter="one"&sort=desc'
-    report = DeepReport(event, {}, False)
+    event.industry = "flash"
+    event.vertical = "finance"
+    event.structured_summary = '结构化 <摘要> & "引号"'
+    report = DeepReport(
+        event,
+        {
+            "背景": '背景 <内容> & "引号"',
+            "技术分析": "技术内容",
+            "市场影响": "市场内容",
+            "竞对信号": "竞对内容",
+        },
+        False,
+    )
 
     message = render_push_message(
         [report],
         {
-            "categories": ["产业热点"],
             "frontend_url": 'https://brief.example/daily?theme="storage"&lang=zh',
             "icon_map": {"合作": "🤝"},
-            "theme_colors": {"primary": "#123456", "accent": "#abcdef"},
+            "industries": {"flash": {"icon": "💾", "label": '闪<存> & "硬件"'}},
+            "verticals": {"finance": {"icon": "💰", "label": "金融"}},
         },
     )
 
-    assert message == (
-        '<div><b>🤝 Acme &lt;Storage&gt; &amp; &quot;Contoso&quot; 合作</b><br>'
-        '<font color="#8a8a8a">｜产业 &amp; 市场</font><br>'
-        '摘要含 &lt;标签&gt; &amp; &quot;引号&quot;<br>'
-        '<a href="https://brief.example/daily?theme=&quot;storage&quot;&amp;lang=zh">🔗 查看完整简报</a><br>'
-        '<a href="https://source.example/article?filter=&quot;one&quot;&amp;sort=desc">📄 原文</a></div>'
-    )
+    assert message.startswith('<div><b>🤝 Acme &lt;Storage&gt; &amp; &quot;Contoso&quot; 合作</b><br>')
+    assert '💾 闪&lt;存&gt; &amp; &quot;硬件&quot; · 💰 金融 · 🆕 新事件<br>' in message
+    assert '📋 一段话总结<br>结构化 &lt;摘要&gt; &amp; &quot;引号&quot;<br>' in message
+    assert '<b>背景</b><br>背景 &lt;内容&gt; &amp; &quot;引号&quot;<br>' in message
+    assert '<b>技术分析</b><br>技术内容<br>' in message
+    assert '<b>市场影响</b><br>市场内容<br>' in message
+    assert '<b>竞对信号</b><br>竞对内容<br>' in message
+    assert '<a href="https://source.example/article?filter=&quot;one&quot;&amp;sort=desc">📄 原文</a></div>' in message
+    assert "查看完整简报" not in message
+    assert "brief.example" not in message
+    assert "<font" not in message
 
 
-def test_render_push_message_omits_frontend_link_when_config_is_missing():
+def test_render_push_message_renders_complete_body_when_frontend_config_is_missing():
     from src.agent6_render import render_push_message
     from src.models import DeepReport
 
     event = make_event("推送摘要")
     event.source_url = "https://source.example/article"
 
-    message = render_push_message([DeepReport(event, {}, False)], {})
+    message = render_push_message([DeepReport(event, {"背景": "背景内容"}, False)], {})
 
     assert "查看完整简报" not in message
+    assert "📋 一段话总结" in message
+    assert "推送摘要" in message
+    assert "<b>背景</b><br>背景内容" in message
     assert '<a href="https://source.example/article">📄 原文</a>' in message
 
 
-def test_render_push_message_degrades_when_frontend_url_is_null_or_blank():
+def test_render_push_message_falls_back_to_summary_and_handles_empty_sections():
     from src.agent6_render import render_push_message
     from src.models import DeepReport
 
     event = make_event("推送摘要")
     event.source_url = "https://source.example/article"
 
-    for frontend_url in (None, "   "):
-        message = render_push_message([DeepReport(event, {}, False)], {"frontend_url": frontend_url})
+    event.structured_summary = ""
+    message = render_push_message([DeepReport(event, {}, False)], {"frontend_url": None})
 
-        assert "查看完整简报" not in message
-        assert '<a href="https://source.example/article">📄 原文</a>' in message
+    assert "📋 一段话总结<br>推送摘要" in message
+    assert "<b>背景</b>" not in message
+    assert "查看完整简报" not in message
+    assert '<a href="https://source.example/article">📄 原文</a>' in message
 
 
 def test_render_push_message_prefers_chinese_title_and_falls_back_to_original_title():
@@ -231,10 +252,68 @@ def test_render_push_message_prefers_chinese_title_and_falls_back_to_original_ti
         {"icon_map": {}},
     )
 
-    first_block, second_block = message.split("<br><br>")
-    assert first_block.startswith("<div><b> 中文推送标题</b><br>")
-    assert "Original English title" not in first_block
-    assert second_block.startswith("<div><b> Fallback English title</b><br>")
+    assert '<div><b> 中文推送标题</b><br>' in message
+    assert "Original English title" not in message
+    assert '<div><b> Fallback English title</b><br>' in message
+    assert message.count("<br><br>") == 1
+
+
+def test_render_push_message_renders_tags_and_update_status_from_config():
+    from src.agent6_render import render_push_message
+    from src.models import DeepReport
+
+    event = make_event("摘要")
+    event.industry = "education"
+    event.vertical = "schools"
+    report = DeepReport(
+        event,
+        {"新进展": "新进展内容"},
+        True,
+        "此前进展",
+    )
+
+    message = render_push_message(
+        [report],
+        {
+            "industries": {"education": {"icon": "🎓", "label": "教育"}},
+            "verticals": {"schools": {"icon": "🏫", "label": "学校"}},
+        },
+    )
+
+    assert "🎓 教育 · 🏫 学校 · 🔄 持续追踪" in message
+    assert "<b>新进展</b><br>新进展内容" in message
+    assert "📎 历史回溯：此前进展" in message
+
+
+def test_render_push_message_skips_summary_label_when_all_summary_fields_are_empty():
+    from src.agent6_render import render_push_message
+    from src.models import DeepReport
+
+    event = make_event("摘要")
+    event.structured_summary = ""
+    event.summary_zh = ""
+
+    message = render_push_message([DeepReport(event, {}, False)], {})
+
+    assert "📋 一段话总结" not in message
+
+
+def test_render_push_message_skips_empty_analysis_sections():
+    from src.agent6_render import render_push_message
+    from src.models import DeepReport
+
+    report = DeepReport(
+        make_event("摘要"),
+        {"背景": "背景内容", "技术分析": "", "市场影响": "市场内容", "竞对信号": ""},
+        False,
+    )
+
+    message = render_push_message([report], {})
+
+    assert "<b>背景</b><br>背景内容" in message
+    assert "<b>市场影响</b><br>市场内容" in message
+    assert "<b>技术分析</b>" not in message
+    assert "<b>竞对信号</b>" not in message
 
 
 def test_render_html_uses_custom_tag_and_layout_configuration():
