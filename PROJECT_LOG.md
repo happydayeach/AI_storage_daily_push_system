@@ -149,6 +149,13 @@
 3. **拆卡 scope 边界要留「顺带修复」授权**：C2/C3 dev 都因「修复需超出 spec 允许的文件范围」而 block。给 dev 卡加一句「若发现前置依赖缺陷需超出本卡文件范围修复，先 block 报 orchestrator 而非硬绕过」。
 4. **sync_project.sh backup 误判**：dev 自行 commit 后，backup 可能误判「无变更可提交」跳过 push。评审通过后必须核对 `git rev-parse HEAD` vs `origin/main`，不一致手动 `git push` 兜底。
 
+## 2026-09-15：推送改造——render_push_message 完整正文（pushplus 短消息机制）
+- dev→review→tester 全绿（含 1 轮返工修 bug）。commit ba4a54e，全量测试 91 passed。
+- **背景（方向纠正）**：搞清 pushplus 短消息机制——pushplus 用它的模板 CSS 渲染你发的 content(HTML 正文)，长内容自动转短消息链接；正文(去 CSS/JS)约 8744 字，在 2 万字内能发。之前「推前端 URL」「推原文链接」都是错的（只推链接不推正文）。
+- **改造**：render_push_message 从「标题+分类+摘要+🔗前端URL+📄原文」改为完整正文——标题 → 标签索引(产业/行业/🆕新事件或🔄持续追踪) → 📋一段话总结(structured_summary 空回退 summary_zh) → 四段式全展开(背景/技术分析/市场影响/竞对信号) → 📎历史回溯(update 有 history_summary 时) → 📄原文。不再引用 frontend_url（config 字段保留未删）。
+- **关键 bug（返工）**：update 报告 sections 只有 `{update_section_name:"新进展"}`，而 analysis 推导式只遍历 get_sections()=[四段式]，导致 update 正文全丢。修复：`names = [theme_config.get("update_section_name","新进展")] if report.is_update else sections`。
+- **坑：GitHub Actions 每天自动跑 daily briefing 并 commit/push**，orchestrator backup 时 `git push` 被 non-fast-forward 拒绝（远程有本地没有的自动 commit）。解决：先 `git fetch` 看差异，`git pull --rebase origin main`（无冲突）再 push。
+
 
 
 
