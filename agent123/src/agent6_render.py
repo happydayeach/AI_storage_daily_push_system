@@ -182,42 +182,101 @@ def render_html(reports: List[DeepReport], theme_config: dict) -> str:
     return f"{before_content}{sections}\n\n{footer}"
 
 
-def render_push_message(reports: List[DeepReport], theme_config: dict, max_reports: int | None = None) -> str:
-    """Return one escaped, complete HTML briefing body for each report."""
-    max_reports = max_reports if max_reports is not None else int(theme_config.get("push_max_reports", 10))
-    if max_reports <= 0:
+_PUSH_STYLE = """
+:root{--color-primary:#1a5fb4;--color-accent:#e66100;--bg-body:#f8f9fa;--bg-card:#fff;--border-color:#e9ecef;--text-primary:#1e293b;--text-secondary:#475569;--text-muted:#94a3b8;--space-xs:.25rem;--space-sm:.5rem;--space-md:1rem;--space-lg:1.5rem;--font-size-xs:.75rem;--font-size-sm:.875rem;--font-size-base:1rem;--font-size-xl:1.25rem;--radius-sm:4px;--radius-md:8px;--shadow-sm:0 1px 2px rgba(0,0,0,.05)}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;background:var(--bg-body);color:var(--text-primary);padding:1rem;line-height:1.6}
+.card{background:var(--bg-card);border:1px solid var(--border-color);border-radius:var(--radius-md);box-shadow:var(--shadow-sm);margin-bottom:var(--space-md);overflow:hidden}.card__header{display:grid;grid-template-columns:auto 1fr;gap:4px var(--space-md);padding:var(--space-md) var(--space-lg)}.card__icon{font-size:var(--font-size-xl);grid-row:span 3;line-height:1.4;margin-top:2px}.card__title{font-size:var(--font-size-base);font-weight:600;min-width:0}.card__title a{color:inherit;text-decoration:none}.card__tags{display:flex;flex-wrap:wrap;gap:4px 6px}.tag{align-items:center;border-radius:12px;display:inline-flex;font-size:var(--font-size-xs);font-weight:500;gap:4px;line-height:1.5;padding:1px 10px}.tag--industry{background:rgba(26,95,180,.14);border:1px solid rgba(26,95,180,.25);color:var(--color-primary)}.tag--industry.tag--data-protection{background:rgba(37,99,235,.14);border-color:rgba(37,99,235,.25);color:#2563eb}.tag--industry.tag--distributed{background:rgba(124,58,237,.14);border-color:rgba(124,58,237,.25);color:#7c3aed}.tag--industry.tag--flash{background:rgba(5,150,105,.14);border-color:rgba(5,150,105,.25);color:#059669}.tag--vertical{background:var(--bg-body);border:1px solid var(--border-color);color:var(--text-muted);font-weight:400}.tag--status{background:rgba(230,97,0,.12);border:1px solid rgba(230,97,0,.2);color:var(--color-accent)}.tag--status-new{background:rgba(22,163,74,.12);border-color:rgba(22,163,74,.2);color:#16a34a}.card__meta{color:var(--text-muted);font-size:var(--font-size-xs)}.structured-summary{border-top:1px solid var(--border-color);padding:var(--space-md) var(--space-lg) var(--space-sm)}.structured-summary p,details p{color:var(--text-secondary);font-size:var(--font-size-sm);line-height:1.7;margin-bottom:var(--space-sm)}details{border-top:1px solid var(--border-color);padding:var(--space-sm) var(--space-lg) var(--space-lg)}summary{cursor:pointer;font-weight:600;margin-bottom:var(--space-sm)}h4{color:var(--text-primary);font-size:var(--font-size-xs);font-weight:600;letter-spacing:.3px;margin:var(--space-sm) 0 2px}.history-block{background:var(--bg-body);border-left:3px solid var(--border-color);border-radius:var(--radius-sm);color:var(--text-secondary);font-size:var(--font-size-xs);margin:var(--space-sm) 0;padding:var(--space-sm) var(--space-md)}.source-link{color:var(--text-muted);font-size:var(--font-size-xs);word-break:break-all}.source-link a{color:var(--color-primary);text-decoration:none}.card--update .card__header{border-left:3px solid var(--color-accent)}
+""".strip()
+
+
+def _minify_push_style(style: str) -> str:
+    """Inline only the single-use design tokens in the push CSS."""
+    single_use_tokens = {
+        "--bg-body": "#f8f9fa",
+        "--bg-card": "#fff",
+        "--text-primary": "#1e293b",
+        "--text-secondary": "#475569",
+        "--text-muted": "#94a3b8",
+        "--font-size-xs": ".75rem",
+        "--font-size-sm": ".875rem",
+        "--font-size-base": "1rem",
+        "--font-size-xl": "1.25rem",
+        "--radius-sm": "4px",
+        "--radius-md": "8px",
+        "--shadow-sm": "0 1px 2px rgba(0,0,0,.05)",
+    }
+    for token, value in single_use_tokens.items():
+        style = style.replace(f"{token}:{value};", "").replace(f"var({token})", value)
+    for old_selector, new_selector in {
+        ".card--update .card__header": ".card--update>header",
+        ".card__header": ".card>header",
+        ".card__icon": ".card>header>i",
+        ".card__title": ".card h3",
+        ".card__tags": ".card .tags",
+        ".card__meta": ".card small",
+    }.items():
+        style = style.replace(old_selector, new_selector)
+
+    def rgba_to_hex(match: re.Match) -> str:
+        red, green, blue = (int(component) for component in match.group(1, 2, 3))
+        alpha = round(float(match.group(4)) * 255)
+        return f"#{red:02x}{green:02x}{blue:02x}{alpha:02x}"
+
+    return re.sub(r"rgba\((\d+),(\d+),(\d+),([.\d]+)\)", rgba_to_hex, style)
+
+
+_PUSH_STYLE = _minify_push_style(_PUSH_STYLE)
+
+
+def render_push_message(
+    reports: List[DeepReport],
+    theme_config: dict,
+    max_reports: int | None = None,
+    char_budget: int | None = None,
+) -> str:
+    """Return an escaped, standalone HTML briefing with collapsed analysis."""
+    max_reports = max_reports if max_reports is not None else int(theme_config.get("push_max_reports", 30))
+    char_budget = char_budget if char_budget is not None else int(theme_config.get("push_char_budget", 18000))
+    if max_reports <= 0 or char_budget <= 0:
         return ""
-    blocks = []
     sections = config_loader.get_sections(theme_config)
     industries = config_loader.get_industries(theme_config)
     verticals = config_loader.get_verticals(theme_config)
+    head = f'<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><style>{_PUSH_STYLE}</style></head><body>'
+    tail = "</body></html>"
+    used = len(head) + len(tail)
+    blocks = []
     for report in reports[:max_reports]:
         event = report.event
-        icon = escape(_icon_for(report, theme_config))
+        source_url = escape(event.source_url, quote=True)
         title = escape(event.title_zh or event.title or event.summary_zh)
         summary = escape(event.structured_summary or event.summary_zh)
-        source_url = escape(event.source_url, quote=True)
-        tags = []
-        for value, labels in ((event.industry, industries), (event.vertical, verticals)):
-            tag = _plain_tag(value, labels)
-            if tag:
-                tags.append(tag)
-        tags.append("🔄 持续追踪" if report.is_update else "🆕 新事件")
+        card_class = "card card--update" if report.is_update else "card"
+        card_open = f'<div class="{card_class}">' if report.is_update else "<div class=card>"
+        tags = [
+            _tag_html("tag--industry", event.industry, industries),
+            _tag_html("tag--vertical", event.vertical, verticals),
+            '<span class="tag tag--status">🔄 持续追踪</span>' if report.is_update else '<span class="tag tag--status tag--status-new">🆕 新事件</span>',
+        ]
         names = [theme_config.get("update_section_name", "新进展")] if report.is_update else sections
-        analysis = [
-            f'<b>{escape(name)}</b><br>{escape(content)}'
+        analysis = "".join(
+            f'<h4>{escape(name)}</h4><p>{escape(content)}</p>'
             for name in names
             if (content := report.sections.get(name))
-        ]
-        parts = [
-            f"<b>{icon} {title}</b>",
-            " · ".join(tags),
-        ]
-        if summary:
-            parts.append(f"📋 一段话总结<br>{summary}")
-        parts.extend(analysis)
-        if report.is_update and report.history_summary:
-            parts.append(f"📎 历史回溯：{escape(report.history_summary)}")
-        parts.append(f'<a href="{source_url}">📄 原文</a>')
-        blocks.append(f'<div>{"<br>".join(parts)}</div>')
-    return "<br><br>".join(blocks)
+        )
+        history = f'<div class="history-block">📎 历史回溯：{escape(report.history_summary)}</div>' if report.is_update and report.history_summary else ""
+        entities = " · ".join(escape(str(entity)) for entity in (event.entities or []))
+        summary_block = f'<div class="structured-summary"><h4>📋 一段话总结</h4><p>{summary}</p></div>' if summary else ""
+        timestamp = escape((event.published_at or "").replace("T", " ")[:16])
+        source = escape(event.domain or "来源")
+        block = (
+            f'{card_open}<header><i>{escape(_icon_for(report, theme_config))}</i><h3><a href="{source_url}">{title}</a></h3>'
+            f'<p class=tags>{"".join(tags)}</p><small>📰 <strong>{source}</strong> · 🕒 {timestamp}</small></header>{summary_block}'
+            f'<details><summary>🔍 展开深度分析</summary>{analysis}{history}<h4>🔍 关键实体</h4><p>{entities}</p>'
+            f'<div class="source-link"><a href="{source_url}">📄 原文</a></div></details></div>'
+        )
+        if blocks and used + len(block) > char_budget:
+            break
+        blocks.append(block)
+        used += len(block)
+    return f'{head}{"".join(blocks)}{tail}'

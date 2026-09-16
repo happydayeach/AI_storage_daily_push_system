@@ -16,7 +16,7 @@ categories:
 analysis_template_sections: ["背景", "技术分析", "市场影响", "竞对信号"]
 theme_colors: {primary: "#1a5fb4", accent: "#e66100"}
 icon_map: {财报: "📈", 产品发布: "🚀", 监管: "⚖️", 合作: "🤝", 并购: "🏦", 漏洞: "🔒", 其他: "📌"}
-push_max_reports: 10
+push_char_budget: 18000
 push_targets:
   - channel: "wechat"  # Pushplus 默认微信渠道
     template: "html"

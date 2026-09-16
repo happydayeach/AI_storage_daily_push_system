@@ -4,6 +4,7 @@
 覆盖场景：模板复用、配置驱动的标题/标签（含 general）/分类/段名/模板/filter-bar、中文标题与一段话总结、更新历史、空段跳过、空态、HTML 转义与推送消息
 """
 
+import json
 import logging
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -158,7 +159,7 @@ def test_render_html_falls_back_to_original_title_and_skips_empty_structured_sum
     assert "📋 一段话总结" not in html
 
 
-def test_render_push_message_renders_escaped_complete_briefing_body_without_frontend_link():
+def test_render_push_message_returns_an_escaped_complete_html_document_with_collapsed_analysis():
     from src.agent6_render import render_push_message
     from src.models import DeepReport
 
@@ -192,49 +193,53 @@ def test_render_push_message_renders_escaped_complete_briefing_body_without_fron
         },
     )
 
-    assert message.startswith('<div><b>🤝 Acme &lt;Storage&gt; &amp; &quot;Contoso&quot; 合作</b><br>')
-    assert '💾 闪&lt;存&gt; &amp; &quot;硬件&quot; · 💰 金融 · 🆕 新事件<br>' in message
-    assert '📋 一段话总结<br>结构化 &lt;摘要&gt; &amp; &quot;引号&quot;<br>' in message
-    assert '<b>背景</b><br>背景 &lt;内容&gt; &amp; &quot;引号&quot;<br>' in message
-    assert '<b>技术分析</b><br>技术内容<br>' in message
-    assert '<b>市场影响</b><br>市场内容<br>' in message
-    assert '<b>竞对信号</b><br>竞对内容<br>' in message
-    assert '<a href="https://source.example/article?filter=&quot;one&quot;&amp;sort=desc">📄 原文</a></div>' in message
+    assert message.startswith("<!DOCTYPE html>")
+    assert "<head><meta charset=\"UTF-8\"><style>" in message
+    assert "</style></head><body>" in message
+    assert message.endswith("</body></html>")
+    assert 'class=card' in message
+    assert 'class="card__header" onclick=' not in message
+    assert '<details><summary>🔍 展开深度分析</summary>' in message
+    assert 'class="structured-summary"' in message
+    assert 'class="card__info"' not in message
+    assert '<h4>📋 一段话总结</h4>' in message
+    assert "<i>🤝</i>" in message
+    assert 'Acme &lt;Storage&gt; &amp; &quot;Contoso&quot; 合作' in message
+    assert '💾 闪&lt;存&gt; &amp; &quot;硬件&quot;' in message
+    assert '💰 金融' in message
+    assert '🆕 新事件' in message
+    assert '结构化 &lt;摘要&gt; &amp; &quot;引号&quot;' in message
+    assert '背景 &lt;内容&gt; &amp; &quot;引号&quot;' in message
+    assert all(content in message for content in ("技术内容", "市场内容", "竞对内容"))
+    assert '<a href="https://source.example/article?filter=&quot;one&quot;&amp;sort=desc">📄 原文</a>' in message
+    assert "<script>" not in message
     assert "查看完整简报" not in message
     assert "brief.example" not in message
-    assert "<font" not in message
+    assert all(forbidden not in message for forbidden in ("@media", "@keyframes", "transition", ":hover", "color-mix", ".brief-header", ".filter-bar"))
 
 
-def test_render_push_message_renders_complete_body_when_frontend_config_is_missing():
+def test_render_push_message_minifies_inline_css_below_push_budget():
+    from src.agent6_render import render_push_message
+
+    message = render_push_message([], {})
+    css = message.split("<style>", 1)[1].split("</style>", 1)[0]
+
+    assert len(css) <= 2600
+
+
+def test_render_push_message_falls_back_to_summary_zh_and_omits_empty_summary_block():
     from src.agent6_render import render_push_message
     from src.models import DeepReport
 
     event = make_event("推送摘要")
-    event.source_url = "https://source.example/article"
-
-    message = render_push_message([DeepReport(event, {"背景": "背景内容"}, False)], {})
-
-    assert "查看完整简报" not in message
-    assert "📋 一段话总结" in message
-    assert "推送摘要" in message
-    assert "<b>背景</b><br>背景内容" in message
-    assert '<a href="https://source.example/article">📄 原文</a>' in message
-
-
-def test_render_push_message_falls_back_to_summary_and_handles_empty_sections():
-    from src.agent6_render import render_push_message
-    from src.models import DeepReport
-
-    event = make_event("推送摘要")
-    event.source_url = "https://source.example/article"
-
     event.structured_summary = ""
-    message = render_push_message([DeepReport(event, {}, False)], {"frontend_url": None})
+    fallback_message = render_push_message([DeepReport(event, {}, False)], {})
+    assert "📋 一段话总结" in fallback_message
+    assert "推送摘要" in fallback_message
 
-    assert "📋 一段话总结<br>推送摘要" in message
-    assert "<b>背景</b>" not in message
-    assert "查看完整简报" not in message
-    assert '<a href="https://source.example/article">📄 原文</a>' in message
+    event.summary_zh = ""
+    empty_message = render_push_message([DeepReport(event, {}, False)], {})
+    assert "📋 一段话总结" not in empty_message
 
 
 def test_render_push_message_prefers_chinese_title_and_falls_back_to_original_title():
@@ -252,10 +257,10 @@ def test_render_push_message_prefers_chinese_title_and_falls_back_to_original_ti
         {"icon_map": {}},
     )
 
-    assert '<div><b> 中文推送标题</b><br>' in message
+    assert ">中文推送标题</a>" in message
     assert "Original English title" not in message
-    assert '<div><b> Fallback English title</b><br>' in message
-    assert message.count("<br><br>") == 1
+    assert ">Fallback English title</a>" in message
+    assert message.count('class=card') == 2
 
 
 def test_render_push_message_renders_tags_and_update_status_from_config():
@@ -280,9 +285,14 @@ def test_render_push_message_renders_tags_and_update_status_from_config():
         },
     )
 
-    assert "🎓 教育 · 🏫 学校 · 🔄 持续追踪" in message
-    assert "<b>新进展</b><br>新进展内容" in message
+    assert 'class="card card--update"' in message
+    assert "🎓 教育" in message
+    assert "🏫 学校" in message
+    assert "🔄 持续追踪" in message
+    assert '<h4>新进展</h4><p>新进展内容</p>' in message
     assert "📎 历史回溯：此前进展" in message
+    assert "技术分析" not in message
+    assert ".card--update>header" in message
 
 
 def test_render_push_message_skips_summary_label_when_all_summary_fields_are_empty():
@@ -310,10 +320,10 @@ def test_render_push_message_skips_empty_analysis_sections():
 
     message = render_push_message([report], {})
 
-    assert "<b>背景</b><br>背景内容" in message
-    assert "<b>市场影响</b><br>市场内容" in message
-    assert "<b>技术分析</b>" not in message
-    assert "<b>竞对信号</b>" not in message
+    assert '<h4>背景</h4><p>背景内容</p>' in message
+    assert '<h4>市场影响</h4><p>市场内容</p>' in message
+    assert "技术分析" not in message
+    assert "竞对信号" not in message
 
 
 def test_render_push_message_limits_reports_by_default_and_explicit_override():
@@ -325,24 +335,81 @@ def test_render_push_message_limits_reports_by_default_and_explicit_override():
     default_message = render_push_message(reports, {})
     explicit_message = render_push_message(reports, {}, max_reports=3)
 
-    assert all(f"推送摘要 {index}" in default_message for index in range(10))
-    assert "推送摘要 10" not in default_message
-    assert default_message.count("<br><br>") == 9
+    assert default_message.count('class=card') >= 8
+    assert len(default_message) <= 18000
     assert all(f"推送摘要 {index}" in explicit_message for index in range(3))
     assert "推送摘要 3" not in explicit_message
 
 
-def test_render_push_message_uses_configured_limit_and_returns_empty_for_zero_limit():
+def test_render_push_message_uses_configured_budget_and_returns_empty_for_zero_budget():
     from src.agent6_render import render_push_message
     from src.models import DeepReport
 
-    reports = [DeepReport(make_event(f"推送摘要 {index}"), {}, False) for index in range(10)]
+    reports = _push_size_fixture_reports("regular_empty_competitor")
 
-    configured_message = render_push_message(reports, {"push_max_reports": 2})
+    configured_message = render_push_message(reports, {"push_char_budget": 1})
 
-    assert all(f"推送摘要 {index}" in configured_message for index in range(2))
-    assert "推送摘要 2" not in configured_message
+    assert configured_message.count('class=card') == 1
+    assert render_push_message(reports, {}, char_budget=0) == ""
     assert render_push_message(reports, {}, max_reports=0) == ""
+
+
+def _push_size_fixture_reports(group_name: str):
+    from src.models import DeepReport
+
+    fixture_path = Path(__file__).parent / "fixtures" / "push_size_cards.json"
+    group = json.loads(fixture_path.read_text(encoding="utf-8"))[group_name]
+    reports = []
+    for index in range(group["card_count"]):
+        event = make_event(f"{group_name} 卡片 {index}")
+        event.title = f"{group_name} 卡片 {index}：欧洲存储项目进展"
+        event.structured_summary = group["section_unit"] * group["section_repetitions"]
+        event.entities = ["欧洲运营商", "数据中心", "存储平台"]
+        sections = {
+            name: group["section_unit"] * group["section_repetitions"]
+            for name in ("背景", "技术分析", "市场影响")
+        }
+        if group["competitor_signal"]:
+            sections["竞对信号"] = group["competitor_signal"]
+        reports.append(DeepReport(event, sections, False))
+    return reports
+
+
+def test_render_push_message_stops_adding_reports_when_char_budget_exceeded():
+    from src.agent6_render import render_push_message
+
+    regular_reports = _push_size_fixture_reports("regular_empty_competitor")
+    worst_case_reports = _push_size_fixture_reports("worst_case_with_competitor")
+
+    char_budget = 18000
+    default_message = render_push_message(regular_reports, {})
+    regular_message = render_push_message(regular_reports, {}, char_budget=char_budget)
+    worst_case_message = render_push_message(worst_case_reports, {}, char_budget=char_budget)
+    first_oversize_message = render_push_message(worst_case_reports, {}, char_budget=100)
+
+    regular_count = regular_message.count('class=card')
+    worst_case_count = worst_case_message.count('class=card')
+    assert len(default_message) <= char_budget
+    assert len(regular_message) <= char_budget
+    assert len(regular_message) < 20000
+    assert len(worst_case_message) <= char_budget
+    assert len(worst_case_message) < 20000
+    assert regular_count > worst_case_count
+    assert regular_count <= 12
+    assert worst_case_count >= 1
+    assert first_oversize_message.count('class=card') == 1
+
+
+def test_render_push_message_honors_character_budget_config_and_explicit_override():
+    from src.agent6_render import render_push_message
+
+    reports = _push_size_fixture_reports("regular_empty_competitor")
+    config_limited = render_push_message(reports, {"push_char_budget": 1})
+    explicitly_overridden = render_push_message(reports, {"push_char_budget": 1}, char_budget=19000)
+
+    assert config_limited.count('class=card') == 1
+    assert explicitly_overridden.count('class=card') > 1
+    assert render_push_message(reports, {}, char_budget=0) == ""
 
 
 def test_render_html_uses_custom_tag_and_layout_configuration():
