@@ -228,15 +228,26 @@ def _minify_push_style(style: str) -> str:
 _PUSH_STYLE = _minify_push_style(_PUSH_STYLE)
 
 
+DEFAULT_PUSH_CHAR_BUDGET = 18000
+DEFAULT_PUSH_MAX_REPORTS = 30
+
+
 def render_push_message(
     reports: List[DeepReport],
     theme_config: dict,
     max_reports: int | None = None,
     char_budget: int | None = None,
 ) -> str:
-    """Return an escaped, standalone HTML briefing with collapsed analysis."""
-    max_reports = max_reports if max_reports is not None else int(theme_config.get("push_max_reports", 30))
-    char_budget = char_budget if char_budget is not None else int(theme_config.get("push_char_budget", 18000))
+    """Return an escaped, standalone HTML briefing with collapsed analysis.
+
+    ``char_budget`` caps the final HTML's ``len()``, including the head/style
+    skeleton, body, and tail. Cards are accumulated until the next card would
+    exceed that budget, while retaining at least the first card. ``max_reports``
+    is a hard safety-limit cap on the number of cards.
+    """
+    # Legacy config fallback: push_char_budget is the new setting; max_reports is now only a hard safety cap.
+    max_reports = max_reports if max_reports is not None else int(theme_config.get("push_max_reports", DEFAULT_PUSH_MAX_REPORTS))
+    char_budget = char_budget if char_budget is not None else int(theme_config.get("push_char_budget", DEFAULT_PUSH_CHAR_BUDGET))
     if max_reports <= 0 or char_budget <= 0:
         return ""
     sections = config_loader.get_sections(theme_config)

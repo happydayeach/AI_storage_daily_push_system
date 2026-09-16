@@ -14,6 +14,7 @@ import pytest
 import yaml
 
 from conftest import make_event
+from src.agent6_render import DEFAULT_PUSH_CHAR_BUDGET, DEFAULT_PUSH_MAX_REPORTS
 from src.models import DedupResult, ExtractedEvent, RawArticle, StoryRecord
 
 def test_render_html_reuses_designed_template_and_maps_new_report_tags_and_sections():
@@ -335,10 +336,23 @@ def test_render_push_message_limits_reports_by_default_and_explicit_override():
     default_message = render_push_message(reports, {})
     explicit_message = render_push_message(reports, {}, max_reports=3)
 
-    assert default_message.count('class=card') >= 8
-    assert len(default_message) <= 18000
+    assert default_message.count('class=card') == 12
+    assert len(default_message) <= DEFAULT_PUSH_CHAR_BUDGET
+    assert explicit_message.count('class=card') == 3
     assert all(f"推送摘要 {index}" in explicit_message for index in range(3))
     assert "推送摘要 3" not in explicit_message
+
+
+def test_render_push_message_caps_at_default_safety_limit():
+    from src.agent6_render import render_push_message
+    from src.models import DeepReport
+
+    reports = [DeepReport(make_event(f"推送摘要 {index}"), {}, False) for index in range(40)]
+
+    message = render_push_message(reports, {})
+
+    assert message.count('class=card') == DEFAULT_PUSH_MAX_REPORTS
+    assert len(message) <= DEFAULT_PUSH_CHAR_BUDGET
 
 
 def test_render_push_message_uses_configured_budget_and_returns_empty_for_zero_budget():
@@ -381,7 +395,7 @@ def test_render_push_message_stops_adding_reports_when_char_budget_exceeded():
     regular_reports = _push_size_fixture_reports("regular_empty_competitor")
     worst_case_reports = _push_size_fixture_reports("worst_case_with_competitor")
 
-    char_budget = 18000
+    char_budget = DEFAULT_PUSH_CHAR_BUDGET
     default_message = render_push_message(regular_reports, {})
     regular_message = render_push_message(regular_reports, {}, char_budget=char_budget)
     worst_case_message = render_push_message(worst_case_reports, {}, char_budget=char_budget)
@@ -405,7 +419,7 @@ def test_render_push_message_honors_character_budget_config_and_explicit_overrid
 
     reports = _push_size_fixture_reports("regular_empty_competitor")
     config_limited = render_push_message(reports, {"push_char_budget": 1})
-    explicitly_overridden = render_push_message(reports, {"push_char_budget": 1}, char_budget=19000)
+    explicitly_overridden = render_push_message(reports, {"push_char_budget": 1}, char_budget=DEFAULT_PUSH_CHAR_BUDGET)
 
     assert config_limited.count('class=card') == 1
     assert explicitly_overridden.count('class=card') > 1
