@@ -15,6 +15,7 @@
     - 脚本只读 docs/index.html，不写项目数据、不动 story_store。
 """
 import html as htmllib
+import json
 import re
 import sys
 from dataclasses import dataclass, field
@@ -31,6 +32,7 @@ from src.models import DeepReport, ExtractedEvent
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 DOCS = REPO_ROOT / "docs" / "index.html"
+FROZEN_CARDS = Path(__file__).resolve().parent / "real_cards.json"
 
 _CARD_RE = re.compile(
     r'<div class="card( card--update)?" data-industry="(?P<industry>[^"]*)" '
@@ -98,6 +100,17 @@ def parse_real_cards(path: Path = DOCS) -> list:
     return cards
 
 
+def load_real_cards() -> list:
+    """优先读固化的 real_cards.json，缺失时回退解析 docs/index.html。
+
+    固化文件由 scripts/freeze_real_cards.py 生成，稳定且不依赖 docs 的 HTML 格式。
+    """
+    if FROZEN_CARDS.exists():
+        raw = json.loads(FROZEN_CARDS.read_text(encoding="utf-8"))
+        return [RealCard(**item) for item in raw]
+    return parse_real_cards()
+
+
 def to_reports(cards, competitor_signal: str = "keep") -> list:
     reports = []
     for card in cards:
@@ -134,7 +147,7 @@ def main():
         sys.exit(1)
 
     theme_config = load_theme_config(theme_id)
-    cards = parse_real_cards()
+    cards = load_real_cards()
     reports = to_reports(cards, competitor_signal)
     message = render_push_message(reports, theme_config)
 

@@ -21,7 +21,7 @@ THEME=<theme_id> .venv/bin/python -m src.main          # 跑完整流水线（�
 
 ### 手动推送测试（最快最便宜，不重跑 LLM/搜索）
 
-要验证推送效果时，**不要跑完整流水线**（会重新调 Tavily + DeepSeek，耗时烧钱还污染 story_store）。用现成脚本直接解析 `docs/index.html` 的 30 张真实卡片 → 渲染 → pushplus 发微信，零额外成本、秒级：
+要验证推送效果时，**不要跑完整流水线**（会重新调 Tavily + DeepSeek，耗时烧钱还污染 story_store）。用现成脚本直接读真实卡片数据 → 渲染 → pushplus 发微信，零额外成本、秒级：
 
 ```bash
 cd agent123
@@ -31,9 +31,11 @@ cd agent123
 .venv/bin/python scripts/manual_push.py europe_storage full   # 竞对信号填满（测长正文少放几篇）
 ```
 
-- 脚本 `scripts/manual_push.py` 自包含、git 跟踪；只读 `docs/index.html`，不写项目数据、不动 story_store。
-- 依赖 `.env` 的 PUSHPLUS_TOKEN（缺失则只渲染不推送，打印长度与篇数）。
+- **真实卡片数据已固化**在 `scripts/real_cards.json`（30 张真实卡，含四段式正文 + 标签 + 实体 + 原文链接）。`manual_push.py` 优先读这份 JSON（不依赖 `docs/index.html` 的 HTML 格式，也不做 LLM 分析），缺失时才回退解析 docs。
+- **重新固化**（当想刷新真实卡片数据、拿到最新一期简报内容时）：先跑完整流水线生成新的 `docs/index.html`，再 `.venv/bin/python scripts/freeze_real_cards.py` 重新导出 JSON。
+- 脚本只读数据、不写项目数据、不动 story_store；依赖 `.env` 的 PUSHPLUS_TOKEN（缺失则只渲染不推送，打印长度与篇数）。
 - 输出形如 `真实卡片: 30 张 → 实际推送 7 篇 / 消息长度: 16964 字`，据此判断动态字数预算是否按预期截断。
+- 注：当前固化的 30 张卡竞对信号全空（真实历史状态）；用 `full` 参数可模拟竞对信号填满的极端波动场景。
 
 ## 项目专属约定
 
