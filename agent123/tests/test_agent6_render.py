@@ -214,8 +214,8 @@ def test_render_push_message_returns_an_escaped_complete_html_document_with_coll
     assert all(content in message for content in ("技术内容", "市场内容", "竞对内容"))
     assert '<a href="https://source.example/article?filter=&quot;one&quot;&amp;sort=desc">📄 原文</a>' in message
     assert "<script>" not in message
-    assert "查看完整简报" not in message
-    assert "brief.example" not in message
+    assert "查看完整简报" in message
+    assert "brief.example" in message
     assert all(forbidden not in message for forbidden in ("@media", "@keyframes", "transition", ":hover", "color-mix", ".brief-header", ".filter-bar"))
 
 

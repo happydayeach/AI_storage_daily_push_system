@@ -253,9 +253,19 @@ def render_push_message(
     sections = config_loader.get_sections(theme_config)
     industries = config_loader.get_industries(theme_config)
     verticals = config_loader.get_verticals(theme_config)
+    frontend_url = theme_config.get("frontend_url", "")
     head = f'<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><style>{_PUSH_STYLE}</style></head><body>'
     tail = "</body></html>"
-    used = len(head) + len(tail)
+    banner = ""
+    if frontend_url:
+        url = escape(frontend_url, quote=True)
+        banner = (
+            f'<div style="background:#1a5fb4;color:#fff;border-radius:8px;'
+            f'padding:10px 14px;margin-top:1rem;text-align:center">'
+            f'<a href="{url}" style="color:#fff;font-weight:600;text-decoration:none">'
+            f'🖥️ 查看完整简报（四段式可折叠 · 原文可跳转）</a></div>'
+        )
+    used = len(head) + len(tail) + len(banner)
     blocks = []
     for report in reports[:max_reports]:
         event = report.event
@@ -290,4 +300,4 @@ def render_push_message(
             break
         blocks.append(block)
         used += len(block)
-    return f'{head}{"".join(blocks)}{tail}'
+    return f'{head}{"".join(blocks)}{banner}{tail}'
