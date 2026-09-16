@@ -19,6 +19,22 @@ THEME=<theme_id> .venv/bin/python -m src.main          # 跑完整流水线（�
 - 依赖：DEEPSEEK_API_KEY、TAVILY_API_KEY、PUSHPLUS_TOKEN（.env + GitHub Secrets）。
 - 前端页面：`docs/index.html`，GitHub Pages 发布到 https://happydayeach.github.io/AI_storage_daily_push_system/
 
+### 手动推送测试（最快最便宜，不重跑 LLM/搜索）
+
+要验证推送效果时，**不要跑完整流水线**（会重新调 Tavily + DeepSeek，耗时烧钱还污染 story_store）。用现成脚本直接解析 `docs/index.html` 的 30 张真实卡片 → 渲染 → pushplus 发微信，零额外成本、秒级：
+
+```bash
+cd agent123
+.venv/bin/python scripts/manual_push.py                     # 默认 europe_storage + 竞对信号保持原样
+.venv/bin/python scripts/manual_push.py nordic_education    # 指定主题
+.venv/bin/python scripts/manual_push.py europe_storage empty  # 竞对信号清空（测短正文多放几篇）
+.venv/bin/python scripts/manual_push.py europe_storage full   # 竞对信号填满（测长正文少放几篇）
+```
+
+- 脚本 `scripts/manual_push.py` 自包含、git 跟踪；只读 `docs/index.html`，不写项目数据、不动 story_store。
+- 依赖 `.env` 的 PUSHPLUS_TOKEN（缺失则只渲染不推送，打印长度与篇数）。
+- 输出形如 `真实卡片: 30 张 → 实际推送 7 篇 / 消息长度: 16964 字`，据此判断动态字数预算是否按预期截断。
+
 ## 项目专属约定
 
 ### 换主题 = 新建 config，不改代码
