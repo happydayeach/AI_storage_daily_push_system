@@ -9,6 +9,12 @@
 | `sample-briefing-2026-09-18.html` | 2026-09-18 生成的简报前端页面（完整自包含：暗色模式 / 双标签 / 四段式 / 筛选器 / 折叠 JS），浏览器直接打开即可查看 |
 | `sample-result-2026-09-18.json` | 同日生成的结构化结果数据（`new` / `update` 报告 + 去重计数 + 质检结果） |
 
+## 在线预览
+
+样例简报页面已发布到 GitHub Pages，可直接在线查看渲染效果：
+
+🔗 https://happydayeach.github.io/AI_storage_daily_push_system/sample-briefing-2026-09-18.html
+
 ## 说明
 
 - 2026-09-18 是 **Tavily 搜索额度耗尽前最后一次有内容的简报**（结果 JSON 120 KB）。
