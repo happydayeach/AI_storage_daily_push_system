@@ -5,6 +5,14 @@
 
 ---
 
+核心目标： 构建一个能够跨项目持续学习、沉淀工程经验并自主完成 Dev→Review→Test 闭环的 Coding Agent Harness，而不是一次性 Coding Agent。
+
+三个核心架构决策：
+
+- Memory ≠ Context：长期知识资产化，项目知识随项目走；执行上下文按任务隔离，解决 context 膨胀与跨项目污染。
+- Model ≠ System：模型作为可替换计算层，Memory / Skills / Eval / Harness 才是长期资产，通过基准验证而非迁移完成模型升级。
+- Stateful Leader + Stateless Workers：Coder 持续学习并负责决策，Dev / Review / Tester 无状态执行，通过独立 Session + Kanban 完成职责隔离与交叉验证。
+
 ## 0. 架构总览
 
 ![coder 团队架构](coder-architecture.png)
