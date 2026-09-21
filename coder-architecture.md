@@ -120,3 +120,13 @@
 - **结论库**：已分析主题 → 结论/观点，防重复分析。
 - **复用打结机制**：每日快照记录「跟踪到哪 + 最新结论 + 待跟踪队列」。
 ---
+
+## 7. Verification / 实际验证
+
+- **E2E Coding Loop**：已完成真实项目 Dev → Review → Tester → 返工 → 验收完整闭环。
+- **Cross-project Reuse**：首个项目沉淀的 Kanban orchestration、Tie-off、SDLC Review 等 Skills 已复用于后续项目。
+- **Long-running Agent**：将 Harness 复用于新闻 Agent，实现跨天增量跟踪、去重、结论沉淀与长期趋势分析。
+- **Model Portability**：Worker 与 Memory 解耦，可通过 Profile 替换底层模型，无需迁移项目知识。
+- **Reliability**：真实 Tool Output + 独立 Review + Tester DoD + 最大 3 次自修复，失败 Block 而非生成虚假结果。
+
+---
